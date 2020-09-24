@@ -1,8 +1,4 @@
-package com.project.monopad.model
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+package com.project.monopad.model.network
 
 data class MovieInfoResponse(
     val dates: Dates,
@@ -11,6 +7,8 @@ data class MovieInfoResponse(
     val total_pages: Int,
     val total_results: Int
 )
+
+
 
 
 

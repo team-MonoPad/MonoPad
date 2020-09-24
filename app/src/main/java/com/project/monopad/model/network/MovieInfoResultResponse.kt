@@ -1,4 +1,4 @@
-package com.project.monopad.model
+package com.project.monopad.model.network
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
