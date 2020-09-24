@@ -6,20 +6,20 @@ buildscript {
         kotlin_version = "1.4.0"
 
         //material
-        materialVersion = '1.2.0-alpha02'
+        materialVersion = '1.3.0-alpha02'
 
         //retrofit
-        retrofitVersion = '2.3.0'
+        retrofitVersion = '2.7.1'
 
         //okhttp
-        okHttpVersion = '3.8.1'
+        okHttpVersion = '4.4.0'
 
         //glide
-        glideVersion = '4.10.0'
+        glideVersion = '4.11.0'
 
         //rx android
         rxandoirdVersion = '2.1.1'
-        rxjavaVersion = '2.2.8'
+        rxjavaVersion = '2.2.9'
 
         // koin
         koinVersion = "2.0.1"
