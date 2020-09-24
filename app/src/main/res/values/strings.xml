@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MonoPad</string>
+
+    <!--login-->
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
+    <string name="auto_login">자동로그인</string>
+    <string name="not_yet_account">아직 계정이 없으신가요? </string>
+    <string name="register">회원가입</string>
+
 </resources>
