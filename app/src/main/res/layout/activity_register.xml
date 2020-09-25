@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.project.monopad.ui.login.LoginViewModel" />
+            type="com.project.monopad.RegisterViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBlack"
-        tools:context=".ui.login.RegisterActivity">
+        tools:context=".RegisterActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
