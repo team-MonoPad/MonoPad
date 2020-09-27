@@ -45,25 +45,50 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ranking_textview"
+                android:text="@={viewModel.name}"
                 android:hint="이름"
                 android:textColorHint="@color/colorLightGray"
                 android:textColor="@color/colorWhite"/>
 
-            <EditText
-                android:id="@+id/et_email"
+            <LinearLayout
+                android:id="@+id/email_layout"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:paddingHorizontal="20dp"
-                android:maxLines="1"
-                android:background="@drawable/gray_rectangle_radius_10"
-                android:hint="이메일"
-                android:textColorHint="@color/colorLightGray"
-                android:textColor="@color/colorWhite"
-                android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_name" />
+                app:layout_constraintTop_toBottomOf="@+id/et_name">
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/gray_rectangle_radius_10"
+                    android:hint="이메일"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:text="@={viewModel.email}"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorLightGray" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryRed"
+                    android:text="중복\n체크"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/et_pw"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/et_email"
+                    app:layout_constraintTop_toBottomOf="@+id/et_name" />
+            </LinearLayout>
+
+
 
             <EditText
                 android:id="@+id/et_pw"
@@ -75,9 +100,10 @@
                 android:background="@drawable/gray_rectangle_radius_10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_email"
+                app:layout_constraintTop_toBottomOf="@+id/email_layout"
                 android:hint="비밀번호 (최소 6자 이상)"
                 android:inputType="textPassword"
+                android:text="@={viewModel.password}"
                 android:textColorHint="@color/colorLightGray"
                 android:textColor="@color/colorWhite" />
 
@@ -90,6 +116,7 @@
                 android:maxLines="1"
                 android:background="@drawable/gray_rectangle_radius_10"
                 android:hint="비밀번호 확인 (최소 6자 이상)"
+                android:text="@={viewModel.passwordCheck}"
                 android:textColorHint="@color/colorLightGray"
                 android:textColor="@color/colorWhite"
                 android:inputType="textPassword"
@@ -109,7 +136,9 @@
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_pw_check" />
+                app:layout_constraintTop_toBottomOf="@+id/et_pw_check"
+                android:onClick="@{(v) -> viewModel.onResisterButtonClick(v)}"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

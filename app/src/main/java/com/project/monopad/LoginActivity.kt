@@ -1,6 +1,7 @@
 package com.project.monopad
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,18 +18,23 @@ class LoginActivity : AppCompatActivity() {
 
         initViewModel()
         initBinding()
-        initView()
+        //initView()
     }
 
     fun initViewModel() {
         mLoginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(
             LoginViewModel::class.java)
+
         mLoginViewModel.getCurrentUser().observe(this, Observer { user->
-            if(user.isValidUser){
-                startMainActivity()
-            }
+            startMainActivity()
+            finish()
         })
 
+        mLoginViewModel.showErrorToast.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     fun initBinding() {
@@ -38,21 +44,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun initView() {
-        mBinder.loginButton.setOnClickListener{ view ->
+/*        mBinder.loginButton.setOnClickListener{ view ->
             val email = mBinder.loginEmailEdittext.text.toString()
             val password = mBinder.loginPasswordEdittext.text.toString()
-
-            if (!LoginPatternCheckUtil.isValidEmail(email)) {
-                Toast.makeText(this,"이메일 유효x",Toast.LENGTH_SHORT).show()
-            }
-            else if (!LoginPatternCheckUtil.isValidPassword(password)){
-                Toast.makeText(this,"비밀번호 유효x",Toast.LENGTH_SHORT).show()
-            }
-            else {
-                mLoginViewModel.signInWithEmail(email,password)
-            }
-
-        }
+            mLoginViewModel.signInWithEmail(email,password)
+        }*/
     }
 
     fun startMainActivity() {

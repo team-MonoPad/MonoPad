@@ -7,6 +7,10 @@ import java.util.regex.Pattern
 class LoginPatternCheckUtil {
 
     companion object {
+        fun isValidName(name : String?): Boolean {
+            return !TextUtils.isEmpty(name)
+        }
+
         fun isValidEmail(email : String?): Boolean {
             return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }

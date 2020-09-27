@@ -19,15 +19,20 @@ class RegisterActivity : AppCompatActivity() {
 
         initViewModel()
         initBinding()
-        initView()
+        //initView()
     }
 
     fun initViewModel() {
         mRegisterViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(
             RegisterViewModel::class.java)
+
         mRegisterViewModel.getCurrentUser().observe(this, Observer { user->
-            if(user.isValidUser){
-                finish()
+            finish()
+        })
+
+        mRegisterViewModel.showErrorToast.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -39,24 +44,13 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun initView() {
-        mBinder.btnRegister.setOnClickListener{ view ->
+/*        mBinder.btnRegister.setOnClickListener{ view ->
             val name = mBinder.etName.text.toString()
             val email = mBinder.etEmail.text.toString()
             val password = mBinder.etPw.text.toString()
             val passwordCheck = mBinder.etPwCheck.text.toString()
 
-            if (!LoginPatternCheckUtil.isValidEmail(email)) {
-                Toast.makeText(this,"이메일 유효x", Toast.LENGTH_SHORT).show()
-            }
-            else if (!LoginPatternCheckUtil.isValidPassword(password)){
-                Toast.makeText(this,"비밀번호 유효x", Toast.LENGTH_SHORT).show()
-            }
-            else if (!LoginPatternCheckUtil.checkPassword(password,passwordCheck)) {
-                Toast.makeText(this,"비밀번호가 다릅니다", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                mRegisterViewModel.createUserWithEmailAndPassword(email,password,name)
-            }
-        }
+            mRegisterViewModel.createUserWithEmailAndPassword(email,password,passwordCheck,name)
+        }*/
     }
 }
