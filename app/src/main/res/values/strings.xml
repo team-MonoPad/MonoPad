@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">MonoPad</string>
+    <string name="title_activity_scrolling"></string>
+    <string name="synopsis">
+        2004년 하얼빈에서 넘어와 순식간에 대한민국을 공포로 몰아 넣은 신흥 범죄 조직을 잡기 위한 괴물 같은 강력반 형사들의 끝.짱.나.는. 실제 \'조폭 소탕 작전\'을 영화화한 실화 범죄액션\n
+        오늘 밤, 다 쓸어버린다!\n
+        2004년 서울... 하얼빈에서 넘어와 단숨에 기존 조직들을 장악하고 가장 강력한 세력인 춘식이파 보스 ‘황사장(조재윤)’까지 위협하며 도시 일대의 최강자로 급부상한 신흥 범죄 조직의 악랄한 보스 ‘장첸(윤계상)’.\n
+        대한민국을 뒤흔든 ‘장첸(윤계상)’ 일당을 잡기 위해 오직 주먹 한 방으로 도시의 평화를 유지해 온 괴물 형사 ‘마석도(마동석)’와 인간미 넘치는 든든한 리더 ‘전일만(최귀화)’ 반장이 이끄는 강력반은 나쁜 놈들을 한 방에 쓸어버릴 끝.짱.나.는. 작전을 세우는데…\n
+        통쾌하고! 화끈하고! 살벌하게!\n
+        나쁜 놈들 때려잡는 강력반 형사들의 ‘조폭 소탕 작전’이 시작된다!\n
+    </string>
+
+    <string name="actor_director">
+         출연 : 마동석(마석도), 윤계상(장첸), 김성규(양태), 진선규(위성락), 최귀화(전일만)...\n\n감독 : 강윤성
+    </string>
+
+    <string name="longlong">
+        \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+    </string>
+    <string name="action_settings">Settings</string>
 </resources>
