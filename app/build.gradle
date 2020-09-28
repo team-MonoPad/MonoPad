@@ -86,7 +86,6 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.4'
 
     // koin
-
     implementation "org.koin:koin-androidx-scope:$koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
     testImplementation "org.koin:koin-test:$koinVersion"
