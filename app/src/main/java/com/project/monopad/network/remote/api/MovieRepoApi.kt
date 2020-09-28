@@ -3,7 +3,6 @@ package com.project.monopad.network.remote.api
 import com.project.monopad.model.network.MovieInfoResponse
 import com.project.monopad.model.network.OtherMovieInfoResponse
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

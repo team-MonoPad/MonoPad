@@ -2,7 +2,6 @@ package com.project.monopad.network.repository
 
 import com.project.monopad.model.network.MovieInfoResponse
 import com.project.monopad.model.network.OtherMovieInfoResponse
-import com.project.monopad.network.remote.api.MovieRepoApi
 import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
 import io.reactivex.Single
 
