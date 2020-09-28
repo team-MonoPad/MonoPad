@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Search" />
+
+    <item
+        android:id="@+id/menu_default"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="category" />
+
+    <item
+        android:id="@+id/menu_calender"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Calender" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="profile" />
+
+</menu>
