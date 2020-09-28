@@ -21,8 +21,13 @@ class LoginPatternCheckUtil {
             return !TextUtils.isEmpty(password) && PASSWORD_PATTERN.matcher(password).matches()
         }
 
+        fun isValidEmailAndPassword(email: String?, password: String?) : Boolean {
+            return isValidEmail(email) && isValidPassword(password)
+        }
+
         fun checkPassword(password : String?, password2 : String?) : Boolean {
             return isValidPassword(password) && isValidPassword(password2) && TextUtils.equals(password, password2)
         }
+
     }
 }

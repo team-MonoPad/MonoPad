@@ -9,28 +9,59 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application){
 
-    private var mAuthRepository : AuthRepository
-    private var mUser : MutableLiveData<User>
+    private var mAuthRepository = AuthRepository(application)
+    var mLoginListener: AuthListener? = null
 
-    private val _showErrorToast = MutableLiveData<Event<String>>()
-    val showErrorToast: LiveData<Event<String>> = _showErrorToast
+    var email: String? = null
+    var password: String? = null
 
-    val email = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
 
-    init {
-        mAuthRepository = AuthRepository(application)
-        mUser = mAuthRepository.getCurrentUser()
+    //by lazy : 호출 시점에 초기화 -> 메모리 낭비 방지
+    val user by lazy {
+        mAuthRepository.getCurrentUser()
     }
 
-    fun getCurrentUser() = mUser
+    /*BaseViewModel*/
+    private val compositeDisposable = CompositeDisposable()
+    fun addDisposable(disposable: Disposable) {
+        compositeDisposable.add(disposable)
+    }
+    override fun onCleared() {
+        compositeDisposable.clear()
+        super.onCleared()
+    }
+    /*BaseViewModel*/
 
-    fun signInWithEmail(email : String, password : String){
-        mAuthRepository.signInWithEmailAndPassword(email,password)
+    fun setLoginListener(authListener: AuthListener) {
+        this.mLoginListener = authListener
+    }
+
+    fun signInWithEmail(email : String?, password : String?){
+        if(!LoginPatternCheckUtil.isValidEmailAndPassword(email,password)){
+            //로그인 실패
+            mLoginListener?.onFailure("가입 x 사용자 / 비번 오류")
+        }
+        else {
+            //로그인 성공
+            mLoginListener?.onStarted()
+            val disposable = mAuthRepository.signInWithEmailAndPassword(email!!, password!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mLoginListener?.onSuccess()
+                }, {
+                    mLoginListener?.onFailure(it.message!!)
+                })
+            addDisposable(disposable)
+        }
     }
 
     fun signOut() {
@@ -38,12 +69,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application){
     }
 
     fun onLoginButtonClick(view: View) {
-        val email_s = email.value
-        val password_s = password.value
-
-        if (isValidEmailAndPassword(email_s, password_s)) {
-            signInWithEmail(email_s!!, password_s!!)
-        }
+        signInWithEmail(email, password)
     }
 
     fun onResisterButtonClick(view: View) {
@@ -52,11 +78,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application){
         context.startActivity(intent)
     }
 
-    fun isValidEmailAndPassword(email: String?, password: String?) : Boolean {
-        if (!(LoginPatternCheckUtil.isValidEmail(email) && LoginPatternCheckUtil.isValidPassword(password))) {
-            _showErrorToast.value = Event("이메일 비번 다시 확인")
-            return false
-        }
-        return true
-    }
+/*    private val _showErrorToast = MutableLiveData<Event<String>>()
+    val showErrorToast: LiveData<Event<String>> = _showErrorToast*/
+
 }

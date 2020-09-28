@@ -18,21 +18,32 @@ class LoginActivity : AppCompatActivity() {
 
         initViewModel()
         initBinding()
-        //initView()
     }
+
+/*
+    //자동로그인
+    override fun onStart() {
+        super.onStart()
+        mLoginViewModel.user?.let {
+            startMainActivity()
+        }
+    }*/
 
     fun initViewModel() {
         mLoginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(
             LoginViewModel::class.java)
 
-        mLoginViewModel.getCurrentUser().observe(this, Observer { user->
-            startMainActivity()
-            finish()
-        })
-
-        mLoginViewModel.showErrorToast.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { message ->
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        mLoginViewModel.setLoginListener(object : AuthListener{
+            override fun onStarted() {
+                mBinder.progressbar.visibility = View.VISIBLE
+            }
+            override fun onSuccess() {
+                mBinder.progressbar.visibility = View.GONE
+                startMainActivity()
+            }
+            override fun onFailure(message: String) {
+                mBinder.progressbar.visibility = View.GONE
+                Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -43,17 +54,9 @@ class LoginActivity : AppCompatActivity() {
         mBinder.lifecycleOwner = this
     }
 
-    fun initView() {
-/*        mBinder.loginButton.setOnClickListener{ view ->
-            val email = mBinder.loginEmailEdittext.text.toString()
-            val password = mBinder.loginPasswordEdittext.text.toString()
-            mLoginViewModel.signInWithEmail(email,password)
-        }*/
-    }
-
     fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
-
 }

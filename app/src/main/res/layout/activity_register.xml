@@ -21,124 +21,157 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/ranking_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="50dp"
-                android:text="@string/register"
-                android:textColor="@color/colorWhite"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/et_name"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:paddingHorizontal="20dp"
-                android:maxLines="1"
-                android:background="@drawable/gray_rectangle_radius_10"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ranking_textview"
-                android:text="@={viewModel.name}"
-                android:hint="이름"
-                android:textColorHint="@color/colorLightGray"
-                android:textColor="@color/colorWhite"/>
+                app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/email_layout"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_name">
+                <TextView
+                    android:id="@+id/ranking_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/register"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="7"
-                    android:paddingHorizontal="20dp"
+                    android:id="@+id/et_name"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/gray_rectangle_radius_10"
-                    android:hint="이메일"
-                    android:inputType="textEmailAddress"
+                    android:hint="이름"
                     android:maxLines="1"
-                    android:text="@={viewModel.email}"
+                    android:paddingHorizontal="20dp"
+                    android:text="@={viewModel.name}"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorLightGray" />
+                    android:textColorHint="@color/colorLightGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ranking_textview" />
+
+                <LinearLayout
+                    android:id="@+id/email_layout"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_name">
+
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="7"
+                        android:background="@drawable/gray_rectangle_radius_10"
+                        android:hint="이메일"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingHorizontal="20dp"
+                        android:text="@={viewModel.email}"
+                        android:textColor="@color/colorWhite"
+                        android:textColorHint="@color/colorLightGray" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimaryRed"
+                        android:text="중복\n체크"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/et_pw"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/et_email"
+                        app:layout_constraintTop_toBottomOf="@+id/et_name"
+                        android:onClick="@{(v) -> viewModel.onEmailCheckButtonClick(v)}"
+                        />
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/et_pw"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/gray_rectangle_radius_10"
+                    android:hint="비밀번호 (최소 6자 이상)"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingHorizontal="20dp"
+                    android:text="@={viewModel.password}"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorLightGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/email_layout" />
+
+                <EditText
+                    android:id="@+id/et_pw_check"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/gray_rectangle_radius_10"
+                    android:hint="비밀번호 확인 (최소 6자 이상)"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingHorizontal="20dp"
+                    android:text="@={viewModel.passwordCheck}"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorLightGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_pw" />
+
+                <TextView
+                    android:id="@+id/password_alert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="비밀번호가 일치하지 않습니다!"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_pw_check" />
+
 
                 <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:id="@+id/btn_register"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/colorPrimaryRed"
-                    android:text="중복\n체크"
+                    android:onClick="@{(v) -> viewModel.onResisterButtonClick(v)}"
+                    android:text="@string/register"
                     android:textColor="@color/colorWhite"
-                    android:textSize="12dp"
-                    android:layout_marginLeft="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/et_pw"
+                    android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/et_email"
-                    app:layout_constraintTop_toBottomOf="@+id/et_name" />
-            </LinearLayout>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/password_alert" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <EditText
-                android:id="@+id/et_pw"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:paddingHorizontal="20dp"
-                android:maxLines="1"
-                android:background="@drawable/gray_rectangle_radius_10"
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_layout"
-                android:hint="비밀번호 (최소 6자 이상)"
-                android:inputType="textPassword"
-                android:text="@={viewModel.password}"
-                android:textColorHint="@color/colorLightGray"
-                android:textColor="@color/colorWhite" />
-
-            <EditText
-                android:id="@+id/et_pw_check"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:paddingHorizontal="20dp"
-                android:maxLines="1"
-                android:background="@drawable/gray_rectangle_radius_10"
-                android:hint="비밀번호 확인 (최소 6자 이상)"
-                android:text="@={viewModel.passwordCheck}"
-                android:textColorHint="@color/colorLightGray"
-                android:textColor="@color/colorWhite"
-                android:inputType="textPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_pw" />
-
-
-            <Button
-                android:id="@+id/btn_register"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorPrimaryRed"
-                android:text="@string/register"
-                android:textColor="@color/colorWhite"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_pw_check"
-                android:onClick="@{(v) -> viewModel.onResisterButtonClick(v)}"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
