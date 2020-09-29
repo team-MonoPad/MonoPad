@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">MonoPad</string>
+
+    <!--  탭,툴바 타이틀  -->
     <string name="title_home">home</string>
     <string name="title_search">search</string>
     <string name="title_profile">profile</string>
+    <string name="title_diary">diary</string>
 </resources>
