@@ -77,7 +77,7 @@ dependencies {
     //room
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compile:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-rxjava2:$roomVersion"
     testImplementation "androidx.room:room-testing:$roomVersion"
 
@@ -86,7 +86,6 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.4'
 
     // koin
-
     implementation "org.koin:koin-androidx-scope:$koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
     testImplementation "org.koin:koin-test:$koinVersion"
