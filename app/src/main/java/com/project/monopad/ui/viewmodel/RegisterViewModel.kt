@@ -1,18 +1,12 @@
-package com.project.monopad
+package com.project.monopad.ui.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.project.monopad.AuthRepository
-import com.project.monopad.User
+import com.project.monopad.ui.AuthListener
+import com.project.monopad.network.repository.AuthRepository
+import com.project.monopad.util.LoginPatternCheckUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -25,7 +19,8 @@ class RegisterViewModel(application : Application) : AndroidViewModel(applicatio
         fun onFailure(message: String)
     }
 
-    private var mAuthRepository= AuthRepository(application)
+    private var mAuthRepository=
+        AuthRepository(application)
     var mRegisterListener: AuthListener? = null
     var mEmailCheckListener: EmailCheckListener? = null
 

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.project.monopad.LoginViewModel" />
+            type="com.project.monopad.ui.viewmodel.LoginViewModel" />
 
     </data>
 
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBlack"
-        tools:context=".LoginActivity">
+        tools:context=".ui.view.LoginActivity">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

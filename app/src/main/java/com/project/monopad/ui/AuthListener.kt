@@ -1,4 +1,4 @@
-package com.project.monopad
+package com.project.monopad.ui
 
 interface AuthListener {
     fun onStarted()

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.monopad">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.project.monopad"
+    tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher,MissingLeanbackSupport">
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -11,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.view.MainActivity">
+        <activity android:name=".ui.view.MainActivity"/>
+        <activity android:name=".ui.view.RegisterActivity"/>
+        <activity android:name=".ui.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

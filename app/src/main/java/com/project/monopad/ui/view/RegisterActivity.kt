@@ -1,4 +1,4 @@
-package com.project.monopad
+package com.project.monopad.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.project.monopad.ui.AuthListener
+import com.project.monopad.R
+import com.project.monopad.ui.viewmodel.RegisterViewModel
 import com.project.monopad.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -25,7 +28,8 @@ class RegisterActivity : AppCompatActivity() {
         mRegisterViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(
             RegisterViewModel::class.java)
 
-        mRegisterViewModel.setRegisterListener(object : AuthListener{
+        mRegisterViewModel.setRegisterListener(object :
+            AuthListener {
             override fun onStarted() {
                 mBinder.progressbar.visibility = View.VISIBLE
             }
@@ -39,7 +43,8 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
-        mRegisterViewModel.setEmailCheckListener(object : RegisterViewModel.EmailCheckListener{
+        mRegisterViewModel.setEmailCheckListener(object :
+            RegisterViewModel.EmailCheckListener {
             override fun onSuccess(isEmailCheckSucccesful: Boolean) {
                 lateinit var messege : String
                 if(isEmailCheckSucccesful) messege = "중복되지않음"
@@ -58,7 +63,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun initBinding() {
-        mBinder = DataBindingUtil.setContentView<ActivityRegisterBinding>(this, R.layout.activity_register)
+        mBinder = DataBindingUtil.setContentView<ActivityRegisterBinding>(this,
+            R.layout.activity_register
+        )
         mBinder.viewModel = mRegisterViewModel
         mBinder.lifecycleOwner = this
     }

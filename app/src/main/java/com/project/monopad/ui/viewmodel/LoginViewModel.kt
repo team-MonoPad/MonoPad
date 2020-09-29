@@ -1,14 +1,14 @@
-package com.project.monopad
+package com.project.monopad.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.project.monopad.ui.AuthListener
+import com.project.monopad.util.LoginPatternCheckUtil
+import com.project.monopad.ui.view.RegisterActivity
+import com.project.monopad.network.repository.AuthRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -17,7 +17,8 @@ import io.reactivex.schedulers.Schedulers
 
 class LoginViewModel(application: Application) : AndroidViewModel(application){
 
-    private var mAuthRepository = AuthRepository(application)
+    private var mAuthRepository =
+        AuthRepository(application)
     var mLoginListener: AuthListener? = null
 
     var email: String? = null
@@ -45,7 +46,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application){
     }
 
     fun signInWithEmail(email : String?, password : String?){
-        if(!LoginPatternCheckUtil.isValidEmailAndPassword(email,password)){
+        if(!LoginPatternCheckUtil.isValidEmailAndPassword(
+                email,
+                password
+            )
+        ){
             //로그인 실패
             mLoginListener?.onFailure("가입 x 사용자 / 비번 오류")
         }

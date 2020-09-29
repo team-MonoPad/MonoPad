@@ -1,12 +1,14 @@
-package com.project.monopad
+package com.project.monopad.ui.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.project.monopad.ui.AuthListener
+import com.project.monopad.ui.viewmodel.LoginViewModel
+import com.project.monopad.R
 import com.project.monopad.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -33,7 +35,8 @@ class LoginActivity : AppCompatActivity() {
         mLoginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(
             LoginViewModel::class.java)
 
-        mLoginViewModel.setLoginListener(object : AuthListener{
+        mLoginViewModel.setLoginListener(object :
+            AuthListener {
             override fun onStarted() {
                 mBinder.progressbar.visibility = View.VISIBLE
             }
@@ -49,7 +52,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun initBinding() {
-        mBinder = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        mBinder = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
+            R.layout.activity_login
+        )
         mBinder.viewModel = mLoginViewModel
         mBinder.lifecycleOwner = this
     }

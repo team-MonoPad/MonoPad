@@ -1,4 +1,4 @@
-package com.project.monopad
+package com.project.monopad.network.repository
 
 import android.app.Application
 import android.util.Log

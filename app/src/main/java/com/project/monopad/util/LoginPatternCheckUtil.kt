@@ -1,4 +1,4 @@
-package com.project.monopad
+package com.project.monopad.util
 
 import android.text.TextUtils
 import android.util.Patterns
@@ -22,11 +22,19 @@ class LoginPatternCheckUtil {
         }
 
         fun isValidEmailAndPassword(email: String?, password: String?) : Boolean {
-            return isValidEmail(email) && isValidPassword(password)
+            return isValidEmail(
+                email
+            ) && isValidPassword(
+                password
+            )
         }
 
         fun checkPassword(password : String?, password2 : String?) : Boolean {
-            return isValidPassword(password) && isValidPassword(password2) && TextUtils.equals(password, password2)
+            return isValidPassword(
+                password
+            ) && isValidPassword(
+                password2
+            ) && TextUtils.equals(password, password2)
         }
 
     }
