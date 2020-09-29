@@ -9,10 +9,10 @@
         tools:context=".ui.view.MainActivity">
 
         <TextView
-            android:id="@+id/home_text"
+            android:id="@+id/diary_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello Home Fragment" />
+            android:text="Hello Diary Fragment" />
 
     </FrameLayout>
 </layout>

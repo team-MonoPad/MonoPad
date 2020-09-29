@@ -3,28 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Home" />
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/title_home" />
 
     <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Search" />
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/title_search" />
 
     <item
-        android:id="@+id/menu_default"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="category" />
+        android:id="@+id/navigation_diary"
+        android:icon="@drawable/ic_baseline_event_note_24"
+        android:title="@string/title_diary" />
 
     <item
-        android:id="@+id/menu_calender"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Calender" />
-
-    <item
-        android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="profile" />
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/title_profile" />
 
 </menu>
