@@ -5,20 +5,28 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_baseline_home_24"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_search"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/title_search" />
 
     <item
         android:id="@+id/navigation_diary"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_event_note_24"
         android:title="@string/title_diary" />
 
     <item
         android:id="@+id/navigation_profile"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/title_profile" />
 
