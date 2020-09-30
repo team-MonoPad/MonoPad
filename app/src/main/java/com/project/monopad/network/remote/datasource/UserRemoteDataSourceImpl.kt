@@ -1,30 +1,22 @@
-package com.project.monopad.network.repository
+package com.project.monopad.network.remote.datasource
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
 
+class UserRemoteDataSourceImpl(private val mFirebaseAuth: FirebaseAuth) : UserRemoteDataSource {
 
-class AuthRepository(application : Application) {
+    override fun getCurrentUser(): FirebaseUser? = mFirebaseAuth.currentUser
 
-    private val mApplcation = application
-    private val mFirebaseAuth = FirebaseAuth.getInstance()
-    private var isLoginSuccessed = false
-    private var isRegisterSuccessed = false
-
-    fun getCurrentUser() = mFirebaseAuth.currentUser
-
-    fun signInWithEmailAndPassword(email : String, password : String) = Completable.create { emitter ->
+    override fun signInWithEmailAndPassword(email : String, password : String) = Completable.create { emitter ->
+        Log.e("SEULGI LOGIN 3","repo에서 이메일 로직 호출")
         mFirebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener{ task ->
                 if(!emitter.isDisposed){
                     if (task.isSuccessful) {
+                        Log.e("SEULGI LOGIN 4","task successful")
                         emitter.onComplete()
                     }
                     else {
@@ -34,7 +26,7 @@ class AuthRepository(application : Application) {
             }
     }
 
-    fun createUserWithEmailAndPassword(email : String, password : String, name : String) = Completable.create  { emitter ->
+    override fun createUserWithEmailAndPassword(email : String, password : String, name : String) = Completable.create  { emitter ->
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener{ task ->
                 if(!emitter.isDisposed){
@@ -49,24 +41,23 @@ class AuthRepository(application : Application) {
 
     }
 
-    fun checkIfEmailAlreadyExist(email : String) = Observable.create(ObservableOnSubscribe<Boolean>() { emitter ->
+    override fun checkIfEmailAlreadyExist(email : String) = Single.create<Boolean> { emitter ->
         mFirebaseAuth.fetchSignInMethodsForEmail(email)
             .addOnCompleteListener{ task ->
                 if(!emitter.isDisposed){
                     if(task.isSuccessful){
-                        Log.e("SEULGI 1",""+email)
-                        emitter.onNext(task.getResult()?.signInMethods!!.isEmpty())
-                        emitter.onComplete()
+                        emitter.onSuccess(task.getResult()?.signInMethods!!.isEmpty())
                     }
                     else {
-                        Log.e("SEULGI 2",""+email)
                         emitter.onError(task.exception!!)
                     }
                 }
             }
-    })
+    }
 
-    fun signOut() {
+    override fun signOut() {
         mFirebaseAuth.signOut()
     }
+
+
 }

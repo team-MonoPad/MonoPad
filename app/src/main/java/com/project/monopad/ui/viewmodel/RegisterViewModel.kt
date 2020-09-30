@@ -1,26 +1,21 @@
 package com.project.monopad.ui.viewmodel
 
-import android.app.Application
 import android.view.View
-import androidx.lifecycle.AndroidViewModel
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.project.monopad.ui.AuthListener
-import com.project.monopad.network.repository.AuthRepository
+import com.project.monopad.network.repository.UserRepoImpl
+import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.LoginPatternCheckUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class RegisterViewModel(application : Application) : AndroidViewModel(application) {
+class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
 
     interface EmailCheckListener {
         fun onSuccess(isEmailCheckSucccesful: Boolean)
         fun onFailure(message: String)
     }
 
-    private var mAuthRepository=
-        AuthRepository(application)
     var mRegisterListener: AuthListener? = null
     var mEmailCheckListener: EmailCheckListener? = null
 
@@ -31,16 +26,6 @@ class RegisterViewModel(application : Application) : AndroidViewModel(applicatio
 
     var isEmailCheckSucccesful = false
 
-    /*BaseViewModel*/
-    private val compositeDisposable = CompositeDisposable()
-    fun addDisposable(disposable: Disposable) {
-        compositeDisposable.add(disposable)
-    }
-    override fun onCleared() {
-        compositeDisposable.clear()
-        super.onCleared()
-    }
-    /*BaseViewModel*/
 
     fun setRegisterListener(authListener: AuthListener) {
         this.mRegisterListener = authListener
@@ -55,7 +40,7 @@ class RegisterViewModel(application : Application) : AndroidViewModel(applicatio
         if(!LoginPatternCheckUtil.isValidName(name)){
             mRegisterListener?.onFailure("이름 오류")
         }
-        else if(!(LoginPatternCheckUtil.isValidEmail(email) && isEmailCheckSucccesful == true)) {
+        else if(!LoginPatternCheckUtil.isValidEmail(email) || isEmailCheckSucccesful == false) {
             mRegisterListener?.onFailure("이메일 중복체크 부탁")
         }
         else if(!LoginPatternCheckUtil.isValidPassword(password)) {
@@ -66,23 +51,23 @@ class RegisterViewModel(application : Application) : AndroidViewModel(applicatio
         }
         else {
             mRegisterListener?.onStarted()
-            val disposable = mAuthRepository.createUserWithEmailAndPassword(email!!, password!!, name!!)
+            addDisposable(repo.createUserWithEmailAndPassword(email!!, password!!, name!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val profileUpdates = UserProfileChangeRequest.Builder().setDisplayName(name).build()
-                    mAuthRepository.getCurrentUser()!!.updateProfile(profileUpdates)
+                    repo.getCurrentUser()!!.updateProfile(profileUpdates)
 
                     mRegisterListener?.onSuccess()
                 }, {
                     mRegisterListener?.onFailure(it.message!!)
                 })
-            addDisposable(disposable)
+            )
         }
     }
 
     fun checkIfEmailAlreadyExist(email : String) {
-        val disposable = mAuthRepository.checkIfEmailAlreadyExist(email)
+        addDisposable( repo.checkIfEmailAlreadyExist(email)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ it ->
@@ -90,8 +75,7 @@ class RegisterViewModel(application : Application) : AndroidViewModel(applicatio
                 mEmailCheckListener?.onSuccess(it)
             }, {
                 mEmailCheckListener?.onFailure(it.message!!)
-            })
-        addDisposable(disposable)
+            }))
     }
 
     fun onResisterButtonClick(view: View) {
@@ -103,7 +87,4 @@ class RegisterViewModel(application : Application) : AndroidViewModel(applicatio
             checkIfEmailAlreadyExist(email!!)
     }
 
-/*
-    private val _showErrorToast = MutableLiveData<Event<String>>()
-    val showErrorToast: LiveData<Event<String>> = _showErrorToast*/
 }

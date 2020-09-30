@@ -11,40 +11,38 @@ import com.project.monopad.ui.AuthListener
 import com.project.monopad.R
 import com.project.monopad.ui.viewmodel.RegisterViewModel
 import com.project.monopad.databinding.ActivityRegisterBinding
+import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.viewmodel.MovieViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>() {
 
-    private lateinit var mRegisterViewModel : RegisterViewModel
-    private lateinit var mBinder : ActivityRegisterBinding
+    override val layoutResourceId: Int
+        get() = R.layout.activity_register
+    override val viewModel: RegisterViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initStartView() {
 
-        initViewModel()
-        initBinding()
     }
 
-    fun initViewModel() {
-        mRegisterViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(
-            RegisterViewModel::class.java)
-
-        mRegisterViewModel.setRegisterListener(object :
-            AuthListener {
+    override fun initBeforeBinding() {
+        viewDataBinding.viewModel = viewModel
+        viewDataBinding.lifecycleOwner = this
+        viewModel.setRegisterListener(object : AuthListener {
             override fun onStarted() {
-                mBinder.progressbar.visibility = View.VISIBLE
+                viewDataBinding.progressbar.visibility = View.VISIBLE
             }
             override fun onSuccess() {
-                mBinder.progressbar.visibility = View.GONE
+                viewDataBinding.progressbar.visibility = View.GONE
                 finish()
             }
             override fun onFailure(message: String) {
-                mBinder.progressbar.visibility = View.GONE
+                viewDataBinding.progressbar.visibility = View.GONE
                 Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
             }
         })
 
-        mRegisterViewModel.setEmailCheckListener(object :
-            RegisterViewModel.EmailCheckListener {
+        viewModel.setEmailCheckListener(object : RegisterViewModel.EmailCheckListener {
             override fun onSuccess(isEmailCheckSucccesful: Boolean) {
                 lateinit var messege : String
                 if(isEmailCheckSucccesful) messege = "중복되지않음"
@@ -62,12 +60,8 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    fun initBinding() {
-        mBinder = DataBindingUtil.setContentView<ActivityRegisterBinding>(this,
-            R.layout.activity_register
-        )
-        mBinder.viewModel = mRegisterViewModel
-        mBinder.lifecycleOwner = this
+    override fun initAfterBinding() {
+
     }
 
 }
