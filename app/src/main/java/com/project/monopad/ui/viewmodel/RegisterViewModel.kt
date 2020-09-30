@@ -1,9 +1,11 @@
 package com.project.monopad.ui.viewmodel
 
+import android.util.Log
 import android.view.View
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.project.monopad.ui.AuthListener
 import com.project.monopad.network.repository.UserRepoImpl
+import com.project.monopad.ui.EmailCheckListener
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.LoginPatternCheckUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,21 +13,15 @@ import io.reactivex.schedulers.Schedulers
 
 class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
 
-    interface EmailCheckListener {
-        fun onSuccess(isEmailCheckSucccesful: Boolean)
-        fun onFailure(message: String)
-    }
-
     var mRegisterListener: AuthListener? = null
     var mEmailCheckListener: EmailCheckListener? = null
+
+    var isEmailCheckSucccesful = false
 
     var name: String? = null
     var email: String? = null
     var password: String? = null
     var passwordCheck: String? = null
-
-    var isEmailCheckSucccesful = false
-
 
     fun setRegisterListener(authListener: AuthListener) {
         this.mRegisterListener = authListener
@@ -36,7 +32,6 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
     }
 
     fun createUserWithEmailAndPassword(email: String?, password: String?, passwordCheck: String?, name : String?) {
-        // rxbinding..?
         if(!LoginPatternCheckUtil.isValidName(name)){
             mRegisterListener?.onFailure("이름 오류")
         }
@@ -66,8 +61,8 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
         }
     }
 
-    fun checkIfEmailAlreadyExist(email : String) {
-        addDisposable( repo.checkIfEmailAlreadyExist(email)
+    fun isAvailableEmail(email : String){
+        addDisposable( repo.isAvailableEmail(email)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ it ->
@@ -84,7 +79,6 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
 
     fun onEmailCheckButtonClick(view: View) {
         if (LoginPatternCheckUtil.isValidEmail(email))
-            checkIfEmailAlreadyExist(email!!)
+            isAvailableEmail(email!!)
     }
-
 }

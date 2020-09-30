@@ -23,8 +23,8 @@ class UserRepoImpl(private val userRemoteDataSource: UserRemoteDataSource) : Use
     override fun createUserWithEmailAndPassword(email : String, password : String, name : String)
             = userRemoteDataSource.createUserWithEmailAndPassword(email, password, name)
 
-    override fun checkIfEmailAlreadyExist(email : String)
-            = userRemoteDataSource.checkIfEmailAlreadyExist(email)
+    override fun isAvailableEmail(email : String)
+            = userRemoteDataSource.isAvailableEmail(email)
 
     override fun signOut()
             = userRemoteDataSource.signOut()

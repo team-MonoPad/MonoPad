@@ -9,7 +9,7 @@ interface UserRemoteDataSource {
     fun getCurrentUser() : FirebaseUser?
     fun signInWithEmailAndPassword(email: String, password: String) : Completable
     fun createUserWithEmailAndPassword(email: String, password: String, name: String) : Completable
-    fun checkIfEmailAlreadyExist(email : String) : Single<Boolean>
+    fun isAvailableEmail(email : String) : Single<Boolean>
     fun signOut()
 
 }

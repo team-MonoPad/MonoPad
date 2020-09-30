@@ -13,6 +13,7 @@ import com.project.monopad.R
 import com.project.monopad.databinding.ActivityLoginBinding
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
+import com.project.monopad.util.PreferenceManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -22,15 +23,26 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override val viewModel: LoginViewModel by viewModel()
 
-    //setting adapter or view
-    override fun initStartView() {
-
+    //자동로그인
+    override fun onStart() {
+        super.onStart()
+        if(PreferenceManager.getBoolean(this,"auto_login")){
+            viewModel.getCurrentUser()?.let {
+                startMainActivity()
+            }
+        }
     }
 
-    //get data
+    override fun initStartView() {
+        viewDataBinding.progressbar.visibility = View.GONE
+    }
+
     override fun initBeforeBinding() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
+    }
+
+    override fun initAfterBinding() {
         viewModel.setLoginListener(object : AuthListener {
             override fun onStarted() {
                 viewDataBinding.progressbar.visibility = View.VISIBLE
@@ -44,13 +56,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
             }
         })
+        viewDataBinding.autoLoginButton.setOnClickListener{ v ->
+            var autoLogin = !v.isSelected
+            v.isSelected = !v.isSelected
+            PreferenceManager.setBoolean(this,"auto_login", autoLogin)
+        }
     }
-
-    //observing & add item to adapter
-    override fun initAfterBinding() {
-
-    }
-
 
     fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
@@ -58,14 +69,5 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         finish()
     }
 
-
-/*
-    //자동로그인
-    override fun onStart() {
-        super.onStart()
-        mLoginViewModel.user?.let {
-            startMainActivity()
-        }
-    }*/
 
 }

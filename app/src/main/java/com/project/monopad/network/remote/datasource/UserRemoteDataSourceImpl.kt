@@ -11,12 +11,10 @@ class UserRemoteDataSourceImpl(private val mFirebaseAuth: FirebaseAuth) : UserRe
     override fun getCurrentUser(): FirebaseUser? = mFirebaseAuth.currentUser
 
     override fun signInWithEmailAndPassword(email : String, password : String) = Completable.create { emitter ->
-        Log.e("SEULGI LOGIN 3","repo에서 이메일 로직 호출")
         mFirebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener{ task ->
                 if(!emitter.isDisposed){
                     if (task.isSuccessful) {
-                        Log.e("SEULGI LOGIN 4","task successful")
                         emitter.onComplete()
                     }
                     else {
@@ -41,7 +39,7 @@ class UserRemoteDataSourceImpl(private val mFirebaseAuth: FirebaseAuth) : UserRe
 
     }
 
-    override fun checkIfEmailAlreadyExist(email : String) = Single.create<Boolean> { emitter ->
+    override fun isAvailableEmail(email : String) = Single.create<Boolean> { emitter ->
         mFirebaseAuth.fetchSignInMethodsForEmail(email)
             .addOnCompleteListener{ task ->
                 if(!emitter.isDisposed){
@@ -58,6 +56,5 @@ class UserRemoteDataSourceImpl(private val mFirebaseAuth: FirebaseAuth) : UserRe
     override fun signOut() {
         mFirebaseAuth.signOut()
     }
-
 
 }

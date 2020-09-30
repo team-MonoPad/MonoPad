@@ -11,13 +11,14 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBlack"
         tools:context=".ui.view.RegisterActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -85,6 +86,7 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginVertical="2dp"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimaryRed"
@@ -95,10 +97,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/et_email"
                         app:layout_constraintTop_toBottomOf="@+id/et_name"
-                        android:onClick="@{(v) -> viewModel.onEmailCheckButtonClick(v)}"
-                        />
-                </LinearLayout>
+                        android:onClick="@{(v) -> viewModel.onEmailCheckButtonClick(v)}" />
 
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_pw"
@@ -134,48 +135,35 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_pw" />
 
-                <TextView
-                    android:id="@+id/password_alert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="비밀번호가 일치하지 않습니다!"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_pw_check" />
-
-
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="350dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimaryRed"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_register"
                     android:onClick="@{(v) -> viewModel.onResisterButtonClick(v)}"
                     android:text="@string/register"
                     android:textColor="@color/colorWhite"
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/password_alert" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_pw_check" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ProgressBar
-                android:id="@+id/progressbar"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        </ScrollView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

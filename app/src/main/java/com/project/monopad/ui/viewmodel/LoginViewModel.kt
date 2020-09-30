@@ -23,6 +23,8 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
         this.mLoginListener = authListener
     }
 
+    fun getCurrentUser() = repo.getCurrentUser()
+
     fun signInWithEmail(email : String?, password : String?){
         if(!LoginPatternCheckUtil.isValidEmailAndPassword(email, password)){
             mLoginListener?.onFailure("가입 안 된 사용자 or 비번 오류")
