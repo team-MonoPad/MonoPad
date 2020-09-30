@@ -12,6 +12,7 @@
             android:id="@+id/diary_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/DefaultTextViewStyle"
             android:text="Hello Diary Fragment" />
 
     </FrameLayout>
