@@ -2,9 +2,28 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:windowBackground">@color/colorBlack</item>
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name = "MainToolbarStyle" >
+        <item name = "background">@color/colorBlack</item>
+    </style>
+
+    <style name = "DefaultTextViewStyle" >
+        <item name = "android:textSize">@dimen/font_300</item>
+    </style>
+
+    <style name = "TitleTextViewStyle" >
+        <item name = "android:textSize">@dimen/font_500</item>
+        <item name = "android:textStyle">bold</item>
     </style>
 
 </resources>
