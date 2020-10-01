@@ -1,11 +1,10 @@
 package com.project.monopad.ui.viewmodel
 
-import android.util.Log
 import android.view.View
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.project.monopad.ui.AuthListener
+import com.project.monopad.ui.view.login.AuthListener
 import com.project.monopad.network.repository.UserRepoImpl
-import com.project.monopad.ui.EmailCheckListener
+import com.project.monopad.ui.view.login.EmailCheckListener
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.LoginPatternCheckUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,26 +22,18 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
     var password: String? = null
     var passwordCheck: String? = null
 
-    fun setRegisterListener(authListener: AuthListener) {
-        this.mRegisterListener = authListener
-    }
-
-    fun setEmailCheckListener(emailCheckListener: EmailCheckListener) {
-        this.mEmailCheckListener = emailCheckListener
-    }
-
     fun createUserWithEmailAndPassword(email: String?, password: String?, passwordCheck: String?, name : String?) {
         if(!LoginPatternCheckUtil.isValidName(name)){
-            mRegisterListener?.onFailure("이름 오류")
+            mRegisterListener?.onFailure("이름을 입력해주세요.")
         }
         else if(!LoginPatternCheckUtil.isValidEmail(email) || isEmailCheckSucccesful == false) {
-            mRegisterListener?.onFailure("이메일 중복체크 부탁")
+            mRegisterListener?.onFailure("이메일 중복 확인 버튼을 눌러주세요.")
         }
         else if(!LoginPatternCheckUtil.isValidPassword(password)) {
-            mRegisterListener?.onFailure("비번 오류")
+            mRegisterListener?.onFailure("비밀번호는 6자 이상으로 입력해주세요.")
         }
         else if(!LoginPatternCheckUtil.checkPassword(password, passwordCheck)) {
-            mRegisterListener?.onFailure("비번 다름")
+            mRegisterListener?.onFailure("비밀번호가 다릅니다.")
         }
         else {
             mRegisterListener?.onStarted()
@@ -67,9 +58,9 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ it ->
                 isEmailCheckSucccesful = it
-                mEmailCheckListener?.onSuccess(it)
+                mEmailCheckListener?.onEmailCheckSuccess(it)
             }, {
-                mEmailCheckListener?.onFailure(it.message!!)
+                mEmailCheckListener?.onEmailCheckFailure(it.message!!)
             }))
     }
 

@@ -40,7 +40,7 @@ var networkModule = module{
         b.build()
     }
 
-    single<FirebaseAuth> {
+    single{
         FirebaseAuth.getInstance()
     }
 }

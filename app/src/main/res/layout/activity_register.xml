@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBlack"
-        tools:context=".ui.view.RegisterActivity">
+        tools:context=".ui.view.login.RegisterActivity">
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -90,7 +90,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:background="@color/colorPrimaryRed"
-                        android:text="중복\n체크"
+                        android:text="@string/email_check"
                         android:textColor="@color/colorWhite"
                         android:textSize="12dp"
                         app:layout_constraintBottom_toTopOf="@+id/et_pw"
