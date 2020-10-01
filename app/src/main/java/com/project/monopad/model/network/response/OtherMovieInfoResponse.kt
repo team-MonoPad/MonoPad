@@ -1,4 +1,4 @@
-package com.project.monopad.model.network
+package com.project.monopad.model.network.response
 
 data class OtherMovieInfoResponse(
     val page: Int,

@@ -1,7 +1,8 @@
 package com.project.monopad.network.repository
 
-import com.project.monopad.model.network.MovieInfoResponse
-import com.project.monopad.model.network.OtherMovieInfoResponse
+import com.project.monopad.model.network.response.MovieDetailResponse
+import com.project.monopad.model.network.response.MovieInfoResponse
+import com.project.monopad.model.network.response.OtherMovieInfoResponse
 import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
 import io.reactivex.Single
 
@@ -43,6 +44,14 @@ class MovieRepoImpl (private val movieRemoteDataSource : MovieRemoteDataSource) 
 
     override fun getLatestMovie(apikey: String, language: String): Single<MovieInfoResponse> {
         return movieRemoteDataSource.getLatestMovie(apikey,language)
+    }
+
+    override fun getMovieDetail(
+        movie_id: Int,
+        apikey: String,
+        language: String
+    ): Single<MovieDetailResponse> {
+        return movieRemoteDataSource.getMovieDetail(movie_id, apikey, language)
     }
 
     override fun getSimilarMovie(
