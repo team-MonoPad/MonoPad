@@ -1,7 +1,8 @@
 package com.project.monopad.network.remote.api
 
-import com.project.monopad.model.network.MovieInfoResponse
-import com.project.monopad.model.network.OtherMovieInfoResponse
+import com.project.monopad.model.network.response.MovieDetailResponse
+import com.project.monopad.model.network.response.MovieInfoResponse
+import com.project.monopad.model.network.response.OtherMovieInfoResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -44,6 +45,13 @@ interface MovieRepoApi {
         @Query("api_key") api_key:String,
         @Query("language") language:String
     ) : Single<MovieInfoResponse>
+
+    @GET("movie/{movie_id}")
+    fun getMovieDetail(
+        @Path("movie_id") movie_id : Int,
+        @Query("api_key") api_key:String,
+        @Query("language") language:String
+    ) : Single<MovieDetailResponse>
 
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovie(
