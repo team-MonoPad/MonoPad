@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+
     <color name="transparent">#00000000</color>
 
     <color name="colorWhite">#ffffff</color>
@@ -12,6 +13,10 @@
     <color name="colorGrey">#656565</color>
     <color name="colorDarkGrey">#494949</color>
     <color name="colorYellow">#FEE500</color>
+    <color name="colorPrimaryRed">#E50914</color>
+    <color name="colorDarkGray">#333333</color>
+    <color name="colorLightGray">#838383</color>
+
 
     <color name="white_250">#3fffffff</color>
     <color name="white_350">#57ffffff</color>
@@ -42,5 +47,6 @@
     <color name="grey_700">#434444</color>
     <color name="grey_800">#2b2b2b</color>
     <color name="grey_900">#0b0c0c</color>
+
 
 </resources>
