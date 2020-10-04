@@ -3,7 +3,6 @@ package com.project.monopad.ui.view.detail
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.ui.base.BaseActivity
@@ -19,24 +18,20 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     override val viewModel: DetailViewModel by viewModel()
 
     override fun initStartView() {
-        //
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun initBeforeBinding() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
+        viewModel.getDetailData()
     }
 
     override fun initAfterBinding() {
-        viewModel.init()
-        toolbarSetting()
-    }
-
-    private fun toolbarSetting(){
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar_layout.title = viewModel.title
-
+        viewModel.title.observe(this, {
+            toolbar_layout.title = it
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,11 +41,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 true
             }
             R.id.action_edit -> {
-                Toast.makeText(applicationContext, "다이어리 작성!", Toast.LENGTH_SHORT).show()
+                // 다이어리 작성
                 true
             }
             R.id.action_share -> {
-                Toast.makeText(applicationContext, "공유하기!", Toast.LENGTH_SHORT).show()
+                // 공유하기
                 true
             }
             else -> super.onOptionsItemSelected(item)

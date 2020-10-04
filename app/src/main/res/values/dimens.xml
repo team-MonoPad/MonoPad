@@ -54,7 +54,7 @@
     <dimen name="font_750">30sp</dimen>
     <dimen name="font_800">34sp</dimen>
     <dimen name="font_900">40sp</dimen>
-    <dimen name="text_margin">16dp</dimen>
-    <dimen name="app_bar_height">180dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+
+    <!--툴바-->
+    <dimen name="app_bar_height">400dp</dimen>
 </resources>

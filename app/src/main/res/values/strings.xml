@@ -7,6 +7,8 @@
     <string name="title_search">search</string>
     <string name="title_profile">profile</string>
     <string name="title_diary">diary</string>
+    <string name="title_activity_detail">ScrollingActivity</string>
+    <string name="action_settings">Settings</string>
 
     <!--login-->
     <string name="login">로그인</string>
@@ -23,6 +25,8 @@
     <string name="message_plz_email_check">이메일 중복 확인 버튼을 눌러주세요.</string>
     <string name="message_password_error">비밀번호는 6자 이상으로 입력해주세요.</string>
     <string name="message_password_inconsistent">비밀번호가 다릅니다.</string>
+
+    <!--Detail-->
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -112,7 +116,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="title_activity_detail">ScrollingActivity</string>
-    <string name="action_settings">Settings</string>
 
 </resources>
