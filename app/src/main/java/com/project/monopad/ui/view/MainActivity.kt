@@ -1,6 +1,7 @@
 package com.project.monopad.ui.view
 
 
+import android.content.Intent
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityMainBinding
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.detail.DetailActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
 
     override fun initAfterBinding() {
         //observing & add item to adapter
+        this.startActivity(Intent(this, DetailActivity::class.java))
     }
 
     private fun setUpBottomNavigationView(){
