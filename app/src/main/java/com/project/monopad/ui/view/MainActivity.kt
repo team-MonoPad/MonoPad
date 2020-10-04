@@ -41,7 +41,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
 
     override fun initAfterBinding() {
         //observing & add item to adapter
-        this.startActivity(Intent(this, DetailActivity::class.java))
     }
 
     private fun setUpBottomNavigationView(){
