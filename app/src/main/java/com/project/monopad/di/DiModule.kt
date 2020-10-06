@@ -7,6 +7,7 @@ import com.project.monopad.network.remote.datasource.MovieRemoteDataSourceImpl
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.network.remote.datasource.*
 import com.project.monopad.network.repository.*
+import com.project.monopad.ui.viewmodel.DetailViewModel
 import com.project.monopad.ui.viewmodel.LoginViewModel
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import com.project.monopad.ui.viewmodel.RegisterViewModel
@@ -54,6 +55,7 @@ var viewModelModule = module {
     viewModel { MovieViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+    viewModel { DetailViewModel(get())}
 }
 
 var monoDiModule = listOf(networkModule, remoteDataSource, repositoryModule, viewModelModule)

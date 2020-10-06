@@ -11,19 +11,26 @@
     </style>
 
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name = "MainToolbarStyle" >
-        <item name = "background">@color/colorBlack</item>
+    <style name="MainToolbarStyle">
+        <item name="background">@color/colorBlack</item>
     </style>
 
-    <style name = "DefaultTextViewStyle" >
-        <item name = "android:textSize">@dimen/font_300</item>
+    <style name="DefaultTextViewStyle">
+        <item name="android:textSize">@dimen/font_300</item>
     </style>
 
-    <style name = "TitleTextViewStyle" >
-        <item name = "android:textSize">@dimen/font_500</item>
-        <item name = "android:textStyle">bold</item>
+    <style name="TitleTextViewStyle">
+        <item name="android:textSize">@dimen/font_500</item>
+        <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 </resources>
