@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--여백-->
+    <dimen name="spacing_5">5dp</dimen>
     <dimen name="spacing_8">8dp</dimen>
+    <dimen name="spacing_10">10dp</dimen>
     <dimen name="spacing_16">16dp</dimen>
     <dimen name="spacing_24">24dp</dimen>
+    <dimen name="spacing_30">30dp</dimen>
+    <dimen name="spacing_70">70dp</dimen>
+    <dimen name="spacing_80">80dp</dimen>
 
     <!--폰트-->
     <dimen name="title_34">34sp</dimen>
@@ -23,7 +28,10 @@
 
     <dimen name="button_text">14sp</dimen>
 
-
     <!--툴바-->
     <dimen name="extended_toolbar_height">400dp</dimen>
+
+    <!--detail view-->
+    <dimen name="detail_poster_width">300dp</dimen>
+    <dimen name="detail_poster_height">250dp</dimen>
 </resources>

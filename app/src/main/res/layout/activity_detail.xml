@@ -34,11 +34,19 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/spacing_5"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/detail_poster_sample" />
+                    app:bindBackPoster="@{viewModel.movieDetailData.poster_path}" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="@dimen/detail_poster_width"
+                    android:layout_height="@dimen/detail_poster_height"
+                    android:layout_marginStart="@dimen/spacing_30"
+                    android:layout_marginTop="@dimen/spacing_80"
+                    app:bindPoster="@{viewModel.movieDetailData.poster_path}" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -47,7 +55,7 @@
                     android:background="#00000000"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="@{viewModel.title}" />
+                    app:title="@{viewModel.movieDetailData.title}" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>

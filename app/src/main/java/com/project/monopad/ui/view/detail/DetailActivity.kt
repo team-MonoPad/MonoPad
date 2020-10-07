@@ -8,6 +8,7 @@ import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.content_scrolling.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
@@ -29,8 +30,17 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     }
 
     override fun initAfterBinding() {
-        viewModel.title.observe(this, {
-            toolbar_layout.title = it
+        observeMovieDetailData()
+    }
+
+    private fun observeMovieDetailData(){
+        viewModel.movieDetailData.observe(this, {
+            toolbar_layout.title = it.title
+            tv_detail_release_date.text = viewModel.releaseDateParsing(it.release_date)
+            tv_detail_runtime.text = viewModel.runtimeParsing(it.runtime)
+            tv_detail_genre.text = viewModel.genreParsing(it.genres)
+            // director parsing
+            tv_detail_overview.text = it.overview
         })
     }
 

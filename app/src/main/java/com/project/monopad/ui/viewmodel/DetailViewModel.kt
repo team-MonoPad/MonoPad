@@ -1,15 +1,29 @@
 package com.project.monopad.ui.viewmodel
 
+import android.app.Activity
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.project.monopad.R
+import com.project.monopad.model.network.dto.Genre
+import com.project.monopad.model.network.response.MovieDetailResponse
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
 
-    private val _title = MutableLiveData<String>()
-    val title = _title
+    companion object{
+        val IMAGE_URL : String = "https://image.tmdb.org/t/p/w500/"
+    }
+
+    private val _movieDetailData = MutableLiveData<MovieDetailResponse>()
+    val movieDetailData = _movieDetailData
 
     fun getDetailData(){
         addDisposable(repo.getMovieDetail(
@@ -21,7 +35,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _title.value = title
+                    movieDetailData.value = it
                 }
             },{
                 //
@@ -29,4 +43,37 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
         )
     }
 
+    fun releaseDateParsing(releaseDate: String) = releaseDate.replace("-","/")
+
+    fun runtimeParsing(runtime: Int) = runtime.let { "${it/60}h ${it-(it/60)*60}m" }
+
+    fun genreParsing(genreList: List<Genre>) : String{
+        var genre = ""
+        for(g in genreList){
+            genre += "${g.name}, "
+        }
+        return genre.substring(0, genre.length-2)
+    }
+
+}
+
+@BindingAdapter("bindPoster")
+fun bindPoster(view: ImageView, imageUrl: String?){
+    if(!imageUrl.isNullOrEmpty()){
+        Glide.with(view.context)
+            .load(DetailViewModel.IMAGE_URL+imageUrl)
+            .fitCenter()
+            .into(view)
+    }
+}
+
+@BindingAdapter("bindBackPoster")
+fun bindBackPoster(view: ImageView, imageUrl: String?){
+    if(!imageUrl.isNullOrEmpty()){
+        Glide.with(view.context)
+            .load(DetailViewModel.IMAGE_URL+imageUrl)
+            .fitCenter()
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(25,3)))
+            .into(view)
+    }
 }
