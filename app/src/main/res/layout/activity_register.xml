@@ -55,7 +55,7 @@
                     android:paddingHorizontal="20dp"
                     android:text="@={viewModel.name}"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorLightGray"
+                    android:textColorHint="@color/colorLightGrey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ranking_textview" />
@@ -81,7 +81,7 @@
                         android:paddingHorizontal="20dp"
                         android:text="@={viewModel.email}"
                         android:textColor="@color/colorWhite"
-                        android:textColorHint="@color/colorLightGray" />
+                        android:textColorHint="@color/colorLightGrey" />
 
                     <Button
                         android:layout_width="0dp"
@@ -89,7 +89,7 @@
                         android:layout_marginVertical="2dp"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimaryRed"
+                        android:background="@color/colorAccent"
                         android:text="@string/email_check"
                         android:textColor="@color/colorWhite"
                         android:textSize="12dp"
@@ -113,7 +113,7 @@
                     android:paddingHorizontal="20dp"
                     android:text="@={viewModel.password}"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorLightGray"
+                    android:textColorHint="@color/colorLightGrey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/email_layout" />
@@ -130,7 +130,7 @@
                     android:paddingHorizontal="20dp"
                     android:text="@={viewModel.passwordCheck}"
                     android:textColor="@color/colorWhite"
-                    android:textColorHint="@color/colorLightGray"
+                    android:textColorHint="@color/colorLightGrey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_pw" />
