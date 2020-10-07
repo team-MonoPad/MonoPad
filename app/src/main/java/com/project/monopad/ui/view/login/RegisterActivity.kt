@@ -13,6 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(),
     AuthListener, EmailCheckListener {
 
+    private val TAG = "RegisterActivity"
     override val layoutResourceId: Int
         get() = R.layout.activity_register
     override val viewModel: RegisterViewModel by viewModel()
@@ -31,7 +32,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         viewModel.mEmailCheckListener = this
     }
 
-
     //AuthListener
     override fun onStarted() {
         viewDataBinding.progressbar.visibility = View.VISIBLE
@@ -45,21 +45,19 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
     }
 
+
     //EmailCheckListener
     override fun onEmailCheckSuccess(isEmailCheckSucccesful: Boolean) {
-        var messege : Int
-        if(isEmailCheckSucccesful) messege = R.string.message_is_not_duplicated
-        else  messege = R.string.message_is_duplicated
+        var message = if(isEmailCheckSucccesful) R.string.message_is_not_duplicated else R.string.message_is_duplicated
 
         val alertDialog = AlertDialog.Builder(this@RegisterActivity,android.R.style.Theme_DeviceDefault_Dialog_Alert)
             .setTitle(R.string.message_check_email_duplicate)
-            .setMessage(messege)
+            .setMessage(message)
             .setPositiveButton("확인", null)
             .create()
             .show()
     }
     override fun onEmailCheckFailure(message: String) {
-        Log.e("REGISTER",message)
+        Log.e(TAG,message)
     }
-
 }
