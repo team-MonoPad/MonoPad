@@ -92,4 +92,9 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
     testImplementation "org.koin:koin-test:$koinVersion"
+
+
+    // jetpack navigation - Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
