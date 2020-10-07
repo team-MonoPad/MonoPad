@@ -3,8 +3,11 @@ package com.project.monopad.network.repository
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.project.monopad.network.remote.api.UserApiClient
 import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
 import com.project.monopad.network.remote.datasource.UserRemoteDataSource
 import io.reactivex.Completable
@@ -15,17 +18,23 @@ import io.reactivex.Single
 
 class UserRepoImpl(private val userRemoteDataSource: UserRemoteDataSource) : UserRepo{
 
-    override fun getCurrentUser() = userRemoteDataSource.getCurrentUser()
+    var autoLogin : Boolean = false
+    var loginMode : UserApiClient.LoginMode = UserApiClient.LoginMode.EMAIL
 
-    override fun signInWithEmailAndPassword(email : String, password : String)
-            = userRemoteDataSource.signInWithEmailAndPassword(email, password)
-
-    override fun createUserWithEmailAndPassword(email : String, password : String, name : String)
-            = userRemoteDataSource.createUserWithEmailAndPassword(email, password, name)
+    override fun getCurrentFirebaseUser() = userRemoteDataSource.getCurrentFirebaseUser()
 
     override fun isAvailableEmail(email : String)
             = userRemoteDataSource.isAvailableEmail(email)
 
-    override fun signOut()
-            = userRemoteDataSource.signOut()
+    override fun createUserWithEmailAndPassword(email : String, password : String, name : String)
+            = userRemoteDataSource.createUserWithEmailAndPassword(email, password, name)
+
+    override fun signInWithEmailAndPassword(email : String, password : String)
+            = userRemoteDataSource.signInWithEmailAndPassword(email, password)
+
+    override fun signInWithGoogle(task: Task<GoogleSignInAccount>) : Completable
+            = userRemoteDataSource.signInWithGoogle(task)
+
+    override fun signOut(mode : UserApiClient.LoginMode)
+            = userRemoteDataSource.signOut(mode)
 }

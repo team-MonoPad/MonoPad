@@ -94,7 +94,8 @@
                 android:background="@drawable/checkbox"
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_button" />
+                app:layout_constraintTop_toBottomOf="@+id/login_button"
+                android:onClick="@{(v) -> viewModel.onAutoLoginButtonClick(v)}" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -132,6 +133,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_login_btn"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                app:buttonSize="wide"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
