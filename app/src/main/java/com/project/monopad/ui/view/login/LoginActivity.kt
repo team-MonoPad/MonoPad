@@ -64,8 +64,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when(requestCode) {
-            GOOGLE_REQUEST_CODE_SIGN_IN ->
+        if(requestCode == GOOGLE_REQUEST_CODE_SIGN_IN) {
                 viewModel.handleGoogleSignInResult(data)
         }
     }

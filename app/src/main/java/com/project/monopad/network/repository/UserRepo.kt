@@ -4,6 +4,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.project.monopad.network.remote.api.UserApiClient
+import com.project.monopad.util.LoginMode
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -17,6 +18,6 @@ interface UserRepo {
     fun signInWithEmailAndPassword(email: String, password: String) : Completable
     fun signInWithGoogle(task: Task<GoogleSignInAccount>) : Completable
 
-    fun signOut(mode : UserApiClient.LoginMode) : Completable
+    fun signOut(mode : LoginMode) : Completable
 
 }

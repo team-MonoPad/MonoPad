@@ -13,6 +13,7 @@ import com.project.monopad.util.LoginPatternCheckUtil
 import com.project.monopad.ui.view.login.RegisterActivity
 import com.project.monopad.network.repository.UserRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
+import com.project.monopad.util.LoginMode
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -42,7 +43,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     mLoginListener?.onSuccess()
-                    repo.loginMode = UserApiClient.LoginMode.EMAIL
+                    repo.loginMode = LoginMode.EMAIL
                 }, {
                     mLoginListener?.onFailure(it.message!!)
                 })
@@ -57,7 +58,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 mLoginListener?.onSuccess()
-                repo.loginMode = UserApiClient.LoginMode.GOOGLE
+                repo.loginMode = LoginMode.GOOGLE
             }, {
                 mLoginListener?.onFailure(it.message!!)
             })

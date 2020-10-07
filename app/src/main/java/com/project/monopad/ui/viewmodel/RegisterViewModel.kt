@@ -62,7 +62,7 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
         if(!LoginPatternCheckUtil.isValidName(name)){
             mRegisterListener?.onFailure(resources.getString(R.string.message_name_error))
         }
-        else if(!LoginPatternCheckUtil.isValidEmail(email) || isEmailCheckSucccesful == false) {
+        else if(!LoginPatternCheckUtil.isValidEmail(email) || !isEmailCheckSucccesful) {
             mRegisterListener?.onFailure(resources.getString(R.string.message_plz_email_check))
         }
         else if(!LoginPatternCheckUtil.isValidPassword(password)) {

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.project.monopad.network.remote.api.UserApiClient
+import com.project.monopad.util.LoginMode
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -74,12 +75,12 @@ class UserRemoteDataSourceImpl(private val userApiClient: UserApiClient) : UserR
             }
     }
 
-    override fun signOut(mode : UserApiClient.LoginMode) : Completable = Completable.create { emitter ->
+    override fun signOut(mode : LoginMode) : Completable = Completable.create { emitter ->
         try {
             when (mode) {
-                UserApiClient.LoginMode.EMAIL ->
+                LoginMode.EMAIL ->
                     userApiClient.firebaseClient.signOut()
-                UserApiClient.LoginMode.GOOGLE ->
+                LoginMode.GOOGLE ->
                     userApiClient.firebaseClient.signOut()
             }
             emitter.onComplete()

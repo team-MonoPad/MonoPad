@@ -10,6 +10,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import com.project.monopad.network.remote.api.UserApiClient
 import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
 import com.project.monopad.network.remote.datasource.UserRemoteDataSource
+import com.project.monopad.util.LoginMode
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -19,7 +20,7 @@ import io.reactivex.Single
 class UserRepoImpl(private val userRemoteDataSource: UserRemoteDataSource) : UserRepo{
 
     var autoLogin : Boolean = false
-    var loginMode : UserApiClient.LoginMode = UserApiClient.LoginMode.EMAIL
+    var loginMode : LoginMode = LoginMode.EMAIL
 
     override fun getCurrentFirebaseUser() = userRemoteDataSource.getCurrentFirebaseUser()
 
@@ -35,6 +36,6 @@ class UserRepoImpl(private val userRemoteDataSource: UserRemoteDataSource) : Use
     override fun signInWithGoogle(task: Task<GoogleSignInAccount>) : Completable
             = userRemoteDataSource.signInWithGoogle(task)
 
-    override fun signOut(mode : UserApiClient.LoginMode)
+    override fun signOut(mode : LoginMode)
             = userRemoteDataSource.signOut(mode)
 }
