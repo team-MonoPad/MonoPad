@@ -16,7 +16,6 @@
         android:name="com.project.monopad.ui.view.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
-
     <fragment
         android:id="@+id/navigation_diary"
         android:name="com.project.monopad.ui.view.diary.DiaryFragment"

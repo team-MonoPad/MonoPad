@@ -6,12 +6,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorDarkGrey"
         tools:context=".ui.view.MainActivity">
 
         <TextView
             android:id="@+id/home_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textColor="@color/black_50"
             android:text="Hello Home Fragment" />
 
     </FrameLayout>

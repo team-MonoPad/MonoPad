@@ -2,18 +2,18 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.MainActivity">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/diary_text"
+        <com.project.monopad.ui.view.diary.CalendarView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/DefaultTextViewStyle"
-            android:text="Hello Diary Fragment" />
+            />
 
-    </FrameLayout>
+    </LinearLayout>
+
+
 </layout>

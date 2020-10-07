@@ -50,7 +50,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
     }
 
     fun onResisterButtonClick(view: View) {
-        val context: Context = view.getContext()
+        val context: Context = view.context
         val intent = Intent(context, RegisterActivity::class.java)
         context.startActivity(intent)
     }
