@@ -3,27 +3,77 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorWhite</item>
-        <item name="colorPrimaryDark">@color/colorBlack</item>
-        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name = "MainToolbarStyle" >
-        <item name = "background">@color/colorBlack</item>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name = "DefaultTextViewStyle" >
-        <item name = "android:textSize">@dimen/font_300</item>
+    <style name="MainToolbarStyle">
+        <item name="background">@color/colorBlack</item>
     </style>
 
-    <style name = "TitleTextViewStyle" >
-        <item name = "android:textSize">@dimen/font_500</item>
-        <item name = "android:textStyle">bold</item>
+    <style name="BodyTextViewStyle1">
+        <item name="android:textSize">@dimen/body_14</item>
+    </style>
+
+    <style name="BodyTextViewStyle2">
+        <item name="android:textSize">@dimen/body_16</item>
+    </style>
+
+    <style name="BigTitleTextViewStyle">
+        <item name="android:textSize">@dimen/title_34</item>
+    </style>
+
+    <style name="MiddleTitleTextViewStyle">
+        <item name="android:textSize">@dimen/title_24</item>
+    </style>
+
+    <style name="SmallTitleTextViewStyle">
+        <item name="android:textSize">@dimen/title_20</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SubTitleTextViewStyle1">
+        <item name="android:textSize">@dimen/subtitle_16</item>
+    </style>
+
+    <style name="SubTitleTextViewStyle2">
+        <item name="android:textSize">@dimen/subtitle_14</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CaptionTextViewStyle">
+        <item name="android:textSize">@dimen/caption_12</item>
+    </style>
+
+    <style name="DefaultButtonStyle">
+        <item name="android:textSize">@dimen/button_text</item>
+    </style>
+
+    <style name="DefaultImageViewStyle">
+        <item name="background">@color/colorGrey</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!--아래처럼 커스텀 가능-->
+    <style name="LoginButtonStyle" parent="DefaultButtonStyle">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <style name="HomeImageViewStyle1" parent="DefaultImageViewStyle">
+        <item name="android:height">250dp</item>
+        <item name="android:width">180dp</item>
     </style>
 
 </resources>
