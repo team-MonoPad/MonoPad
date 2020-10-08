@@ -1,13 +1,10 @@
 package com.project.monopad.ui.viewmodel
 
-import android.app.Activity
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.project.monopad.R
 import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.model.network.response.MovieDetailResponse
 import com.project.monopad.network.repository.MovieRepoImpl
@@ -77,3 +74,4 @@ fun bindBackPoster(view: ImageView, imageUrl: String?){
             .into(view)
     }
 }
+

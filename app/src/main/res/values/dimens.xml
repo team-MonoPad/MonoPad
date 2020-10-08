@@ -34,4 +34,6 @@
     <!--detail view-->
     <dimen name="detail_poster_width">300dp</dimen>
     <dimen name="detail_poster_height">250dp</dimen>
+    <dimen name="detail_recommend_movie_width">250dp</dimen>
+    <dimen name="detail_recommend_movie_height">300dp</dimen>
 </resources>
