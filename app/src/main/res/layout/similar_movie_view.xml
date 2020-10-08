@@ -8,15 +8,12 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_detail_caster"
-            android:layout_width="@dimen/caster_poster_size"
-            android:layout_height="@dimen/caster_poster_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/iv_detail_similar"
+            android:layout_width="@dimen/detail_recommend_movie_width"
+            android:layout_height="@dimen/detail_recommend_movie_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </layout>

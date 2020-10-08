@@ -10,7 +10,6 @@ import com.project.monopad.util.BaseUtil
 
 class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 
-
     private var casterList = ArrayList<MovieCastResponse>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CasterAdapter.ViewHolder {
@@ -29,7 +28,7 @@ class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
         return casterList.size
     }
 
-    fun setList(list : List<MovieCastResponse>){
+    fun setList(list: List<MovieCastResponse>){
         this.casterList = list as ArrayList<MovieCastResponse>
     }
 

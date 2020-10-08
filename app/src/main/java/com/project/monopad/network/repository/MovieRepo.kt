@@ -4,6 +4,7 @@ import com.project.monopad.model.network.response.*
 import io.reactivex.Single
 
 interface MovieRepo{
+
     fun getNowPlayMovie(apikey : String, language : String, page: Int) : Single<MovieInfoResponse>
     fun getUpComingMovie(apikey : String, language : String, page: Int) : Single<MovieInfoResponse>
     fun getPopularMovie(apikey : String, language : String, page: Int, region : String) : Single<MovieInfoResponse>
@@ -17,4 +18,5 @@ interface MovieRepo{
 
     fun getSearch(apikey: String, language: String, query : String , page: Int) : Single<OtherMovieInfoResponse>
     fun getPeopleDetail(people_id : Int, apikey: String, language: String) : Single<PersonDetailResponse>
+
 }
