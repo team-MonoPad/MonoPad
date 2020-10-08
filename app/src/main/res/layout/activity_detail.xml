@@ -30,6 +30,7 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimaryDark"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:maxLines="2"
                 app:toolbarId="@+id/toolbar">
 
                 <ImageView
@@ -46,7 +47,7 @@
                     android:layout_height="@dimen/detail_poster_height"
                     android:layout_marginStart="@dimen/spacing_30"
                     android:layout_marginTop="@dimen/spacing_80"
-                    app:bindPoster="@{viewModel.movieDetailData.poster_path}" />
+                    app:bindFrontPoster="@{viewModel.movieDetailData.poster_path}" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
