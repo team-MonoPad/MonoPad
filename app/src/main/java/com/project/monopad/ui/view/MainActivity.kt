@@ -40,7 +40,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
     }
 
     override fun initAfterBinding() {
-        startActivity(Intent(this, DetailActivity::class.java))
         //observing & add item to adapter
     }
 
