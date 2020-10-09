@@ -7,67 +7,75 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.project.monopad.R
-import kotlinx.android.synthetic.main.item_layout.view.*
+import kotlinx.android.synthetic.main.calendar_item_layout.view.*
 import java.util.*
 
 class CalendarAdapter(context: Context) : BaseAdapter() {
-    private val day = mutableListOf<Int>()
+
+    private val dateList = mutableListOf<Date>()
+    private val SIZE_OF_DAY = 7*5
+
     private var mContext : Context = context
-    private var cal = Calendar.getInstance()
-    private var lastWeekDay = 0
-    private var firstWeekDay = 0
-    private var dayOfMonth = 0
-    private var DAY_OF_WEEK = 7
-    private var colorFlag = true
+    private var calendar = Calendar.getInstance()
+    private var month = Calendar.getInstance().get(Calendar.MONTH)
 
     init {
-        setCal()
+        setCalendar()
     }
 
     override fun getView(position: Int, view: View?, p2: ViewGroup?): View {
-        val inflator = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val mView = view ?: inflator.inflate(R.layout.item_layout,null)
-        when {
-            (position+1)%7==0 -> mView.day_tv.setTextColor(Color.BLUE)
-            position%7==0 -> mView.day_tv.setTextColor(Color.RED)
-            else -> mView.day_tv.setTextColor(Color.WHITE)
-        }
-        if(day[position]!=0) mView.day_tv.text = day[position].toString()
-        else mView.day_tv.text = ""
+        val layoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val mView = view ?: layoutInflater.inflate(R.layout.calendar_item_layout, null)
+
+        val date: Date = getItem(position) as Date
+        calendar.time = date
+
+        val itemDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val itemMonth = calendar.get(Calendar.MONTH)
+        val itemYear = calendar.get(Calendar.YEAR)
+
+        mView.day_tv.text = itemDay.toString()
+        mView.day_tv.setTextColor(Color.WHITE)
+
+        if(position%7==0)
+            mView.day_tv.setTextColor(Color.RED)
+
+        if(itemMonth!=month)
+            mView.day_tv.setTextColor(Color.GRAY)
+
         return mView
     }
 
-    override fun getItem(p0: Int): Any {
-        return day[p0]
+    override fun getItem(position: Int): Any {
+        return dateList[position]
     }
 
-    override fun getItemId(p0: Int): Long {
-        return p0.toLong()
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     override fun getCount(): Int {
-        return day.size
+        return dateList.size
     }
 
-    fun calUpdate(cal : Calendar){
-        this.cal = cal
-        setCal()
+    fun updateCalendar(cal: Calendar){
+        this.calendar = cal
+        setCalendar()
         notifyDataSetChanged()
     }
 
-    private fun setCal(){
-        day.clear()
-        cal.set(Calendar.DATE,1)
-        firstWeekDay = cal.get(Calendar.DAY_OF_WEEK)-1
-        cal.set(Calendar.DATE,cal.getActualMaximum(Calendar.DAY_OF_MONTH))
-        dayOfMonth = cal.get(Calendar.DATE)
-        lastWeekDay = DAY_OF_WEEK-cal.get(Calendar.DAY_OF_WEEK)
-        var count = 1
-        for(i in 0 until dayOfMonth+firstWeekDay+lastWeekDay){
-            if(i>=firstWeekDay&&i<firstWeekDay+cal.getActualMaximum(Calendar.DAY_OF_MONTH)){
-                day.add(count)
-                count++
-            } else day.add(0)
+    private fun setCalendar(){
+        dateList.clear()
+
+        month = calendar.get(Calendar.MONTH)
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        var startOfMonth = calendar.get(Calendar.DAY_OF_WEEK) - 1
+        calendar.add(Calendar.DAY_OF_MONTH, -startOfMonth)
+
+        while (dateList.size < SIZE_OF_DAY) {
+            dateList.add(calendar.time);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
     }
 }

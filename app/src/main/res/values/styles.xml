@@ -8,6 +8,8 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -74,6 +76,9 @@
     <style name="HomeImageViewStyle1" parent="DefaultImageViewStyle">
         <item name="android:height">250dp</item>
         <item name="android:width">180dp</item>
+    </style>
+    <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
     </style>
 
 </resources>
