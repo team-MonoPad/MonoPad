@@ -2,6 +2,7 @@ package com.project.monopad.ui.viewmodel
 
 import android.view.View
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.project.monopad.R
 import com.project.monopad.ui.view.login.AuthListener
 import com.project.monopad.network.repository.UserRepoImpl
 import com.project.monopad.ui.view.login.EmailCheckListener
@@ -11,6 +12,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
+
+    private val TAG = "RegisterViewModel"
 
     var mRegisterListener: AuthListener? = null
     var mEmailCheckListener: EmailCheckListener? = null
@@ -22,34 +25,19 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
     var password: String? = null
     var passwordCheck: String? = null
 
-    fun createUserWithEmailAndPassword(email: String?, password: String?, passwordCheck: String?, name : String?) {
-        if(!LoginPatternCheckUtil.isValidName(name)){
-            mRegisterListener?.onFailure("이름을 입력해주세요.")
-        }
-        else if(!LoginPatternCheckUtil.isValidEmail(email) || isEmailCheckSucccesful == false) {
-            mRegisterListener?.onFailure("이메일 중복 확인 버튼을 눌러주세요.")
-        }
-        else if(!LoginPatternCheckUtil.isValidPassword(password)) {
-            mRegisterListener?.onFailure("비밀번호는 6자 이상으로 입력해주세요.")
-        }
-        else if(!LoginPatternCheckUtil.checkPassword(password, passwordCheck)) {
-            mRegisterListener?.onFailure("비밀번호가 다릅니다.")
-        }
-        else {
-            mRegisterListener?.onStarted()
-            addDisposable(repo.createUserWithEmailAndPassword(email!!, password!!, name!!)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    val profileUpdates = UserProfileChangeRequest.Builder().setDisplayName(name).build()
-                    repo.getCurrentUser()!!.updateProfile(profileUpdates)
-
-                    mRegisterListener?.onSuccess()
-                }, {
-                    mRegisterListener?.onFailure(it.message!!)
-                })
-            )
-        }
+    fun createUserWithEmailAndPassword(email: String, password: String, passwordCheck: String, name : String) {
+        mRegisterListener?.onStarted()
+        addDisposable(repo.createUserWithEmailAndPassword(email, password, name)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                val profileUpdates = UserProfileChangeRequest.Builder().setDisplayName(name).build()
+                repo.getCurrentFirebaseUser()!!.updateProfile(profileUpdates)
+                mRegisterListener?.onSuccess()
+            }, {
+                mRegisterListener?.onFailure(it.message!!)
+            })
+        )
     }
 
     fun isAvailableEmail(email : String){
@@ -64,12 +52,27 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
             }))
     }
 
-    fun onResisterButtonClick(view: View) {
-        createUserWithEmailAndPassword(email, password, passwordCheck, name)
-    }
-
     fun onEmailCheckButtonClick(view: View) {
         if (LoginPatternCheckUtil.isValidEmail(email))
             isAvailableEmail(email!!)
+    }
+
+    fun onResisterButtonClick(view: View) {
+        val resources = view.resources
+        if(!LoginPatternCheckUtil.isValidName(name)){
+            mRegisterListener?.onFailure(resources.getString(R.string.message_name_error))
+        }
+        else if(!LoginPatternCheckUtil.isValidEmail(email) || !isEmailCheckSucccesful) {
+            mRegisterListener?.onFailure(resources.getString(R.string.message_plz_email_check))
+        }
+        else if(!LoginPatternCheckUtil.isValidPassword(password)) {
+            mRegisterListener?.onFailure(resources.getString(R.string.message_password_error))
+        }
+        else if(!LoginPatternCheckUtil.checkPassword(password, passwordCheck)) {
+            mRegisterListener?.onFailure(resources.getString(R.string.message_password_inconsistent))
+        }
+        else {
+            createUserWithEmailAndPassword(email!!, password!!, passwordCheck!!, name!!)
+        }
     }
 }

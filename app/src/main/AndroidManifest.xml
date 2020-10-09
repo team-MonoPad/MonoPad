@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.monopad">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MonoApplication"
@@ -14,15 +14,18 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.view.login.RegisterActivity"/>
-        <activity android:name=".ui.view.login.LoginActivity">
-        </activity>
-        <activity android:name=".ui.view.MainActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".ui.view.detail.DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.view.login.RegisterActivity" />
+        <activity android:name=".ui.view.login.LoginActivity"></activity>
+        <activity android:name=".ui.view.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -1,4 +1,6 @@
-package com.project.monopad.model.network
+package com.project.monopad.model.network.response
+
+import com.project.monopad.model.network.dto.Dates
 
 data class MovieInfoResponse(
     val dates: Dates,

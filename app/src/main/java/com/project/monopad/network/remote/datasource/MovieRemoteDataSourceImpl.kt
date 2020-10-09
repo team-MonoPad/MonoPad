@@ -1,7 +1,6 @@
 package com.project.monopad.network.remote.datasource
 
-import com.project.monopad.model.network.MovieInfoResponse
-import com.project.monopad.model.network.OtherMovieInfoResponse
+import com.project.monopad.model.network.response.*
 import com.project.monopad.network.remote.api.MovieRepoApi
 import io.reactivex.Single
 
@@ -31,6 +30,18 @@ class MovieRemoteDataSourceImpl (private val movieRepoApi: MovieRepoApi) : Movie
         return movieRepoApi.getLatestMovie(api_key = apikey, language = language)
     }
 
+    override fun getMovieDetail(
+        movie_id: Int,
+        apikey: String,
+        language: String
+    ): Single<MovieDetailResponse> {
+        return movieRepoApi.getMovieDetail(movie_id = movie_id, api_key = apikey, language = language)
+    }
+
+    override fun getMovieCredits(movie_id: Int, apikey: String): Single<MovieCreditsResponse> {
+        return movieRepoApi.getMovieCredits(movie_id = movie_id, api_key = apikey)
+    }
+
     override fun getSimilarMovie(movie_id: Int, apikey: String, language: String, page: Int) : Single<OtherMovieInfoResponse> {
         return movieRepoApi.getSimilarMovie(movie_id = movie_id, api_key = apikey, language = language, page = page)
     }
@@ -51,6 +62,14 @@ class MovieRemoteDataSourceImpl (private val movieRepoApi: MovieRepoApi) : Movie
         page: Int
     ): Single<OtherMovieInfoResponse> {
         return movieRepoApi.getSearch(api_key = apikey, language = language, query = query, page = page)
+    }
+
+    override fun getPersonDetail(
+        person_id: Int,
+        apikey: String,
+        language: String
+    ): Single<PersonDetailResponse> {
+        return movieRepoApi.getPeopleDetail(person_id = person_id, api_key = apikey, language = language)
     }
 
 }

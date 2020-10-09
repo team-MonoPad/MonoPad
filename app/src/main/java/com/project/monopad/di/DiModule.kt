@@ -1,15 +1,22 @@
 package com.project.monopad.di
 
-import com.google.firebase.auth.FirebaseAuth
+import androidx.room.Room
+import com.project.monopad.network.local.LocalDataSource
+import com.project.monopad.network.local.database.DiaryDatabase
+import com.project.monopad.network.local.datasource.ReviewLocalDataSource
+import com.project.monopad.network.local.datasource.ReviewLocalDataSourceImpl
 import com.project.monopad.network.remote.api.MovieRepoApi
+import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
+import com.project.monopad.network.remote.datasource.MovieRemoteDataSourceImpl
+import com.project.monopad.network.repository.MovieRepoImpl
+import com.project.monopad.ui.viewmodel.MovieViewModel
+import com.project.monopad.network.remote.api.UserApiClient
 import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
 import com.project.monopad.network.remote.datasource.MovieRemoteDataSourceImpl
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.network.remote.datasource.*
 import com.project.monopad.network.repository.*
-import com.project.monopad.ui.viewmodel.LoginViewModel
-import com.project.monopad.ui.viewmodel.MovieViewModel
-import com.project.monopad.ui.viewmodel.RegisterViewModel
+import com.project.monopad.ui.viewmodel.*
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -33,27 +40,37 @@ var networkModule = module{
     }
 
     single{
-        FirebaseAuth.getInstance()
+        UserApiClient
     }
 }
 
-var remoteDataSource = module {
+var remoteDataSourceModule = module {
     single<MovieRemoteDataSource>{ MovieRemoteDataSourceImpl(get()) }
     single<UserRemoteDataSource>{ UserRemoteDataSourceImpl(get()) }
 }
 
-var localDataSource = module {
+var localDataSourceModule = module {
+    single {
+        Room.databaseBuilder(get(), DiaryDatabase::class.java, "movie_diary.db")
+            .fallbackToDestructiveMigration().build()
+    }
+    single { get<DiaryDatabase>().diaryDao() }
+    single { LocalDataSource(get()) }
+    single<ReviewLocalDataSource> { ReviewLocalDataSourceImpl(get()) }
 }
 
 var repositoryModule = module {
     single { MovieRepoImpl(get()) }
     single { UserRepoImpl(get()) }
+    single { ReviewRepoImpl(get()) }
 }
 
 var viewModelModule = module {
     viewModel { MovieViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+    viewModel { DetailViewModel(get())}
+    viewModel { DiaryViewModel(get())}
 }
 
-var monoDiModule = listOf(networkModule, remoteDataSource, repositoryModule, viewModelModule)
+var monoDiModule = listOf(networkModule, remoteDataSourceModule, localDataSourceModule, repositoryModule, viewModelModule)

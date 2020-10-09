@@ -1,4 +1,4 @@
-package com.project.monopad.model.network
+package com.project.monopad.model.network.dto
 
 data class User (
     var uid : String,
