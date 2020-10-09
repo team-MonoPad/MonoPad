@@ -3,6 +3,7 @@ package com.project.monopad.util
 import java.text.SimpleDateFormat
 import java.util.*
 
+<<<<<<< HEAD
 object DateUtil{
     val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
 
@@ -14,5 +15,11 @@ object DateUtil{
             return "+$diffDate"
         }
         return diffDate.toString()
+=======
+object DateUtil {
+    fun calendarToString(calendar: Calendar, format : String) : String{
+        val simpleFormat = SimpleDateFormat(format)
+        return simpleFormat.format(calendar.time)
+>>>>>>> ada2ef0... #26 - modify calendar UI
     }
 }

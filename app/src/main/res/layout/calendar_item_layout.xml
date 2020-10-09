@@ -3,7 +3,6 @@
     android:layout_width="55dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="1dp"
     android:layout_columnWeight="1"
     android:orientation="vertical">
 
@@ -11,7 +10,9 @@
         android:id="@+id/back_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="1dp"
+        android:background="@drawable/calendar_item_background">
 
         <TextView
             android:id="@+id/day_tv"
@@ -21,16 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:layout_marginTop="3dp"/>
 
         <LinearLayout
             android:id="@+id/cal_layout"
-            app:layout_constraintTop_toBottomOf="@id/day_tv"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/day_tv">
 
         </LinearLayout>
 
