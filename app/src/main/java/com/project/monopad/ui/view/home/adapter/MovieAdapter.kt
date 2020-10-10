@@ -6,25 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.monopad.R
-import com.project.monopad.databinding.ItemHomeMovieBinding
-import com.project.monopad.databinding.ItemPopularBinding
-import com.project.monopad.databinding.ItemTopRatedBinding
-import com.project.monopad.databinding.ItemUpcomingBinding
+import com.project.monopad.databinding.*
 import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import kotlinx.android.synthetic.main.item_popular.view.*
-import kotlinx.android.synthetic.main.item_home_movie.view.*
-import kotlinx.android.synthetic.main.item_top_rated.view.*
-import kotlinx.android.synthetic.main.item_upcoming.view.*
+import kotlinx.android.synthetic.main.item_popular_page.view.*
+import kotlinx.android.synthetic.main.item_now_playing.view.*
 
 //https://lakue.tistory.com/16?category=853542
-class MovieAdapter(private val movieCase: MovieCase, private val movies: ArrayList<MovieInfoResultResponse>) : RecyclerView.Adapter<MovieItemView>() {
+class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
     val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
-//    private val movies: ArrayList<MovieInfoResultResponse> = ArrayList()
+    private var movies: ArrayList<MovieInfoResultResponse> = ArrayList()
+
+    private var listener: ((id: Int) -> Unit)? = null
+
+    fun setOnTrailerClickListener(listener: (id: Int) -> Unit) {
+        this.listener = listener
+    }
+    fun setOnItemClickListener(listener: (id: Int) -> Unit) {
+        this.listener = listener
+    }
+
+    fun setMovies(movies: ArrayList<MovieInfoResultResponse>){
+        this.movies = movies
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemView {
         val view: View
@@ -32,7 +41,7 @@ class MovieAdapter(private val movieCase: MovieCase, private val movies: ArrayLi
         when (movieCase){
             MovieCase.POPULAR -> {
                 view = LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_popular,
+                    R.layout.item_popular_page,
                     parent,
                     false
                 )
@@ -44,7 +53,7 @@ class MovieAdapter(private val movieCase: MovieCase, private val movies: ArrayLi
             }
             MovieCase.NOW_PLAYING -> {
                 view = LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_home_movie,
+                    R.layout.item_now_playing,
                     parent,
                     false
                 )
@@ -97,31 +106,46 @@ class MovieAdapter(private val movieCase: MovieCase, private val movies: ArrayLi
 
     override fun getItemCount(): Int = movies.size
 
+
+
     inner class PopularMovieViewHolder(@NonNull itemView: View) : MovieItemView(itemView) {
-        var binding: ItemPopularBinding? = DataBindingUtil.bind(itemView)
+        var binding: ItemPopularPageBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
             val moviePosterURL = POSTER_BASE_URL + movie.poster_path
             Glide.with(itemView.context)
                 .load(moviePosterURL)
                 .into(itemView.item_movie_iv_poster)
+
             binding!!.itemMovieTvTitle.text = movie.title
+            binding!!.itemMovieTv1.text = movie.release_date.split("-")[0] //연도
+//            binding!!.itemMovieTv2.text = " | ${movie.vote_count}♡"
+
+            binding!!.itemMovieBtTrailer.setOnClickListener {
+                listener?.invoke(movie.id)
+            }
+
         }
     }
 
-    fun setData(data : MovieInfoResultResponse){
-        movies.add(data)
-    }
-
     inner class NowPlayingMovieViewHolder(@NonNull itemView: View) : MovieItemView(itemView) {
-        var binding: ItemHomeMovieBinding? = DataBindingUtil.bind(itemView)
+        var binding: ItemNowPlayingBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
             val moviePosterURL = POSTER_BASE_URL + movie.poster_path
-            Log.d("nowplaying poster", moviePosterURL)
+            binding!!.itemNowIvPoster.apply {
+                background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
+                clipToOutline = true
+            }
             Glide.with(itemView.context)
                 .load(moviePosterURL)
-                .into(itemView.item_home_iv_movie)
+                .into(binding!!.itemNowIvPoster)
+
+            binding!!.itemNowTvTitle.text = movie.title
+
+            itemView.setOnClickListener {
+                listener?.invoke(movie.id)
+            }
         }
     }
 
@@ -130,11 +154,20 @@ class MovieAdapter(private val movieCase: MovieCase, private val movies: ArrayLi
 
         fun bind(movie: MovieInfoResultResponse){
             val moviePosterURL = POSTER_BASE_URL + movie.poster_path
+            //이미지뷰 라운딩 처리
+            binding!!.itemUpcomingIvPoster.apply {
+                background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
+                clipToOutline = true
+            }
             Glide.with(itemView.context)
                 .load(moviePosterURL)
-                .into(itemView.item_upcoming_iv_poster)
-
+                .into(binding!!.itemUpcomingIvPoster)
+//            d("dday", movie.release_date)
             binding!!.itemUpcomingTvDDay.text = dDay(movie.release_date)
+
+            itemView.setOnClickListener {
+                listener?.invoke(movie.id)
+            }
         }
     }
 
@@ -143,14 +176,26 @@ class MovieAdapter(private val movieCase: MovieCase, private val movies: ArrayLi
 
         fun bind(position:Int, movie: MovieInfoResultResponse){
             val moviePosterURL = POSTER_BASE_URL + movie.poster_path
+
+            //이미지뷰 라운딩 처리
+            binding!!.itemTopRatedIvPoster.apply {
+                background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
+                clipToOutline = true
+            }
             Glide.with(itemView.context)
                 .load(moviePosterURL)
-                .into(itemView.item_top_rated_iv_poster)
+                .into(binding!!.itemTopRatedIvPoster)
 
-            binding!!.itemTopRatedTvRanking.text = position.toString()
+            binding!!.itemTopRatedTvRanking.text = (position+1).toString()
             binding!!.itemTopRatedTvTitle.text = movie.title
-            d("top rated", movie.vote_count.toString())
+//            d("top rated", .vote_count.toString())
+
+            itemView.setOnClickListener {
+                listener?.invoke(movie.id)
+            }
         }
     }
+
+
 
 }

@@ -8,6 +8,10 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -61,8 +65,10 @@
     </style>
 
     <style name="DefaultImageViewStyle">
-        <item name="background">@color/colorGrey</item>
+        <item name="background">@drawable/image_shape</item>
         <item name="android:scaleType">centerCrop</item>
+        <item name="android:windowClipToOutline">true</item>
+
     </style>
 
     <!--아래처럼 커스텀 가능-->
@@ -71,9 +77,18 @@
         <item name="android:background">@color/colorAccent</item>
     </style>
 
-    <style name="HomeImageViewStyle1" parent="DefaultImageViewStyle">
-        <item name="android:height">250dp</item>
-        <item name="android:width">180dp</item>
+    <style name="HomeTitleTextViewStyle" parent="SmallTitleTextViewStyle">
+        <item name="android:layout_marginTop">@dimen/spacing_24</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_16</item>
     </style>
 
+    <style name="CustomActionBarTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:actionBarStyle">@style/TransparentActionBar</item>
+    </style>
+
+    <style name="TransparentActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>

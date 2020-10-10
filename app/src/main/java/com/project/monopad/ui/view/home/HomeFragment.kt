@@ -1,5 +1,6 @@
 package com.project.monopad.ui.view.home
 
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
@@ -18,25 +19,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_home
 
-//    private val popularAdapter = MovieAdapter(MovieCase.POPULAR)
-//    private val nowPlayingAdapter = MovieAdapter(MovieCase.NOW_PLAYING)
-//    private val topRatedAdapter = MovieAdapter(MovieCase.TOP_RATED)
-//    private val upcomingAdapter = MovieAdapter(MovieCase.UPCOMING)
+    private val popularAdapter = MovieAdapter(MovieCase.POPULAR)
+    private val nowPlayingAdapter = MovieAdapter(MovieCase.NOW_PLAYING)
+    private val topRatedAdapter = MovieAdapter(MovieCase.TOP_RATED)
+    private val upcomingAdapter = MovieAdapter(MovieCase.UPCOMING)
 
     override fun initStartView() {
-//        viewDataBinding.homeViewpager.adapter = adapter
-//
-//        viewDataBinding.homeRvNowPlaying.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//        viewDataBinding.homeRvNowPlaying.adapter = adapter
-//
-//        viewDataBinding.homeRvUpcoming.adapter = adapter
-//        viewDataBinding.homeRvUpcoming.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//        viewDataBinding.homeRvTopRated.adapter = adapter
-//        viewDataBinding.homeRvTopRated.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//
-//        viewDataBinding.homeRvLatest.adapter = adapter
-//        viewDataBinding.homeRvLatest.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        adapterSetting()
     }
 
     override fun initDataBinding() {
@@ -50,46 +39,57 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         observeMovieLiveData()
     }
 
-    private fun setViewPagerAdapter(movie: MovieInfoResponse){
-        val adapter = MovieAdapter(MovieCase.POPULAR, movie.results)
-        viewDataBinding.homeViewpager.adapter = adapter
-    }
-
-    private fun setNowPlayMovieAdapter(movie: MovieInfoResponse){
-        val adapter = MovieAdapter(MovieCase.NOW_PLAYING, movie.results)
-        viewDataBinding.homeRvNowPlaying.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewDataBinding.homeRvNowPlaying.adapter = adapter
-    }
-
-    private fun setUpcomingMovieAdapter(movie: MovieInfoResponse){
-        val adapter = MovieAdapter(MovieCase.UPCOMING, movie.results)
-        viewDataBinding.homeRvUpcoming.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewDataBinding.homeRvUpcoming.adapter = adapter
-    }
-
-    private fun setTopRatedMovieAdapter(movie: MovieInfoResponse){
-//        movie.results.sort()
-        val adapter = MovieAdapter(MovieCase.TOP_RATED, movie.results)
-        viewDataBinding.homeRvTopRated.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewDataBinding.homeRvTopRated.adapter = adapter
-    }
-
-
     private fun observeMovieLiveData(){
         viewModel.livePopularMovie.observe(this, Observer<MovieInfoResponse>{
-            setViewPagerAdapter(it)
+            popularAdapter.setMovies(it.results)
+            viewDataBinding.homeViewpager.adapter = popularAdapter
+
         })
 
         viewModel.liveNowPlayingMovie.observe(this, Observer<MovieInfoResponse>{
-            setNowPlayMovieAdapter(it)
+            nowPlayingAdapter.setMovies(it.results)
+            viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
+
+
         })
 
-        viewModel.liveUpComingMovie.observe(this, Observer<MovieInfoResponse>{
-            setUpcomingMovieAdapter(it)
+        viewModel.liveUpcomingMovie.observe(this, Observer<MovieInfoResponse>{
+            upcomingAdapter.setMovies(it.results)
+            viewDataBinding.homeRvUpcoming.adapter = upcomingAdapter
+
         })
 
         viewModel.liveTopRatedMovie.observe(this, Observer<MovieInfoResponse>{
-            setTopRatedMovieAdapter(it)
+            topRatedAdapter.setMovies(it.results)
+            viewDataBinding.homeRvTopRated.adapter = topRatedAdapter
+
         })
     }
+
+   private fun adapterSetting() {
+       //Set LayoutManager
+       viewDataBinding.homeRvNowPlaying.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+       viewDataBinding.homeRvUpcoming.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+       viewDataBinding.homeRvTopRated.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+       //Set Click Listener
+       popularAdapter.setOnTrailerClickListener {
+           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+       }
+
+       nowPlayingAdapter.setOnItemClickListener {
+           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+       }
+
+       topRatedAdapter.setOnItemClickListener {
+           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+       }
+
+       upcomingAdapter.setOnItemClickListener {
+           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+       }
+
+    }
+
+
 }

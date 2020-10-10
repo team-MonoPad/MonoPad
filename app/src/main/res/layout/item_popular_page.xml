@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:layout_marginEnd="@dimen/spacing_8">
+
+        <ImageView
+            android:id="@+id/item_movie_iv_poster"
+            android:background="@drawable/image_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:contentDescription="@string/app_name" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@drawable/image_gradient"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/spacing_16"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom">
+            <TextView
+                android:id="@+id/item_movie_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:maxLines="1"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                style="@style/MiddleTitleTextViewStyle"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_movie_tv_title"
+                android:layout_centerInParent="true"
+                android:layout_above="@+id/item_movie_bt_trailer"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/item_movie_tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_8"
+                    style="@style/SubTitleTextViewStyle1"
+                    android:text=""/>
+
+                <TextView
+                    android:id="@+id/item_movie_tv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_8"
+                    style="@style/SubTitleTextViewStyle1"
+                    android:visibility="gone"
+                    android:text=""/>
+                <TextView
+                    android:id="@+id/item_movie_tv_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_8"
+                    style="@style/SubTitleTextViewStyle1"
+                    android:visibility="gone"
+                    android:text="SUB"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/item_movie_bt_trailer"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/button_trailer_shape"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/spacing_8"
+                android:text="트레일러"/>
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

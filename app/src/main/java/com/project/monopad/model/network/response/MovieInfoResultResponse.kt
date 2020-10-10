@@ -1,8 +1,5 @@
 package com.project.monopad.model.network.response
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 
 data class MovieInfoResultResponse(
@@ -20,4 +17,13 @@ data class MovieInfoResultResponse(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+) : Comparable<MovieInfoResultResponse> {
+
+    //https://siyoon210.tistory.com/22?category=839846
+    //특정 필드 값을 기준으로 리스트를 정렬하기 위한 메서드
+
+    override fun compareTo(other: MovieInfoResultResponse): Int {
+        return other.vote_count - vote_count
+    }
+
+}

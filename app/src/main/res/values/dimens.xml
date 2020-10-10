@@ -23,7 +23,14 @@
 
     <dimen name="button_text">14sp</dimen>
 
-
     <!--툴바-->
     <dimen name="extended_toolbar_height">400dp</dimen>
+
+
+<!--Home-->
+    <dimen name="home_image_height">250dp</dimen>
+    <dimen name="home_image_width">160dp</dimen>
+
+
+
 </resources>

@@ -18,13 +18,14 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/main_app_bar_layout"
                 android:layout_width="match_parent"
+                android:background="@color/transparent"
                 android:layout_height="?attr/actionBarSize">
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/main_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimaryDark"
                     app:layout_scrollFlags="scroll|enterAlways"
+                    android:background="@color/transparent"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
             </com.google.android.material.appbar.AppBarLayout>
@@ -32,13 +33,13 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <androidx.fragment.app.FragmentContainerView
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/main_nav_host_fragment"
                     android:name="androidx.navigation.fragment.NavHostFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     app:defaultNavHost="true"
                     app:navGraph="@navigation/main_navigation" />
             </FrameLayout>
@@ -50,6 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            app:itemTextColor="@color/bottom_menu_selector"
+            app:itemIconTint="@color/bottom_menu_selector"
             android:background="?android:attr/windowBackground"
             app:menu="@menu/menu_bottom" />
 
