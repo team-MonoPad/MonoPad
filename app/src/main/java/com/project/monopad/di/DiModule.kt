@@ -1,11 +1,7 @@
 package com.project.monopad.di
 
-import com.google.firebase.auth.FirebaseAuth
 import com.project.monopad.network.remote.api.MovieRepoApi
 import com.project.monopad.network.remote.api.UserApiClient
-import com.project.monopad.network.remote.datasource.MovieRemoteDataSource
-import com.project.monopad.network.remote.datasource.MovieRemoteDataSourceImpl
-import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.network.remote.datasource.*
 import com.project.monopad.network.repository.*
 import com.project.monopad.ui.viewmodel.DetailViewModel
