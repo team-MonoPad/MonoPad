@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityMainBinding
 import com.project.monopad.ui.base.BaseFragment
+import com.project.monopad.ui.view.MainActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
