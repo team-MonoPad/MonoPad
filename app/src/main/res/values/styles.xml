@@ -76,10 +76,4 @@
         <item name="android:width">180dp</item>
     </style>
 
-    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
 </resources>
