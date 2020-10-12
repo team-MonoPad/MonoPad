@@ -1,6 +1,7 @@
 package com.project.monopad.ui.view
 
 
+import android.content.Intent
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -13,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityMainBinding
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.detail.DetailActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,6 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
     }
 
     override fun initAfterBinding() {
+        startActivity(Intent(this, DetailActivity::class.java))
         //observing & add item to adapter
     }
 
