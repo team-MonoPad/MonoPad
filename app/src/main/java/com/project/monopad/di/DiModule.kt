@@ -41,17 +41,25 @@ var networkModule = module{
     }
 }
 
-var remoteDataSource = module {
+var remoteDataSourceModule = module {
     single<MovieRemoteDataSource>{ MovieRemoteDataSourceImpl(get()) }
     single<UserRemoteDataSource>{ UserRemoteDataSourceImpl(get()) }
 }
 
-var localDataSource = module {
+var localDataSourceModule = module {
+    single {
+        Room.databaseBuilder(get(), DiaryDatabase::class.java, "movie_diary.db")
+            .fallbackToDestructiveMigration().build()
+    }
+    single { get<DiaryDatabase>().diaryDao() }
+    single { LocalDataSource(get()) }
+    single<ReviewLocalDataSource> { ReviewLocalDataSourceImpl(get()) }
 }
 
 var repositoryModule = module {
     single { MovieRepoImpl(get()) }
     single { UserRepoImpl(get()) }
+    single { ReviewRepoImpl(get()) }
 }
 
 var viewModelModule = module {
@@ -59,6 +67,7 @@ var viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { DetailViewModel(get())}
+    viewModel { DiaryViewModel(get())}
 }
 
-var monoDiModule = listOf(networkModule, remoteDataSource, repositoryModule, viewModelModule)
+var monoDiModule = listOf(networkModule, remoteDataSourceModule, localDataSourceModule, repositoryModule, viewModelModule)
