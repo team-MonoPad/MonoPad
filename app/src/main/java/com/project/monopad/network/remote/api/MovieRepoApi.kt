@@ -51,6 +51,13 @@ interface MovieRepoApi {
         @Query("language") language:String
     ) : Single<MovieDetailResponse>
 
+    @GET("movie/{movie_id}/videos")
+    fun getMovieVideo(
+        @Path("movie_id") movie_id : Int,
+        @Query("api_key") api_key:String,
+        @Query("language") language:String
+    ) : Single<MovieVideoResponse>
+
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovie(
         @Path("movie_id") movie_id : Int,
