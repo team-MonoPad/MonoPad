@@ -5,11 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.project.monopad.databinding.SimilarMovieViewBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.view.detail.DetailActivity
-import com.project.monopad.util.BaseUtil
 
 class SimilarMovieAdapter : RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>() {
 
@@ -35,10 +33,7 @@ class SimilarMovieAdapter : RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>
     }
     inner class ViewHolder(private val binding: SimilarMovieViewBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(movie: MovieInfoResultResponse){
-            Glide.with(binding.ivDetailSimilar.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .fitCenter()
-                .into(binding.ivDetailSimilar)
+            binding.movie = movie
         }
 
         fun onClick(movie: MovieInfoResultResponse){

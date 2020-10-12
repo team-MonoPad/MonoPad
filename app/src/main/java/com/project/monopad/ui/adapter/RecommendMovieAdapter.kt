@@ -5,11 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.project.monopad.databinding.RecommendMovieViewBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.view.detail.DetailActivity
-import com.project.monopad.util.BaseUtil
 
 class RecommendMovieAdapter : RecyclerView.Adapter<RecommendMovieAdapter.ViewHolder>() {
 
@@ -35,10 +33,7 @@ class RecommendMovieAdapter : RecyclerView.Adapter<RecommendMovieAdapter.ViewHol
     }
     inner class ViewHolder(private val binding: RecommendMovieViewBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(movie: MovieInfoResultResponse){
-            Glide.with(binding.ivDetailRecommend.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .fitCenter()
-                .into(binding.ivDetailRecommend)
+            binding.movie = movie
         }
 
         fun onClick(movie: MovieInfoResultResponse){

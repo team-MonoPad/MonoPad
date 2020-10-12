@@ -27,8 +27,41 @@ object DetailImageBinding{
             Glide.with(view.context)
                 .load(BaseUtil.IMAGE_URL +imageUrl)
                 .fitCenter()
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(25,3)))
+                .apply(RequestOptions.bitmapTransform(BlurTransformation(13,3)))
                 .into(view)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("bindCasterPoster")
+    fun bindCasterPoster(view: ImageView, imageUrl: String?){
+        if(!imageUrl.isNullOrEmpty()){
+            Glide.with(view.context)
+                .load(BaseUtil.IMAGE_URL +imageUrl)
+                .fitCenter()
+                .into(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindSimilarPoster")
+    fun bindSimilarPoster(view: ImageView, imageUrl: String?){
+        if(!imageUrl.isNullOrEmpty()){
+            Glide.with(view.context)
+                .load(BaseUtil.IMAGE_URL +imageUrl)
+                .fitCenter()
+                .into(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindRecommendPoster")
+    fun bindRecommendPoster(view: ImageView, imageUrl: String?){
+        if(!imageUrl.isNullOrEmpty()){
+        Glide.with(view.context)
+            .load(BaseUtil.IMAGE_URL +imageUrl)
+            .fitCenter()
+            .into(view)
+    }
+}
 }

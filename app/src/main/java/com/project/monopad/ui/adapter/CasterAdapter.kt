@@ -3,10 +3,8 @@ package com.project.monopad.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.project.monopad.databinding.CasterViewBinding
 import com.project.monopad.model.network.response.MovieCastResponse
-import com.project.monopad.util.BaseUtil
 
 class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 
@@ -21,7 +19,6 @@ class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: CasterAdapter.ViewHolder, position: Int) {
         holder.bindView(casterList[position])
         holder.onClick(casterList[position])
-
     }
 
     override fun getItemCount(): Int {
@@ -34,10 +31,7 @@ class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: CasterViewBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(cast: MovieCastResponse){
-                Glide.with(binding.ivDetailCaster.context)
-                    .load(BaseUtil.IMAGE_URL+cast.profile_path)
-                    .fitCenter()
-                    .into(binding.ivDetailCaster)
+            binding.caster = cast
         }
 
         fun onClick(cast: MovieCastResponse){
