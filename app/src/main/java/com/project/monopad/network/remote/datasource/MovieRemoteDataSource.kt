@@ -16,4 +16,5 @@ interface MovieRemoteDataSource {
     fun getRecommendationsMovie(movie_id : Int, apikey: String, language: String, page: Int) : Single<OtherMovieInfoResponse>
     fun getSearch(apikey : String, language : String, query : String, page: Int) : Single<OtherMovieInfoResponse>
     fun getPersonDetail(person_id : Int, apikey: String, language: String) : Single<PersonDetailResponse>
+    fun getPersonDeatilCredits(person_id : Int, apikey: String, language: String) : Single<PersonDetailCreditsResponse>
 }
