@@ -1,6 +1,6 @@
 package com.project.monopad.model.network.response
 
-data class PersonDetailCredtisCastResponse(
+data class PersonDetailCreditsCastResponse(
     val adult: Boolean,
     val backdrop_path: String,
     val character: String,
