@@ -18,8 +18,7 @@
             android:layout_height="@dimen/detail_recommend_movie_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:bindRecommendPoster="@{movie.poster_path}"
-            />
+            app:bindRecommendPoster="@{movie.poster_path}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

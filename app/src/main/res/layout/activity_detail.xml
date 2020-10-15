@@ -27,7 +27,7 @@
                 app:contentScrim="?attr/colorPrimaryDark"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:maxLines="2"
-                app:toolbarId="@+id/toolbar">
+                app:toolbarId="@+id/detail_toolbar">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -46,7 +46,7 @@
                     app:bindFrontPoster="@{viewModel.movieDetailData.poster_path}" />
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/detail_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="#00000000"

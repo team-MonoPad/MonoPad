@@ -7,14 +7,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.util.BaseUtil
 import jp.wasabeef.glide.transformations.BlurTransformation
 
-object DetailImageBinding{
+object DetailImageBinding {
 
     @JvmStatic
     @BindingAdapter("bindFrontPoster")
-    fun bindFrontPoster(view: ImageView, imageUrl: String?){
-        if(!imageUrl.isNullOrEmpty()){
+    fun bindFrontPoster(view: ImageView, imageUrl: String?) {
+        if (!imageUrl.isNullOrEmpty()) {
             Glide.with(view.context)
-                .load(BaseUtil.IMAGE_URL +imageUrl)
+                .load(BaseUtil.IMAGE_URL + imageUrl)
                 .fitCenter()
                 .into(view)
         }
@@ -22,22 +22,22 @@ object DetailImageBinding{
 
     @JvmStatic
     @BindingAdapter("bindBackPoster")
-    fun bindBackPoster(view: ImageView, imageUrl: String?){
-        if(!imageUrl.isNullOrEmpty()){
+    fun bindBackPoster(view: ImageView, imageUrl: String?) {
+        if (!imageUrl.isNullOrEmpty()) {
             Glide.with(view.context)
-                .load(BaseUtil.IMAGE_URL +imageUrl)
+                .load(BaseUtil.IMAGE_URL + imageUrl)
                 .fitCenter()
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(13,3)))
+                .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
                 .into(view)
         }
     }
 
     @JvmStatic
     @BindingAdapter("bindCasterPoster")
-    fun bindCasterPoster(view: ImageView, imageUrl: String?){
-        if(!imageUrl.isNullOrEmpty()){
+    fun bindCasterPoster(view: ImageView, imageUrl: String?) {
+        if (!imageUrl.isNullOrEmpty()) {
             Glide.with(view.context)
-                .load(BaseUtil.IMAGE_URL +imageUrl)
+                .load(BaseUtil.IMAGE_URL + imageUrl)
                 .fitCenter()
                 .into(view)
         }
@@ -45,10 +45,10 @@ object DetailImageBinding{
 
     @JvmStatic
     @BindingAdapter("bindSimilarPoster")
-    fun bindSimilarPoster(view: ImageView, imageUrl: String?){
-        if(!imageUrl.isNullOrEmpty()){
+    fun bindSimilarPoster(view: ImageView, imageUrl: String?) {
+        if (!imageUrl.isNullOrEmpty()) {
             Glide.with(view.context)
-                .load(BaseUtil.IMAGE_URL +imageUrl)
+                .load(BaseUtil.IMAGE_URL + imageUrl)
                 .fitCenter()
                 .into(view)
         }
@@ -56,12 +56,12 @@ object DetailImageBinding{
 
     @JvmStatic
     @BindingAdapter("bindRecommendPoster")
-    fun bindRecommendPoster(view: ImageView, imageUrl: String?){
-        if(!imageUrl.isNullOrEmpty()){
-        Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL +imageUrl)
-            .fitCenter()
-            .into(view)
+    fun bindRecommendPoster(view: ImageView, imageUrl: String?) {
+        if (!imageUrl.isNullOrEmpty()) {
+            Glide.with(view.context)
+                .load(BaseUtil.IMAGE_URL + imageUrl)
+                .fitCenter()
+                .into(view)
+        }
     }
-}
 }

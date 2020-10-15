@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.project.monopad.ui.viewmodel.ImageSelectViewModel" />
+    </data>
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:columnCount="3"
+        app:orientation="horizontal"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/image_select_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarColoredBackArrow" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+
+
+</layout>
