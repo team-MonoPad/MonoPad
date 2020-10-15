@@ -1,10 +1,16 @@
 package com.project.monopad.ui.view.review
 
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.youtube.player.internal.m
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityImageSelectBinding
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.review.adapter.ImageSelectAdapter
 import com.project.monopad.ui.viewmodel.ImageSelectViewModel
 import kotlinx.android.synthetic.main.activity_image_select.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,23 +25,39 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
 
     override fun initStartView() {
         toolbarSetting()
+        recyclerViewSetting()
     }
 
     override fun initBeforeBinding() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
+        viewModel.getMovieData(intent?.getIntExtra("movie_id", 89501) ?: 89501)
 
     }
 
     override fun initAfterBinding() {
-        //
+        observeImageList()
     }
 
+    private fun observeImageList(){
+        val imageSelectAdapter = ImageSelectAdapter()
+        viewModel.movieImageData.observe(this, {
+            rv_image_select.adapter = imageSelectAdapter
+            imageSelectAdapter.setList(it)
+        })
+    }
+
+    private fun recyclerViewSetting(){
+        rv_image_select.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            setHasFixedSize(true)
+        }
+    }
 
     private fun toolbarSetting(){
         setSupportActionBar(image_select_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
+        supportActionBar?.setTitle(R.string.image_select_title)
     }
 
     /* toolbar menu setting */
@@ -45,8 +67,25 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                 onBackPressed()
                 true
             }
+            R.id.action_save -> {
+                val imageSelectAdapter = rv_image_select.adapter as ImageSelectAdapter
+                imageSelectAdapter.getImagePath().also {
+                    if(it==null){
+                        Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT).show()
+                    } else {
+                        // go to review edit view
+                    }
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_image_select, menu)
+        return true
     }
 }

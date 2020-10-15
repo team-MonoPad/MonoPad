@@ -119,8 +119,12 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 onBackPressed()
                 true
             }
-            R.id.action_edit -> {
-                startActivity(Intent(this, ImageSelectActivity::class.java))
+            R.id.action_save -> {
+                Intent(this,ImageSelectActivity::class.java)
+                    .putExtra("movie_id", intent?.getIntExtra("movie_id", 89501) ?: 89501)
+                    .also{
+                        startActivity(it)
+                    }
                 true
             }
             R.id.action_share -> {

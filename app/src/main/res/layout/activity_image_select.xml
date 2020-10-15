@@ -9,12 +9,9 @@
             type="com.project.monopad.ui.viewmodel.ImageSelectViewModel" />
     </data>
 
-    <androidx.gridlayout.widget.GridLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:columnCount="3"
-        app:orientation="horizontal"
-        >
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/image_select_toolbar"
@@ -22,13 +19,26 @@
             android:layout_height="wrap_content"
             android:background="#00000000"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ToolbarColoredBackArrow" />
+            android:theme="@style/ToolbarColoredBackArrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="#FFFFFF" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_image_select"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/spacing_14"
+            android:layout_marginTop="@dimen/spacing_60"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
-    </androidx.gridlayout.widget.GridLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
