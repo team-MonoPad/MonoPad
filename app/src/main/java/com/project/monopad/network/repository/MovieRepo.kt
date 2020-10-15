@@ -17,4 +17,5 @@ interface MovieRepo{
     fun getSearch(apikey: String, language: String, query : String , page: Int) : Single<OtherMovieInfoResponse>
     fun getPeopleDetail(people_id : Int, apikey: String, language: String) : Single<PersonDetailResponse>
     fun getPersonDetailCredits(people_id : Int, apikey: String, language: String) : Single<PersonDetailCreditsResponse>
+    fun getMovieImages(movie_id : Int, apikey: String) : Single<MovieImageResponse>
 }

@@ -104,7 +104,12 @@ class MovieRepoImpl (private val movieRemoteDataSource : MovieRemoteDataSource) 
         apikey: String,
         language: String
     ): Single<PersonDetailCreditsResponse> {
-        return movieRemoteDataSource.getPersonDeatilCredits(people_id, apikey, language)
+        return movieRemoteDataSource.getPersonDetailCredits(people_id, apikey, language)
     }
+
+    override fun getMovieImages(movie_id: Int, apikey: String): Single<MovieImageResponse> {
+        return movieRemoteDataSource.getMovieImages(movie_id, apikey)
+    }
+
 
 }

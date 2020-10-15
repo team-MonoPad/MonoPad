@@ -102,4 +102,9 @@ interface MovieRepoApi {
         @Query("language") language:String
     ) : Single<PersonDetailCreditsResponse>
 
+    @GET("movie/{movie_id}/images")
+    fun getMovieImages(
+        @Path("movie_id") movie_id : Int,
+        @Query("api_key") api_key: String
+    ) : Single<MovieImageResponse>
 }
