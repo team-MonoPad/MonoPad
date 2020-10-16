@@ -5,78 +5,91 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlack"
-        android:layout_marginEnd="@dimen/spacing_8">
-
+        android:layout_height="400dp"
+        android:background="@color/colorBlack">
         <ImageView
-            android:id="@+id/item_movie_iv_poster"
-            android:background="@drawable/image_gradient"
+            android:id="@+id/item_movie_iv_blur_poster"
             android:layout_width="match_parent"
             android:layout_height="400dp"
+            android:background="@color/colorLightGrey"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/app_name" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:background="@drawable/image_gradient"/>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/spacing_16"
-            android:layout_height="150dp"
-            android:layout_gravity="bottom">
-            <TextView
-                android:id="@+id/item_movie_tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:maxLines="1"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                style="@style/MiddleTitleTextViewStyle"/>
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/item_movie_iv_poster"
+                android:layout_width="180dp"
+                android:layout_height="280dp"
+                android:layout_marginStart="40dp"
+                android:layout_centerVertical="true"
+                android:background="@color/colorGrey"
+                android:contentDescription="@string/app_name" />
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_movie_tv_title"
-                android:layout_centerInParent="true"
-                android:layout_above="@+id/item_movie_bt_trailer"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/item_movie_iv_poster"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_16">
+
                 <TextView
-                    android:id="@+id/item_movie_tv_1"
+                    android:id="@+id/item_movie_tv_title"
+                    style="@style/SmallTitleTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_8"
+                    android:maxLines="5"
+                    android:shadowRadius="5.0"
+                    android:shadowDx="5.0"
+                    android:shadowDy="5.0"
+                    android:shadowColor="#000000"
+                    tools:text="영화 제목영화 제목영화제목영화제목영화 제목영화 영화 제목영화 제목 제목영화 제목영화 제목" />
+
+                <TextView
+                    android:id="@+id/item_movie_tv_1"
                     style="@style/SubTitleTextViewStyle1"
-                    android:text=""/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:shadowRadius="5.0"
+                    android:shadowDx="5.0"
+                    android:shadowDy="5.0"
+                    android:shadowColor="#000000"
+                    android:layout_marginVertical="@dimen/spacing_16"
+                    tools:text="2020" />
 
                 <TextView
                     android:id="@+id/item_movie_tv_2"
+                    style="@style/SubTitleTextViewStyle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_8"
-                    style="@style/SubTitleTextViewStyle1"
                     android:visibility="gone"
-                    android:text=""/>
+                    tools:text="Title" />
+
                 <TextView
                     android:id="@+id/item_movie_tv_3"
+                    style="@style/SubTitleTextViewStyle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_8"
-                    style="@style/SubTitleTextViewStyle1"
                     android:visibility="gone"
-                    android:text="SUB"/>
+
+                    tools:text="Title" />
+
+                <Button
+                    android:id="@+id/item_movie_bt_trailer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_trailer_shape"
+                    android:text="트레일러" />
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/item_movie_bt_trailer"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/button_trailer_shape"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="@dimen/spacing_8"
-                android:text="트레일러"/>
         </RelativeLayout>
+
+
+
     </FrameLayout>
 </layout>

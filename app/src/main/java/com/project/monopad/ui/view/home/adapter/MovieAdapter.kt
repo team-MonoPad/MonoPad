@@ -10,10 +10,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
 import com.project.monopad.databinding.*
 import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
+import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.item_popular_page.view.*
 import kotlinx.android.synthetic.main.item_now_playing.view.*
 
@@ -115,11 +117,15 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
             val moviePosterURL = POSTER_BASE_URL + movie.poster_path
             Glide.with(itemView.context)
                 .load(moviePosterURL)
-                .into(itemView.item_movie_iv_poster)
+                .into(binding!!.itemMovieIvPoster)
+
+            Glide.with(itemView.context)
+                .load(moviePosterURL)
+                .apply(RequestOptions.bitmapTransform(BlurTransformation(13,3)))
+                .into(binding!!.itemMovieIvBlurPoster)
 
             binding!!.itemMovieTvTitle.text = movie.title
             binding!!.itemMovieTv1.text = movie.release_date.split("-")[0] //연도
-//            binding!!.itemMovieTv2.text = " | ${movie.vote_count}♡"
 
             binding!!.itemMovieBtTrailer.setOnClickListener {
                 listener?.invoke(movie.id)
