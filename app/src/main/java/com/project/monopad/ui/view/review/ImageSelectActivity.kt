@@ -39,6 +39,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
         observeImageList()
     }
 
+    /* observe */
     private fun observeImageList(){
         val imageSelectAdapter = ImageSelectAdapter()
         viewModel.movieImageData.observe(this, {
@@ -47,6 +48,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
         })
     }
 
+    /* view setting */
     private fun recyclerViewSetting(){
         rv_image_select.apply {
             layoutManager = GridLayoutManager(context, 3)
