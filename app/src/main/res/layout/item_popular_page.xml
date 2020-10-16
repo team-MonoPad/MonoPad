@@ -21,23 +21,26 @@
             <ImageView
                 android:id="@+id/item_movie_iv_poster"
                 android:layout_width="180dp"
-                android:layout_height="280dp"
+                android:layout_height="270dp"
+                android:scaleType="centerCrop"
                 android:layout_marginStart="40dp"
                 android:layout_centerVertical="true"
                 android:background="@color/colorGrey"
                 android:contentDescription="@string/app_name" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="270dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/item_movie_iv_poster"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_16">
+                android:paddingVertical="@dimen/spacing_24"
+                android:paddingHorizontal="16dp">
 
                 <TextView
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:id="@+id/item_movie_tv_title"
                     style="@style/SmallTitleTextViewStyle"
                     android:layout_width="wrap_content"
@@ -46,8 +49,9 @@
                     android:shadowRadius="5.0"
                     android:shadowDx="5.0"
                     android:shadowDy="5.0"
+                    android:gravity="center"
                     android:shadowColor="#000000"
-                    tools:text="영화 제목영화 제목영화제목영화제목영화 제목영화 영화 제목영화 제목 제목영화 제목영화 제목" />
+                    tools:text="영화 제목" />
 
                 <TextView
                     android:id="@+id/item_movie_tv_1"
@@ -55,9 +59,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:shadowRadius="5.0"
+                    android:layout_below="@+id/item_movie_tv_title"
+                    android:layout_above="@id/item_movie_bt_trailer"
                     android:shadowDx="5.0"
                     android:shadowDy="5.0"
                     android:shadowColor="#000000"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginVertical="@dimen/spacing_16"
                     tools:text="2020" />
 
@@ -82,10 +89,12 @@
                     android:id="@+id/item_movie_bt_trailer"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/button_trailer_shape"
                     android:text="트레일러" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
 
