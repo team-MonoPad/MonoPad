@@ -39,7 +39,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="2dp"
-                                android:text="title"
+                                tools:text="title"
                                 style="@style/MiddleTitleTextViewStyle"/>
                             <TextView
                                 android:id="@+id/video_tv_release_date"
@@ -52,7 +52,7 @@
                                 android:id="@+id/video_tv_types"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="#tag #tag #tag #tag"
+                                android:text="#genre #genre #genre #genre"
                                 android:layout_marginBottom="2dp"
                                 style="@style/SubTitleTextViewStyle1"/>
                         </LinearLayout>

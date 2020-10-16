@@ -23,7 +23,7 @@ class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>() {
         setSupportActionBar(viewDataBinding.videoToolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) //back button
         supportActionBar!!.setDisplayShowCustomEnabled(true)
-        supportActionBar!!.title = getString(R.string.app_name)
+        supportActionBar!!.title = "영화제목"
         if (intent.hasExtra("movie")) {
 
 //            movieId = intent.getIntExtra("id", 0)
@@ -43,12 +43,9 @@ class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>() {
         viewModel.liveVideo.observe(this, {
             videoList = it.results as ArrayList<MovieVideoResultResponse>
             viewDataBinding.videoYoutubePlayerView.play(videoList[0].key) //key is youtube id
+            viewDataBinding.videoTvTitle.text = videoList[0].name //영상 제목
             d("key", videoList[0].key)
         })
-    }
-
-    companion object {
-        private const val VIDEO_ID = "m2SZ6RV_J7I"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
