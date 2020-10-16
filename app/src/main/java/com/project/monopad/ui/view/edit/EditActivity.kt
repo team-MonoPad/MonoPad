@@ -155,7 +155,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
     fun saveImage() {
         val view = viewDataBinding.editReviewContainer
 
-        val path = Environment.getExternalStorageDirectory().absolutePath + "/EndGame"
+        val path = Environment.getExternalStorageDirectory().absolutePath + "/MonoPad"
         //처음 생성한 path 경로가 존재하는지 확인 후 존재하지 않을 시 경로를 생성
         val file = File(path)
         if (!file.exists()) {
@@ -168,7 +168,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
         val captureView = view.drawingCache //비트맵 형식으로 저장
         var fos: FileOutputStream? = null
         try {
-            fos = FileOutputStream(path + "/EndGame" + day.format(date) + ".jpeg")
+            fos = FileOutputStream(path + "/MonoPad" + day.format(date) + ".jpeg")
             captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos) //save file
 //            mResultActivityView.validateSuccessSaveImage("결과가 갤러리에 저장되었습니다.", path, day, date)
             //            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path + "/EndGame" + day.format(date) + ".JPEG")));
