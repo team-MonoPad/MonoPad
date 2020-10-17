@@ -9,6 +9,8 @@
     <string name="title_diary">Diary</string>
     <string name="title_activity_detail">ScrollingActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_movie_detail">MovieDetail</string>
+    <string name="title_people_detail">PeopleDetail</string>
 
     <!--login-->
     <string name="login">로그인</string>

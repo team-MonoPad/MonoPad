@@ -16,9 +16,10 @@
         <activity
             android:name=".ui.view.detail.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.view.login.RegisterActivity" />
-        <activity android:name=".ui.view.login.LoginActivity"></activity>
+        <activity android:name=".ui.view.login.LoginActivity"/>
+        <activity android:name=".ui.view.detail.PersonDetailActivity"/>
         <activity android:name=".ui.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

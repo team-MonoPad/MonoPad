@@ -86,8 +86,14 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .subscribe({ it ->
                     it.run {
                         //개봉일 순으로 정렬
-                        it.results.sortWith(Comparator { a, b -> DateUtil.getDayDifference(a.release_date).toInt() - DateUtil.getDayDifference(b.release_date).toInt()})
+                        it.results.sortWith(Comparator { a, b ->
+                            DateUtil.getDayDifference(a.release_date).toInt() - DateUtil.getDayDifference(b.release_date).toInt()
+                            Log.d(TAG, "${a.release_date}")
+                        }
+                        )
                         liveUpcomingMovie.value = it
+
+
                     }
                 }, {
                     Log.d(TAG, it.message.toString())

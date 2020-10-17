@@ -1,8 +1,12 @@
 package com.project.monopad.ui.view.detail
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
@@ -68,6 +72,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             rv_detail_caster.adapter = casterAdapter
             casterAdapter.setList(DetailParsingUtil.casterParsing(it))
         })
+        casterAdapter.setOnCasterClickListener {
+            //findNavController(requireViewById(R.id.navigation_detail)).navigate(R.id.navigation_deatil_person)
+            val intent = Intent(this, PersonDetailActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun observeSimilarMovieData(){
