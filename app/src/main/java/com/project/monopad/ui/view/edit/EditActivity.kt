@@ -1,24 +1,26 @@
 package com.project.monopad.ui.view.edit
 
 
+import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Environment
 import android.provider.Settings.System.DATE_FORMAT
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
+import androidx.annotation.ColorInt
+import androidx.core.graphics.drawable.DrawableCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.ViewTarget
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityEditBinding
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
-import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,6 +46,8 @@ class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
 
     //override 된 메소드는 모두 onCreate 내에 존재함으로 activity가 시작되고 자동적으로 그려진다.
     override fun initStartView() {
+        viewDataBinding.activity = this;
+
         //setting adapter or view
         setSupportActionBar(viewDataBinding.editToolbar) //툴바를 액션바로 등록
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) //back button
@@ -52,10 +56,11 @@ class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
 
         viewDataBinding.editTvTitle.text = intent.getStringExtra("title");
 
+
         Glide.with(this@EditActivity)
-            .load(IMAGE_URL +"/aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg")
+            .load(IMAGE_URL + "/aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg")
             .fitCenter()
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(13,3)))
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
             .into(viewDataBinding.editIvBlurBackground)
     }
 
@@ -125,8 +130,10 @@ class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
 
     private fun convertViewToDrawable(): Bitmap {
         val view = viewDataBinding.editReviewContainer
-        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight,
-            Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(
+            view.measuredWidth, view.measuredHeight,
+            Bitmap.Config.ARGB_8888
+        )
         val c = Canvas(bitmap)
         c.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
         view.draw(c)
@@ -180,4 +187,30 @@ class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
 //            mResultActivityView.validateFailureSaveImage("저장 실패ㅠㅠ. [설정] > [권한] 에서 외부 접근 권한을 허용해주세요.")
         }
     }
+
+    fun btnClick() {
+        println("dateOnClick")
+        showDatePickerDialog()
+    }
+
+    private fun showDatePickerDialog() {
+        val cal = Calendar.getInstance()
+        val y = cal.get(Calendar.YEAR)
+        val m = cal.get(Calendar.MONTH)
+        val d = cal.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(
+            this, R.style.MyDatePickerDialogTheme,
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                d("Selected Birthday", "$year  $monthOfYear  $dayOfMonth")
+                // Display Selected date in textbox
+                val birthDay = "${year}-${monthOfYear + 1}-${dayOfMonth}"
+                viewDataBinding.editTvDate.text = birthDay
+            },
+            y, m, d
+        ).apply {
+            show()
+        }
+    }
+
 }

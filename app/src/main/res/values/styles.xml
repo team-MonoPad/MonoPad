@@ -88,4 +88,20 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- this is new -->
+        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+        <item name="android:colorAccent">@color/colorBlack</item>
+        <item name="android:colorPrimary">@color/colorBlack</item>
+        <item name="android:colorPrimaryDark">@color/colorBlack</item>
+    </style>
+
+    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/colorYellow</item>
+        <item name="android:calendarTextColor">@color/colorBlack</item>
+        <item name="android:dayOfWeekBackground">@color/colorBlack</item>
+        <item name="android:datePickerMode">spinner</item>
+        <item name="android:yearListSelectorColor">@color/colorBlack</item>
+    </style>
+
 </resources>

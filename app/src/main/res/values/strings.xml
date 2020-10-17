@@ -32,5 +32,6 @@
     <string name="detail_actor_line">출연진</string>
     <string name="detail_similar_movie">비슷한 콘텐츠</string>
     <string name="detail_recommend_movie">추천 콘텐츠</string>
+    <string name="edit_diary_date_message">영화를 관람한 날짜를 선택해주세요!</string>
 
 </resources>
