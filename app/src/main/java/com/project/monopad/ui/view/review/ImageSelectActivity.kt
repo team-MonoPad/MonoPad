@@ -75,7 +75,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                     if(it==null){
                         Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT).show()
                     } else {
-                        // go to review edit view
+                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                     }
                 }
                 true
