@@ -1,16 +1,14 @@
 package com.project.monopad.ui.view.review
 
-import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.youtube.player.internal.m
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityImageSelectBinding
 import com.project.monopad.ui.base.BaseActivity
-import com.project.monopad.ui.view.review.adapter.ImageSelectAdapter
+import com.project.monopad.ui.adapter.ImageSelectAdapter
 import com.project.monopad.ui.viewmodel.ImageSelectViewModel
 import kotlinx.android.synthetic.main.activity_image_select.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -75,7 +73,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                     if(it==null){
                         Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                        // go to review edit view
                     }
                 }
                 true

@@ -1,11 +1,9 @@
-package com.project.monopad.ui.view.review.adapter
+package com.project.monopad.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.project.monopad.R
 import com.project.monopad.databinding.ImageSelectViewBinding
 import com.project.monopad.model.network.response.MovieImagePosterResponse
 

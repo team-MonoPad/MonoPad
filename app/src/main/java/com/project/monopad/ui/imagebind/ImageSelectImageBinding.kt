@@ -11,13 +11,10 @@ object ImageSelectImageBinding {
     @JvmStatic
     @BindingAdapter("bindPosterImage")
     fun bindPosterImage(view: ImageView, imageUrl: String?) {
-        if (!imageUrl.isNullOrEmpty()) {
-            Glide.with(view.context)
-                .load(BaseUtil.IMAGE_URL + imageUrl)
-                .fitCenter()
-                .placeholder(R.drawable.ic_baseline_error_outline_24)
-                .error(R.drawable.ic_baseline_error_outline_24)
-                .into(view)
-        }
+        Glide.with(view.context)
+            .load(BaseUtil.IMAGE_URL + imageUrl)
+            .fitCenter()
+            .error(R.drawable.ic_baseline_error_outline_24)
+            .into(view)
     }
 }
