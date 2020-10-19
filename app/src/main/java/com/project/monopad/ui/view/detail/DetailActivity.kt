@@ -1,5 +1,6 @@
 package com.project.monopad.ui.view.detail
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.RecommendMovieAdapter
 import com.project.monopad.ui.adapter.SimilarMovieAdapter
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.review.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
 import com.project.monopad.util.DetailParsingUtil
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -32,7 +34,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     override fun initBeforeBinding() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
-        viewModel.getDetailData(intent?.getIntExtra("movie_id", 396535) ?: 396535)
+        viewModel.getDetailData(intent?.getIntExtra("movie_id", 89501) ?: 89501)
     }
 
     override fun initAfterBinding() {
@@ -76,6 +78,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             rv_detail_similar_movie.adapter = similarMovieAdapter
             similarMovieAdapter.setList(it)
         })
+        similarMovieAdapter.setOnSimilarClickListener {
+            val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
+            startActivity(intent)
+        }
     }
 
     private fun observeRecommendMovieData(){
@@ -84,6 +90,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             rv_detail_recommend_movie.adapter = recommendMovieAdapter
             recommendMovieAdapter.setList(it)
         })
+        recommendMovieAdapter.setOnRecommendClickListener {
+            val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
+            startActivity(intent)
+        }
     }
 
 
@@ -104,9 +114,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     }
 
     private fun toolbarLayoutSetting(){
-        setSupportActionBar(toolbar)
+        setSupportActionBar(detail_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar_layout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar)
+
     }
 
     /* toolbar menu setting */
@@ -116,8 +127,12 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 onBackPressed()
                 true
             }
-            R.id.action_edit -> {
-                // 다이어리 작성
+            R.id.action_save -> {
+                Intent(this,ImageSelectActivity::class.java)
+                    .putExtra("movie_id", intent?.getIntExtra("movie_id", 89501) ?: 89501)
+                    .also{
+                        startActivity(it)
+                    }
                 true
             }
             R.id.action_share -> {

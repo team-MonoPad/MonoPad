@@ -1,5 +1,6 @@
 package com.project.monopad.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.monopad.model.network.response.MovieCastResponse
 import com.project.monopad.model.network.response.MovieCrewResponse
@@ -13,6 +14,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
 
+    private val TAG = "DETAIL VIEWMODEL"
 
     private val _movieDetailData = MutableLiveData<MovieDetailResponse>()
     val movieDetailData = _movieDetailData
@@ -43,7 +45,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
                     _movieDetailData.value = it
                 }
             },{
-                //
+                Log.d(TAG, it.localizedMessage)
             })
         )
 
@@ -60,7 +62,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
                     _movieCrewData.value = it.crew
                 }
             },{
-                //
+                Log.d(TAG, it.localizedMessage)
             })
         )
 
@@ -78,7 +80,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
                     _similarMovieData.value = it.results
                 }
             },{
-                //
+                Log.d(TAG, it.localizedMessage)
             })
         )
 
@@ -96,7 +98,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
                     _recommendMovieData.value = it.results
                 }
             },{
-                //
+                Log.d(TAG, it.localizedMessage)
             })
         )
     }
