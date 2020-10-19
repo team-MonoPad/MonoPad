@@ -1,15 +1,15 @@
 package com.project.monopad.ui.view.detail
 
-import android.util.Log
-import com.bumptech.glide.Glide
+import android.content.Intent
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityPersonDetailBinding
+import com.project.monopad.ui.adapter.PersonFilmographyAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.PersonViewModel
-import com.project.monopad.util.BaseUtil
+import com.project.monopad.util.DetailParsingUtil
 import kotlinx.android.synthetic.main.activity_person_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.regex.Pattern
 
 class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonViewModel>() {
 
@@ -18,37 +18,46 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
 
     override val viewModel: PersonViewModel by viewModel()
 
+    private val id : Int
+        get() = intent.getIntExtra("person_id",0)
+
+    private val personFilmographyAdapter = PersonFilmographyAdapter()
+
     override fun initStartView() {
-        // adapter set
+        recyclerViewSet()
+        onClickEvent()
     }
 
     override fun initBeforeBinding() {
-        viewModel.getPersonDetail(150903)
-        viewModel.getPersonDetailCredits(150903)
+        viewModel.getPersonDetail(id)
+        viewModel.getPersonDetailCredits(id)
     }
 
     override fun initAfterBinding() {
         viewModel.personDetailInfo.observe(this, {
-            //배우 정보 바인딩
-            it.also_known_as.forEach {name_also ->
-                if(Pattern.matches("^[ㄱ-ㅎ가-힣]*$", name_also)){
-                    //tv에 추가
-                    Log.d("PERSON DETAIL 네임 ", "$name_also")
-                }
-            }
-            tb_person_detail.title = it.name
-            Glide.with(this)
-                .load(BaseUtil.IMAGE_URL +it.profile_path)
-                .fitCenter()
-                .into(cv_person_detail_profile)
-
+            viewDataBinding.model = it
+            tv_person_detail_known_name.text = DetailParsingUtil.koreaNameParsing(it.also_known_as)
         })
+
         viewModel.personDetailMovie.observe(this, {
-            it.forEach {
-                Log.d("PERSON DETAIL", "${it.title}에서 ${it.character}")
-            }
+            rv_person_detail.adapter = personFilmographyAdapter
+            personFilmographyAdapter.setFilmoList(it)
         })
     }
 
+    private fun recyclerViewSet(){
+        rv_person_detail.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+        }
+    }
 
+    private fun onClickEvent(){
+        personFilmographyAdapter.setOnFilmoMovieClickListener {
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("movie_id", it)
+            startActivity(intent)
+            finish()
+        }
+    }
 }

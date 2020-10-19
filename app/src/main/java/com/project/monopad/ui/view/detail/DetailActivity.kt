@@ -47,7 +47,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         observeRecommendMovieData()
     }
 
-
     /* observe */
     private fun observeMovieDetailData(){
         viewModel.movieDetailData.observe(this, {
@@ -73,9 +72,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             casterAdapter.setList(DetailParsingUtil.casterParsing(it))
         })
         casterAdapter.setOnCasterClickListener {
-            //findNavController(requireViewById(R.id.navigation_detail)).navigate(R.id.navigation_deatil_person)
             val intent = Intent(this, PersonDetailActivity::class.java)
+            intent.putExtra("person_id", it)
             startActivity(intent)
+            finish()
         }
     }
 

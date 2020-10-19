@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/tools">
+
+    <Transition
+        app:constraintSetStart="@id/start"
+        app:constraintSetEnd="@id/end"
+        app:duration="1000">
+        <OnSwipe
+            app:touchAnchorId="@+id/nsv_person_detail"
+            app:touchAnchorSide="top"
+            app:dragDirection="dragUp" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:id="@+id/iv_back"
+            android:visibility="gone"
+            />
+
+        <Constraint android:id="@id/background"
+            >
+            <CustomAttribute
+                app:attributeName="background"
+                app:customColorValue="#000000" />
+        </Constraint>
+
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/iv_back"
+            android:visibility="visible"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ci_person_detail_poster"
+            app:layout_constraintTop_toTopOf="@+id/ci_person_detail_poster"
+            android:layout_marginTop="@dimen/over_line_10"
+            android:layout_marginStart="10dp"
+            />
+
+        <Constraint
+            android:id="@id/ci_person_detail_poster"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_back"
+            android:layout_marginStart="16dp"
+            />
+
+        <Constraint
+            android:id="@+id/tv_person_detail_name"
+            app:layout_constraintTop_toTopOf="@+id/ci_person_detail_poster"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toEndOf="@+id/ci_person_detail_poster"
+            android:layout_marginStart="15dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            />
+
+        <Constraint
+            android:id="@+id/tv_person_detail_known_name"
+            app:layout_constraintTop_toTopOf="@+id/ci_person_detail_poster"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toEndOf="@+id/ci_person_detail_poster"
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            >
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="14"
+                app:attributeName="TODO" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/tv_person_detail_birth"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Constraint
+            android:id="@+id/tv_person_detail_place_of_birth"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Constraint android:id="@id/background">
+            <CustomAttribute
+                app:attributeName="background"
+                app:customColorValue="#000000" />
+        </Constraint>
+
+    </ConstraintSet>
+</MotionScene>

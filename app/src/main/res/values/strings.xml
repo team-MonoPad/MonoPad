@@ -34,5 +34,6 @@
     <string name="detail_actor_line">출연진</string>
     <string name="detail_similar_movie">비슷한 콘텐츠</string>
     <string name="detail_recommend_movie">추천 콘텐츠</string>
+    <string name="person_detail_text_filmography">필모그라피</string>
 
 </resources>

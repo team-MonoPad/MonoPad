@@ -44,10 +44,8 @@ class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 
         fun onClick(cast: MovieCastResponse){
             binding.ivDetailCaster.setOnClickListener{
-                listener?.invoke(it.id)
-                // it.context.startActivity(Intent(it.context, DetailActivity::class.java)) : go person detail
+                listener?.invoke(cast.id)
             }
         }
-
     }
 }
