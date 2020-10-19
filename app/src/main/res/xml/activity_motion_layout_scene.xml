@@ -16,9 +16,13 @@
     <ConstraintSet android:id="@+id/start">
 
         <Constraint
-            android:id="@+id/iv_back"
-            android:visibility="gone"
-            />
+            android:id="@+id/tv_filmo"
+            >
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="18"
+                app:attributeName="TODO" />
+        </Constraint>
 
         <Constraint android:id="@id/background"
             >
@@ -40,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ci_person_detail_poster"
             app:layout_constraintTop_toTopOf="@+id/ci_person_detail_poster"
-            android:layout_marginTop="@dimen/over_line_10"
+            android:layout_marginTop="7dp"
             android:layout_marginStart="10dp"
             />
 
@@ -78,6 +82,16 @@
             <CustomAttribute
                 motion:attributeName="textSize"
                 motion:customFloatValue="14"
+                app:attributeName="TODO" />
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/tv_filmo"
+
+            >
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="23"
                 app:attributeName="TODO" />
         </Constraint>
 

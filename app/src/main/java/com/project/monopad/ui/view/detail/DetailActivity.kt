@@ -75,7 +75,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             val intent = Intent(this, PersonDetailActivity::class.java)
             intent.putExtra("person_id", it)
             startActivity(intent)
-            finish()
         }
     }
 

@@ -19,7 +19,7 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
     override val viewModel: PersonViewModel by viewModel()
 
     private val id : Int
-        get() = intent.getIntExtra("person_id",0)
+        get() = intent.getIntExtra("person_id", 0)
 
     private val personFilmographyAdapter = PersonFilmographyAdapter()
 
@@ -57,7 +57,10 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("movie_id", it)
             startActivity(intent)
-            finish()
+            finishAndRemoveTask()
+        }
+        iv_back.setOnClickListener {
+            onBackPressed()
         }
     }
 }

@@ -14,7 +14,9 @@
     app:showPaths="false"
     app:layoutDescription="@xml/activity_motion_layout_scene"
     android:layout_height="match_parent">
-    <View android:layout_width="0dp"
+
+    <View
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/background"
@@ -32,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_back"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         app:bindFilmoPoster="@{model.profile_path}"
         />
 
@@ -40,9 +42,10 @@
         android:id="@+id/iv_back"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ci_person_detail_poster"
-        app:layout_constraintTop_toTopOf="@+id/ci_person_detail_poster"
+        app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/arrow_left"
         android:contentDescription="TODO" />
 
@@ -115,8 +118,8 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/body_16"
-        android:textSize="18sp"
         android:textStyle="bold"
+        android:textSize="18sp"
         />
 
     <androidx.core.widget.NestedScrollView
