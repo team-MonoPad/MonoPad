@@ -43,7 +43,7 @@
                     android:layout_height="@dimen/detail_poster_height"
                     android:layout_marginStart="@dimen/spacing_30"
                     android:layout_marginTop="@dimen/spacing_80"
-                    app:bindFrontPoster="@{viewModel.movieDetailData.poster_path}" />
+                    app:bindPoster="@{viewModel.movieDetailData.poster_path}" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/detail_toolbar"

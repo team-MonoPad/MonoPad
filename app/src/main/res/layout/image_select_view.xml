@@ -19,7 +19,7 @@
             android:layout_height="180dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:bindPosterImage="@{image.file_path}"/>
+            app:bindPoster="@{image.file_path}"/>
 
         <CheckBox
             android:id="@+id/cb_image_select"

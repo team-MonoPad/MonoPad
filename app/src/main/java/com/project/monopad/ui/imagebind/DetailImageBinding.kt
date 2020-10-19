@@ -11,16 +11,6 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 object DetailImageBinding {
 
     @JvmStatic
-    @BindingAdapter("bindFrontPoster")
-    fun bindFrontPoster(view: ImageView, imageUrl: String?) {
-        Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
-            .fitCenter()
-            .error(R.drawable.ic_baseline_error_outline_24)
-            .into(view)
-    }
-
-    @JvmStatic
     @BindingAdapter("bindBackPoster")
     fun bindBackPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
@@ -32,28 +22,8 @@ object DetailImageBinding {
     }
 
     @JvmStatic
-    @BindingAdapter("bindCasterPoster")
-    fun bindCasterPoster(view: ImageView, imageUrl: String?) {
-        Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
-            .fitCenter()
-            .error(R.drawable.ic_baseline_error_outline_24)
-            .into(view)
-    }
-
-    @JvmStatic
-    @BindingAdapter("bindSimilarPoster")
-    fun bindSimilarPoster(view: ImageView, imageUrl: String?) {
-        Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
-            .fitCenter()
-            .error(R.drawable.ic_baseline_error_outline_24)
-            .into(view)
-    }
-
-    @JvmStatic
-    @BindingAdapter("bindRecommendPoster")
-    fun bindRecommendPoster(view: ImageView, imageUrl: String?) {
+    @BindingAdapter("bindPoster")
+    fun bindPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
             .load(BaseUtil.IMAGE_URL + imageUrl)
             .fitCenter()
