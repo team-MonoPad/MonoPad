@@ -4,9 +4,11 @@
     <dimen name="spacing_5">5dp</dimen>
     <dimen name="spacing_8">8dp</dimen>
     <dimen name="spacing_10">10dp</dimen>
+    <dimen name="spacing_14">14dp</dimen>
     <dimen name="spacing_16">16dp</dimen>
     <dimen name="spacing_24">24dp</dimen>
     <dimen name="spacing_30">30dp</dimen>
+    <dimen name="spacing_60">60dp</dimen>
     <dimen name="spacing_70">70dp</dimen>
     <dimen name="spacing_80">80dp</dimen>
 
