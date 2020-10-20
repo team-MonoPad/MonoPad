@@ -1,5 +1,6 @@
 package com.project.monopad.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.project.monopad.util.DetailParsingUtil
 
 class PersonFilmographyAdapter : RecyclerView.Adapter<PersonFilmographyAdapter.ViewHolder>() {
 
-    private var filmographyList = ArrayList<PersonDetailCreditsCastResponse>()
+    private var filmographyList : MutableList<PersonDetailCreditsCastResponse> = ArrayList<PersonDetailCreditsCastResponse>()
 
     private var listener: ((id: Int) -> Unit)? = null
 
@@ -31,13 +32,12 @@ class PersonFilmographyAdapter : RecyclerView.Adapter<PersonFilmographyAdapter.V
     override fun getItemCount(): Int = filmographyList.size
 
     fun setFilmoList(list: List<PersonDetailCreditsCastResponse>){
-        this.filmographyList = list as ArrayList<PersonDetailCreditsCastResponse>
+        this.filmographyList = list as MutableList<PersonDetailCreditsCastResponse>
     }
 
     inner class ViewHolder(private val binding: ItemFilmographyMovieBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(movie: PersonDetailCreditsCastResponse){
             if (movie.character.isNotEmpty()) binding.tvFilmoMovieCharacter.text = "${movie.character} 역"
-
             binding.model = movie
             binding.ivFilmoMoviePoster.setOnClickListener {
                 listener?.invoke(movie.id)

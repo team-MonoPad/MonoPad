@@ -1,6 +1,7 @@
 package com.project.monopad.ui.view.detail
 
 import android.content.Intent
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityPersonDetailBinding
@@ -34,15 +35,15 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
     }
 
     override fun initAfterBinding() {
-        viewModel.personDetailInfo.observe(this, {
+        viewModel.personDetailInfo.observe(this) {
             viewDataBinding.model = it
             tv_person_detail_known_name.text = DetailParsingUtil.koreaNameParsing(it.also_known_as)
-        })
+        }
 
-        viewModel.personDetailMovie.observe(this, {
+        viewModel.personDetailMovie.observe(this) { it ->
             rv_person_detail.adapter = personFilmographyAdapter
-            personFilmographyAdapter.setFilmoList(it)
-        })
+            personFilmographyAdapter.setFilmoList(it.sortedWith( compareBy { it.release_date }).reversed())
+        }
     }
 
     private fun recyclerViewSet(){

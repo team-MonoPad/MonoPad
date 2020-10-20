@@ -35,7 +35,7 @@
         app:layout_constraintStart_toEndOf="@+id/iv_back"
         android:layout_marginTop="32dp"
         android:layout_marginStart="24dp"
-        app:bindFilmoPoster="@{model.profile_path}"
+        app:bindPoster="@{model.profile_path}"
         />
 
     <ImageView

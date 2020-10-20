@@ -27,7 +27,7 @@
         android:layout_marginBottom="@dimen/over_line_10"
         android:layout_marginTop="@dimen/over_line_10"
         android:layout_marginStart="@dimen/over_line_10"
-        app:bindFilmoPoster="@{model.poster_path}"
+        app:bindPoster="@{model.poster_path}"
         />
 
     <TextView

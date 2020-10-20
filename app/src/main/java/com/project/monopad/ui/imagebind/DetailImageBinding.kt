@@ -30,13 +30,4 @@ object DetailImageBinding {
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
-    @JvmStatic
-    @BindingAdapter("bindFilmoPoster")
-    fun bindFilmoPoster(view: ImageView, imageUrl: String?) {
-        Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
-            .error(R.drawable.ic_baseline_error_outline_24)
-            .fitCenter()
-            .into(view)
-    }
 }
