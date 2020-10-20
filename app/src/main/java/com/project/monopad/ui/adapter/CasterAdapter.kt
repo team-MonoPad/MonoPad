@@ -2,13 +2,21 @@ package com.project.monopad.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.project.monopad.R
 import com.project.monopad.databinding.CasterViewBinding
 import com.project.monopad.model.network.response.MovieCastResponse
 
 class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 
     private var casterList = ArrayList<MovieCastResponse>()
+
+    private var listener: ((id: Int) -> Unit)? = null
+
+    fun setOnCasterClickListener(listener: (id: Int) -> Unit) {
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CasterAdapter.ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -36,9 +44,8 @@ class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 
         fun onClick(cast: MovieCastResponse){
             binding.ivDetailCaster.setOnClickListener{
-
+                listener?.invoke(cast.id)
             }
         }
-
     }
 }

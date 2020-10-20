@@ -2,6 +2,7 @@ package com.project.monopad.ui.view.home
 
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
@@ -83,6 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
 
        topRatedAdapter.setOnItemClickListener {
            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+           Navigation.findNavController(requireView()).navigate(R.id.action_home_to_detail)
        }
 
        upcomingAdapter.setOnItemClickListener {

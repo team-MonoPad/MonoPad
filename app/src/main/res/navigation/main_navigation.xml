@@ -9,7 +9,12 @@
         android:id="@+id/navigation_home"
         android:name="com.project.monopad.ui.view.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_detail"
+            app:destination="@+id/navigation_detail"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
@@ -28,4 +33,22 @@
         android:name="com.project.monopad.ui.view.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <activity
+        android:id="@+id/navigation_detail"
+        android:name="com.project.monopad.ui.view.detail.DetailActivity"
+        android:label="@string/title_movie_detail"
+        tools:layout="@layout/activity_detail"/>
+
+    <activity
+        android:id="@+id/navigation_deatil_person"
+        android:name="com.project.monopad.ui.view.detail.PersonDetailActivity"
+        android:label="@string/title_people_detail"
+        tools:layout="@layout/activity_person_detail"
+        />
+
+    <action
+        android:id="@+id/action_global_person"
+        app:destination="@+id/navigation_deatil_person"
+        />
 </navigation>
