@@ -2,19 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
         <variable
             name="viewModel"
             type="com.project.monopad.ui.viewmodel.DetailViewModel" />
     </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context=".ui.view.detail.DetailActivity">
-
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
@@ -22,7 +19,6 @@
             android:background="#000000"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
-
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
@@ -30,30 +26,36 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimaryDark"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:toolbarId="@+id/toolbar">
+                app:maxLines="2"
+                app:toolbarId="@+id/detail_toolbar">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/spacing_5"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/detail_poster_sample" />
+                    app:bindBackPoster="@{viewModel.movieDetailData.poster_path}" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="@dimen/detail_poster_width"
+                    android:layout_height="@dimen/detail_poster_height"
+                    android:layout_marginStart="@dimen/spacing_30"
+                    android:layout_marginTop="@dimen/spacing_80"
+                    app:bindPoster="@{viewModel.movieDetailData.poster_path}" />
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/detail_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="#00000000"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="@{viewModel.title}" />
+                    app:title="@{viewModel.movieDetailData.title}" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
-
         <include layout="@layout/content_scrolling" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </layout>

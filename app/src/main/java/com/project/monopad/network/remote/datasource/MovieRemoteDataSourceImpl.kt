@@ -38,6 +38,14 @@ class MovieRemoteDataSourceImpl (private val movieRepoApi: MovieRepoApi) : Movie
         return movieRepoApi.getMovieDetail(movie_id = movie_id, api_key = apikey, language = language)
     }
 
+    override fun getMovieVideo(
+        movie_id: Int,
+        apikey: String,
+        language: String
+    ): Single<MovieVideoResponse> {
+        return movieRepoApi.getMovieVideo(movie_id = movie_id, api_key = apikey, language = language)
+    }
+
     override fun getMovieCredits(movie_id: Int, apikey: String): Single<MovieCreditsResponse> {
         return movieRepoApi.getMovieCredits(movie_id = movie_id, api_key = apikey)
     }
@@ -70,6 +78,18 @@ class MovieRemoteDataSourceImpl (private val movieRepoApi: MovieRepoApi) : Movie
         language: String
     ): Single<PersonDetailResponse> {
         return movieRepoApi.getPeopleDetail(person_id = person_id, api_key = apikey, language = language)
+    }
+
+    override fun getPersonDetailCredits(
+        person_id: Int,
+        apikey: String,
+        language: String
+    ): Single<PersonDetailCreditsResponse> {
+        return movieRepoApi.getPeopleDetailCredits(person_id = person_id, api_key = apikey, language = language)
+    }
+
+    override fun getMovieImages(movie_id: Int, apikey: String): Single<MovieImageResponse> {
+        return movieRepoApi.getMovieImages(movie_id = movie_id, api_key = apikey)
     }
 
 }

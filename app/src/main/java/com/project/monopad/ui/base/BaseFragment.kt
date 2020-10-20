@@ -1,9 +1,13 @@
 package com.project.monopad.ui.base
 
+import android.app.Activity
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -34,5 +38,25 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel> : Fragment()
 
         return view
     }
+
+    private fun progressOn(activity: Activity, layoutId:Int) {
+
+    }
+
+    private fun progressOff() {
+
+    }
+
+    /**
+     * isProgress(activity as Activity, R.layout.progress_bar, true/false)
+     */
+    fun isProgress(activity: Activity, layoutId: Int, flag: Boolean) {
+        if(flag){
+            progressOn(activity, layoutId)
+        }else{
+            progressOff()
+        }
+    }
+
 
 }

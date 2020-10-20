@@ -81,4 +81,21 @@
         <item name="android:datePickerMode">spinner</item>
     </style>
 
+    <style name="HomeTitleTextViewStyle" parent="SmallTitleTextViewStyle">
+        <item name="android:layout_marginTop">@dimen/spacing_24</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_16</item>
+    </style>
+
+    <!--detail-->
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!--imageSelect-->
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+    </style>
+
 </resources>
