@@ -108,4 +108,6 @@ dependencies {
     //https://github.com/PRNDcompany/YouTubePlayerView
     implementation 'kr.co.prnd:youtube-player-view:1.3.0'
 
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
