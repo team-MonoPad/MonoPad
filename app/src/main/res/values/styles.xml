@@ -9,6 +9,7 @@
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
+        <item name="android:dialogTheme">@style/myDialogTheme</item>
 
     </style>
 
@@ -77,9 +78,6 @@
         <item name="android:height">250dp</item>
         <item name="android:width">180dp</item>
     </style>
-    <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
-        <item name="android:datePickerMode">spinner</item>
-    </style>
 
     <style name="HomeTitleTextViewStyle" parent="SmallTitleTextViewStyle">
         <item name="android:layout_marginTop">@dimen/spacing_24</item>
@@ -97,5 +95,19 @@
     <style name="ToolbarColoredBackArrow" parent="AppTheme">
         <item name="android:textColorSecondary">@color/colorWhite</item>
     </style>
+
+    <!--calendar-->
+    <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
+    </style>
+    <style name="myDialogTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
+    </style>
+
+    <!--bottom fragment-->
+    <style name="CornerRadius6" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">6dp</item>
+    </style>
+
 
 </resources>

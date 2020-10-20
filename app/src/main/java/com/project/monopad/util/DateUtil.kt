@@ -15,8 +15,4 @@ object DateUtil{
         }
         return diffDate.toString()
     }
-    fun calendarToString(calendar: Calendar, format : String) : String{
-        val simpleFormat = SimpleDateFormat(format)
-        return simpleFormat.format(calendar.time)
-    }
 }
