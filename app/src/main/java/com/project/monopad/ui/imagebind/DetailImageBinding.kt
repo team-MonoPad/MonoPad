@@ -30,5 +30,4 @@ object DetailImageBinding {
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
-
 }
