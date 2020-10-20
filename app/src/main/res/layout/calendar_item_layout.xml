@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="55dp"
+    android:layout_width="60dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_columnWeight="1"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:id="@+id/back_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,26 +16,31 @@
 
         <TextView
             android:id="@+id/day_tv"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            android:layout_marginTop="3dp"/>
+            android:textSize="14sp"/>
 
         <LinearLayout
             android:id="@+id/cal_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/day_tv">
 
+            <ImageView
+                android:id="@+id/poster_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@color/transparent"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </LinearLayout>
