@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
 import com.project.monopad.model.entity.Day
 import com.project.monopad.model.entity.Review
-import com.project.monopad.util.CalendarUtil.calendarToString
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.calendar_item_layout.view.*
 import java.util.*
 
@@ -105,8 +102,8 @@ class CalendarAdapter(context: Context) : BaseAdapter() {
             val it = reviewList.iterator()
             val reviews = mutableListOf<Review>()
             while(it.hasNext()){
-                var item = it.next()
-                if(item.date==calendarToString(cal, "yyyy/MM/dd")){
+                val item = it.next()
+                if(calendar.time.toString() == item.date.toString()){
                     reviews.add(item)
                 }
             }
