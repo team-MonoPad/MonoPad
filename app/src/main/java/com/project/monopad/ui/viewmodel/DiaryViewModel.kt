@@ -106,7 +106,7 @@ class DiaryViewModel(
                 val direct = saveImage(bitmap, dir, fileName)
                 if (!direct.isBlank()) {
                     if (direct.contentEquals("already_exist")) {
-                        _imagePathData.postValue(dirPath)
+                        _imagePathData.postValue(dirPath+fileName)
                     } else {
                         _imagePathData.postValue(direct)
                     }
