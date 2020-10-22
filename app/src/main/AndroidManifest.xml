@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.view.review.ImageSelectActivity"></activity>
+        <activity android:name=".ui.view.review.ImageSelectActivity"/>
         <activity
             android:name=".ui.view.detail.DetailActivity"
             android:label="@string/title_activity_detail"
@@ -28,6 +28,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.view.video.VideoActivity"
+            android:theme="@style/VideoDialogStyle">
         </activity>
     </application>
 
