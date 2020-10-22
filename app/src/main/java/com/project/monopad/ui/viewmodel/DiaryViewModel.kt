@@ -9,7 +9,7 @@ import com.project.monopad.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DiaryViewModel(private val repo : ReviewRepoImpl): BaseViewModel(){
+class DiaryViewModel(private val repo : ReviewRepoImpl): BaseViewModel(){ //여기서 repo,local 모두 접근해서 가져오는 형태로 변환.
 
     fun insertReviewWithMovie(){
         //add test data

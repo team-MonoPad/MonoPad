@@ -68,6 +68,8 @@ var viewModelModule = module {
     viewModel { RegisterViewModel(get()) }
     viewModel { DetailViewModel(get())}
     viewModel { DiaryViewModel(get())}
+    viewModel { PersonViewModel(get())}
+    viewModel { ImageSelectViewModel(get()) }
 }
 
 var monoDiModule = listOf(networkModule, remoteDataSourceModule, localDataSourceModule, repositoryModule, viewModelModule)

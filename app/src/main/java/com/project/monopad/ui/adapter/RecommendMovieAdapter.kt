@@ -1,18 +1,20 @@
 package com.project.monopad.ui.adapter
 
-import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.RecommendMovieViewBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.ui.view.detail.DetailActivity
 
 class RecommendMovieAdapter : RecyclerView.Adapter<RecommendMovieAdapter.ViewHolder>() {
 
     private var recommendMovieList = ArrayList<MovieInfoResultResponse>()
 
+    private var listener: ((id: Int) -> Unit)? = null
+
+    fun setOnRecommendClickListener(listener: (id: Int) -> Unit){
+        this.listener = listener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendMovieAdapter.ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val binding: RecommendMovieViewBinding = RecommendMovieViewBinding.inflate(inflater, parent, false)
@@ -38,13 +40,7 @@ class RecommendMovieAdapter : RecyclerView.Adapter<RecommendMovieAdapter.ViewHol
 
         fun onClick(movie: MovieInfoResultResponse){
             binding.ivDetailRecommend.setOnClickListener{
-                val activity = binding.ivDetailRecommend.context as Activity
-
-                binding.ivDetailRecommend.context.also {
-                    it.startActivity(Intent(it, DetailActivity::class.java).putExtra("movie_id", movie.id))
-                }
-
-                activity.finish()
+                listener?.invoke(movie.id)
             }
         }
     }
