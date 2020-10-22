@@ -4,6 +4,8 @@
     package="com.project.monopad">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MonoApplication"
@@ -13,16 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.view.review.ImageSelectActivity"></activity>
+
+<!--        <activity android:name=".ui.view.edit.EditActivity"-->
+<!--            android:windowSoftInputMode="adjustPan">-->
         <activity
             android:name=".ui.view.detail.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.view.login.RegisterActivity" />
-        <activity android:name=".ui.view.login.LoginActivity"/>
-        <activity android:name=".ui.view.detail.PersonDetailActivity"/>
-
-        <activity android:name=".ui.view.MainActivity">
+        <activity android:name=".ui.view.login.LoginActivity"></activity>
+        <activity android:name=".ui.view.edit.EditActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

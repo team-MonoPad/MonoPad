@@ -39,4 +39,5 @@
     <string name="image_select_title">이미지 선택</string>
     <string name="image_select_please">이미지를 선택하세요!</string>
     <string name="image_select_checkbox">한 개만 선택 가능합니다!\n 다른 선택을 해제하세요!</string>
+    <string name="edit_diary_date_message">영화를 관람한 날짜를 선택해주세요!</string>
 </resources>

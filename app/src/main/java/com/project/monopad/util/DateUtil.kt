@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtil{
-    private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+    val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
 
     fun getDayDifference(releaseDate: String): String {
         val date = simpleDateFormat.parse(releaseDate)

@@ -8,6 +8,7 @@
             type="com.project.monopad.ui.view.edit.EditActivity"/>
     </data>
     <RelativeLayout
+        android:id="@+id/edit_top_layout"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +30,6 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
         <RelativeLayout
-            android:id="@+id/edit_review_container"
             android:layout_width="match_parent"
             android:layout_below="@id/edit_toolbar"
             android:layout_height="match_parent">
@@ -37,30 +37,38 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                card_view:cardBackgroundColor="#79DADADA"
+                card_view:cardBackgroundColor="#793E3E3E"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="0dp"
                 android:layout_margin="36dp"
-
                 card_view:contentPadding="4dp">
                 <LinearLayout
+                    android:id="@+id/edit_review_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/spacing_24"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/edit_tv_title"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_et_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/MiddleTitleTextViewStyle"
-                        tools:text="title"/>
+                        android:gravity="top"
+                        android:inputType="text"
+                        android:hint="리뷰 제목"
+                        android:textColorHint="@color/grey300"
+                        android:textCursorDrawable="@color/colorAccent"
+                        android:textColor="@color/colorWhite"
+                        android:focusable="true"
+                        android:maxLines="1"
+                        android:background="@color/transparent"
+                        android:layout_marginTop="@dimen/spacing_8"/>
                     <TextView
                         android:id="@+id/edit_tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/SubTitleTextViewStyle1"
                         tools:text="2020/01/01"
-                        android:text="@string/edit_diary_date_message"
                         android:onClick="@{() -> activity.btnClick()}"/>
                     <RatingBar
                         android:id="@+id/edit_rating_bar"
@@ -72,7 +80,7 @@
                         android:secondaryProgressTint="@color/colorYellow"
                         style="@style/Widget.AppCompat.RatingBar.Indicator"/>
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_et_review"
+                        android:id="@+id/edit_et_comment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="top"
@@ -80,7 +88,7 @@
                         android:singleLine="false"
                         android:imeOptions="actionNone"
                         android:hint="리뷰를 기록하고 SNS에 공유해보세요!"
-                        android:textColorHint="@color/colorLightGrey"
+                        android:textColorHint="@color/grey300"
                         android:textCursorDrawable="@color/colorAccent"
                         android:textColor="@color/colorWhite"
                         android:focusable="true"
