@@ -7,8 +7,8 @@ import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
 import com.project.monopad.model.network.response.MovieInfoResponse
 import com.project.monopad.ui.base.BaseFragment
-import com.project.monopad.ui.view.home.adapter.MovieAdapter
-import com.project.monopad.ui.view.home.adapter.MovieCase
+import com.project.monopad.ui.adapter.MovieAdapter
+import com.project.monopad.ui.adapter.MovieCase
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -49,8 +49,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         viewModel.liveNowPlayingMovie.observe(this, Observer<MovieInfoResponse>{
             nowPlayingAdapter.setMovies(it.results)
             viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
-
-
         })
 
         viewModel.liveUpcomingMovie.observe(this, Observer<MovieInfoResponse>{

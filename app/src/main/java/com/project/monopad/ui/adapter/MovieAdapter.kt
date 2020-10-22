@@ -1,7 +1,5 @@
-package com.project.monopad.ui.view.home.adapter
+package com.project.monopad.ui.adapter
 
-import android.util.Log
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
-import com.project.monopad.databinding.*
 import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.android.synthetic.main.item_popular_page.view.*
-import kotlinx.android.synthetic.main.item_now_playing.view.*
 
 //https://lakue.tistory.com/16?category=853542
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
