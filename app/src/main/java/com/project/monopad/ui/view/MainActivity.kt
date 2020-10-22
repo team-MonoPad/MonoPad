@@ -2,6 +2,8 @@ package com.project.monopad.ui.view
 
 
 import android.content.Intent
+import android.icu.util.TimeUnit.values
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,6 +19,7 @@ import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.detail.DetailActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.chrono.JapaneseEra.values
 
 /**
  * Android Setup BottomNavigationView With Jetpack Navigation UI (Kotlin)
@@ -65,8 +68,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
 //         make sure appbar/toolbar is not hidden upon fragment switch ?
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in bottomNavDestinationIds) {
-                viewDataBinding.mainAppBarLayout.setExpanded(true, true)
+                if (destination.id == R.id.navigation_home){
+                    viewDataBinding.mainAppBarLayout.setExpanded(false, false)
+                }else{
+                    viewDataBinding.mainAppBarLayout.setExpanded(true, true)
+                }
             }
+
 //            if (destination.id != bottomNavDestinationIds.elementAt(0)){
 //                val layoutParams  = viewDataBinding.mainFrameLayout.layoutParams as (CoordinatorLayout.LayoutParams)
 //                layoutParams.topMargin = R.attr.actionBarSize;

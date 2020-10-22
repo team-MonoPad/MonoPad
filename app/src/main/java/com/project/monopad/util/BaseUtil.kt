@@ -5,3 +5,4 @@ object BaseUtil {
     const val API_KEY  = "84301bd818cef2f63643e7dffa8998ab"
     const val KR_LANGUAGE = "ko-KR"
 }
+

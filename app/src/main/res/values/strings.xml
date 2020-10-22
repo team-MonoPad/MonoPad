@@ -9,6 +9,8 @@
     <string name="title_diary">Diary</string>
     <string name="title_activity_detail">ScrollingActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="title_movie_detail">MovieDetail</string>
+    <string name="title_people_detail">PeopleDetail</string>
 
     <!--login-->
     <string name="login">로그인</string>
@@ -31,6 +33,7 @@
     <string name="detail_actor_line">출연진</string>
     <string name="detail_similar_movie">비슷한 콘텐츠</string>
     <string name="detail_recommend_movie">추천 콘텐츠</string>
+    <string name="person_detail_text_filmography">필모그라피</string>
 
     <!--ImageSelect-->
     <string name="image_select_title">이미지 선택</string>

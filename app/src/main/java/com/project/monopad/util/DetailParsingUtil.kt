@@ -3,6 +3,7 @@ package com.project.monopad.util
 import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.model.network.response.MovieCastResponse
 import com.project.monopad.model.network.response.MovieCrewResponse
+import java.util.regex.Pattern
 
 class DetailParsingUtil {
 
@@ -34,6 +35,16 @@ class DetailParsingUtil {
                 if(c.profile_path!=null) list.add(c)
             }
             return list
+        }
+
+        fun koreaNameParsing(data : List<String>) : String {
+            var test = ""
+            data.forEach { name_also ->
+                if (Pattern.matches("^[ㄱ-ㅎ가-힣]*$", name_also)) {
+                    test += "#$name_also "
+                }
+            }
+            return test
         }
     }
 }
