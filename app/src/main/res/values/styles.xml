@@ -89,4 +89,9 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!--imageSelect-->
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+    </style>
+
 </resources>

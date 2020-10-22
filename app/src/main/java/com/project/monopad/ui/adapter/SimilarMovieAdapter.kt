@@ -1,17 +1,20 @@
 package com.project.monopad.ui.adapter
 
-import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.SimilarMovieViewBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.ui.view.detail.DetailActivity
 
 class SimilarMovieAdapter : RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>() {
 
     private var similarMovieList = ArrayList<MovieInfoResultResponse>()
+
+    private var listener: ((id: Int) -> Unit)? = null
+
+    fun setOnSimilarClickListener(listener: (id: Int) -> Unit){
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilarMovieAdapter.ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -38,13 +41,7 @@ class SimilarMovieAdapter : RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>
 
         fun onClick(movie: MovieInfoResultResponse){
             binding.ivDetailSimilar.setOnClickListener{
-                val activity = binding.ivDetailSimilar.context as Activity
-
-                binding.ivDetailSimilar.context.also {
-                    it.startActivity(Intent(it, DetailActivity::class.java).putExtra("movie_id", movie.id))
-                }
-
-                activity.finish()
+                listener?.invoke(movie.id)
             }
         }
     }
