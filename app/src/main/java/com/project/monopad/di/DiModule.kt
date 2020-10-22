@@ -68,7 +68,7 @@ var viewModelModule = module {
     viewModel { RegisterViewModel(get()) }
     viewModel { DetailViewModel(get())}
     viewModel { DiaryViewModel(get())}
-    viewModel { VideoViewModel(get())}
+    viewModel { PersonViewModel(get())}
     viewModel { ImageSelectViewModel(get()) }
 }
 
