@@ -1,34 +1,33 @@
 package com.project.monopad.ui.view.edit
 
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.app.DatePickerDialog
-import android.content.ContentValues
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.net.Uri
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Environment
-import android.provider.MediaStore
 import android.provider.Settings.System.DATE_FORMAT
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorInt
+import androidx.core.graphics.drawable.DrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityEditBinding
-import com.project.monopad.model.entity.Movie
-import com.project.monopad.model.entity.Review
-import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.ui.base.BaseActivity
-import com.project.monopad.ui.viewmodel.DiaryViewModel
+import com.project.monopad.ui.viewmodel.MovieViewModel
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
 import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.android.synthetic.main.activity_edit.view.*
+import kotlinx.android.synthetic.main.activity_edit.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -41,16 +40,17 @@ import java.util.*
  * Android Setup BottomNavigationView With Jetpack Navigation UI (Kotlin)
  * https://code.luasoftware.com/tutorials/android/android-setup-bottomnavigationview-with-jetpack-navigation/
  */
-class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
+class EditActivity : BaseActivity<ActivityEditBinding, MovieViewModel>() {
 
     override val layoutResourceId: Int
         get() = R.layout.activity_edit
 
-    override val viewModel: DiaryViewModel by viewModel()
+    override val viewModel: MovieViewModel by viewModel()
 
     private lateinit var imm: InputMethodManager
-
-    private lateinit var movie: Movie
+    internal lateinit var frontCard : AnimatorSet
+    internal lateinit var backCard : AnimatorSet
+    internal var isFront = true
 
     //override 된 메소드는 모두 onCreate 내에 존재함으로 activity가 시작되고 자동적으로 그려진다.
     override fun initStartView() {
@@ -76,52 +76,43 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
             .into(viewDataBinding.editIvBlurBackground)
 
+        //Flip CardView Setting
+        val scale : Float = applicationContext.resources.displayMetrics.density
+        cv_edit_diary_edit.cameraDistance = 8000 * scale
+        cv_edit_diary_poster.cameraDistance = 8000 * scale
+
+        frontCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.front_animator) as AnimatorSet
+        backCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.back_animator) as AnimatorSet
     }
 
     override fun initBeforeBinding() {
         // get data
-        viewModel.getReviewByReviewId()
+        viewModel.nowPlayMovieData()
     }
 
     override fun initAfterBinding() {
         //observing & add item to adapter
-
-        //local db 에 저장된 리뷰데이터를 가져와서 세팅
-        viewModel.singleReviewData.observe(this,
-            {
-                viewDataBinding.editTvDate.text = it.date
-                viewDataBinding.editEtTitle.setText(it.title)
-                viewDataBinding.editEtComment.setText(it.comment)
-                viewDataBinding.editRatingBar.rating = it.rating.toFloat()
-                Glide.with(this@EditActivity)
-                    .load(IMAGE_URL + "/aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg")
-                    .fitCenter()
-                    .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
-                    .into(viewDataBinding.editIvBlurBackground)
-            })
     }
 
+    //ToolBar에 새로 만든 menu.xml을 인플레이트함
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.menu_edit, menu)
-        setEditableMode(true) // intent 를 통해 데이터를 받아온 후, 값 설정
+        setEditableMode(true) // intent 로 저장 상태인지 편집 상태인지 데이터 받아와서 세팅
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_save -> {
-                setEditableMode(false) //편집 불가능
-                saveReview() //디비에 insert
+                setEditableMode(false)
                 return true
             }
             R.id.menu_edit -> {
-                setEditableMode(true) //편집 가능
+                setEditableMode(true)
                 return true
             }
             R.id.menu_share -> {
-                saveImageInAlbum()
-//                shareFileToInstagram(uri, false)
+                saveImage()
                 return true
             }
             else -> {
@@ -130,182 +121,43 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         }
     }
 
-    //로컬디비에 리뷰 저장
-    private fun saveReview() {
-        val genre = Genre(1, "action")
-        val genre1 = Genre(2, "fantasy")
-        val fakeMovie = Movie(
-            1231,
-            "post-paath",
-            "title",
-            "overview",
-            "2020/08/01",
-            listOf(genre, genre1)
-        )
-
-        val review = Review(
-            review_poster = viewDataBinding.editEtTitle.text.toString(),
-            title = viewDataBinding.editEtTitle.text.toString(),
-            date = viewDataBinding.editTvDate.text.toString(),
-            comment = viewDataBinding.editEtComment.text.toString(),
-            rating = viewDataBinding.editRatingBar.rating.toDouble(),
-            movie = fakeMovie
-        )
-
-        d("review", review.toString())
-
-        viewModel.insertReviewWithMovie(review)
-    }
-
     /**
-     * false -> 편집 불가능 화면 화면
-     * true -> 편집 가능 화면
+     * false -> 저장완료 화면
+     * true -> 편집 화면
      */
     private fun setEditableMode(flag: Boolean) {
-        //Toolbar 의 메뉴 활성화 or 비활성화
+        //can't edit
         viewDataBinding.editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
         viewDataBinding.editToolbar.menu.findItem(R.id.menu_edit).isVisible = !flag
+
+        viewDataBinding.editEtComment.isFocusable = flag
+        viewDataBinding.editEtComment.isFocusableInTouchMode = flag
+        viewDataBinding.editEtComment.isEnabled = flag
+        d("flag ", flag.toString())
+        //can edit
         viewDataBinding.editToolbar.menu.findItem(R.id.menu_save).isVisible = flag
 
-        //https://stackoverflow.com/questions/7068873/how-can-i-disable-all-views-inside-the-layout
-        //카드뷰 안에 있는 모든 뷰를 활성화 or 비활성화
-        for (i in 0 until viewDataBinding.editReviewContainer.childCount) {
-            val child: View = viewDataBinding.editReviewContainer.getChildAt(i)
-            //레이팅바는 비활성화 하면 색깔이 투명해지므로, 색깔은 유지시키고 수정만 불가능하게 처리함.
-            if(child == viewDataBinding.editRatingBar){
-                viewDataBinding.editRatingBar.setIsIndicator(!flag)
-            }else{
-                child.isEnabled = flag
-            }
-        }
+        if(flag) showKeyboard() else hideKeyboard()
 
-        if(flag) showKeyboard() else hideKeyboard() //소프트키 자동 보이기 or 숨기기
     }
     private fun showKeyboard() {
         viewDataBinding.editEtComment.requestFocus()
-        imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager //앱에서 창을 제어하는 기능을 제공하는 클래스. 소프트키 제어하기 위해 사용
         imm.showSoftInput(viewDataBinding.editEtComment, 0)
     }
 
     private fun hideKeyboard() {
-        imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(viewDataBinding.editEtComment.windowToken, 0)
     }
 
-    //날짜 클릭 시 Show DatePicker
-    fun btnClick() {
-        println("dateOnClick")
-        showDatePickerDialog()
-    }
-
-    private fun showDatePickerDialog() {
-        val cal = Calendar.getInstance()
-        val y = cal.get(Calendar.YEAR)
-        val m = cal.get(Calendar.MONTH)
-        val d = cal.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(
-            this, R.style.CustomDatePickerDialogTheme,
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                d("Selected Birthday", "$year  $monthOfYear  $dayOfMonth")
-                // Display Selected date in textbox
-                val birthDay = "${year}/${monthOfYear + 1}/${dayOfMonth}"
-                viewDataBinding.editTvDate.text = birthDay
-            },
-            y, m, d
-        )
-            .apply {
-                show()
-            }
-    }
-
-    private fun shareFileToInstagram(uri: Uri, isVideo: Boolean) {
-        val feedIntent = Intent(Intent.ACTION_SEND)
-        feedIntent.type = if (isVideo) "video/*" else "image/*"
-        feedIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        feedIntent.setPackage("com.instagram.android")
-        val storiesIntent = Intent("com.instagram.share.ADD_TO_STORY")
-        storiesIntent.setDataAndType(uri, if (isVideo) "mp4" else "jpg")
-        storiesIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        storiesIntent.setPackage("com.instagram.android")
-        this.grantUriPermission(
-            "com.instagram.android", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        val chooserIntent = Intent.createChooser(feedIntent, "insta")
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(storiesIntent))
-        startActivity(chooserIntent)
-    }
-//    private fun shareStory() {
-//        val backgroundAssetUri =
-//            FileProvider.getUriForFile(this, "your_package_name.provider", ScreenShot())
-//        val storiesIntent = Intent("com.instagram.share.ADD_TO_STORY")
-//        storiesIntent.setDataAndType(backgroundAssetUri, "image/*")
-//        storiesIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//        storiesIntent.setPackage("com.instagram.android")
-//        grantUriPermission(
-//            "com.instagram.android", backgroundAssetUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-//        )
-//        this.startActivity(storiesIntent)
-//    }
-
-    private fun shareInstagramStory() {
-        // Define image asset URI and attribution link URL
-
-        // Define image asset URI and attribution link URL
-        val stickerAssetUri: Uri = Uri.parse("your-image-asset-uri-goes-here")
-        val attributionLinkUrl = "https://www.my-aweseome-app.com/p/BhzbIOUBval/"
-        val sourceApplication = "com.my.app"
-
-// Instantiate implicit intent with ADD_TO_STORY action,
-// sticker asset, background colors, and attribution link
-
-// Instantiate implicit intent with ADD_TO_STORY action,
-// sticker asset, background colors, and attribution link
-        val intent = Intent("com.instagram.share.ADD_TO_STORY")
-        intent.putExtra("source_application", sourceApplication)
-
-        intent.type = "MEDIA_TYPE_JPEG"
-        intent.putExtra("interactive_asset_uri", stickerAssetUri)
-        intent.putExtra("content_url", attributionLinkUrl)
-        intent.putExtra("top_background_color", "#33FF33")
-        intent.putExtra("bottom_background_color", "#FF00FF")
-
-// Instantiate activity and verify it will resolve implicit intent
-
-// Instantiate activity and verify it will resolve implicit intent
-        this.grantUriPermission(
-            "com.instagram.android", stickerAssetUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        if (this.packageManager.resolveActivity(intent, 0) != null) {
-            this.startActivityForResult(intent, 0)
-        }
-    }
     private fun convertViewToDrawable(): Bitmap {
-        val view = viewDataBinding.editTopLayout
+        val view = viewDataBinding.editReviewContainer
         val bitmap = Bitmap.createBitmap(
-            view.measuredWidth,
-            view.measuredHeight,
+            view.measuredWidth, view.measuredHeight,
             Bitmap.Config.ARGB_8888
         )
-
-//        val resultBitmap: Bitmap = Bitmap.createBitmap(
-//            sourceBitmap, 0, 0,
-//            sourceBitmap.getWidth() - 1, sourceBitmap.getHeight() - 1
-//        )
-        val b = Bitmap.createBitmap(
-            bitmap,
-            0,
-            0,
-            view.measuredWidth,
-            view.measuredHeight - view.edit_toolbar.measuredHeight,
-        )
-
-        val canvas = Canvas(b)
-        canvas.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
-        view.draw(canvas)
-
-
-
+        val c = Canvas(bitmap)
+        c.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
+        view.draw(c)
         return bitmap
     }
 
@@ -328,7 +180,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
         return file
     }
-
     fun saveImage() {
         val view = viewDataBinding.editReviewContainer
 
@@ -358,59 +209,70 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         }
     }
 
-    //https://boilerplate.tistory.com/43
-    fun saveImageInAlbum() {
-        val bitmap: Bitmap = convertViewToDrawable()
-        val fileName = "MonoPad" + DATE_FORMAT.format(Date())
-        //API 29 이상일 경우
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val values = ContentValues()
-            with(values) {
-                put(MediaStore.Images.Media.TITLE, fileName)
-                put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/MonoPad")
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            }
+    fun btnClick() {
+        println("dateOnClick")
+        showDatePickerDialog()
+    }
 
-            val uri = this.contentResolver
-                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            val fos = this.contentResolver.openOutputStream(uri!!)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-            fos?.run {
-                flush()
-                close()
-            }
-        } else { //API 29 미만일 경우
-            val path = Environment.getExternalStorageDirectory().absolutePath + "/MonoPad"
-
-//            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() +
-//                    File.separator +
-//                    "MonoPad"
-
-            //처음 생성한 path 경로가 존재하는지 확인 후 존재하지 않을 시 경로를 생성
-            val file = File(path)
-            if (!file.exists()) {
-                file.mkdirs()
-                //            printToast("폴더가 생성되었습니다.");
-            }
-
-//            fos = FileOutputStream(path + "/MonoPad" + day.format(date) + ".jpeg")
-
-            val imgFile = File(file, fileName)
-            val os = FileOutputStream(path + fileName + ".jpeg")
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
-            os.flush()
-            os.close()
-
-            val values = ContentValues()
-            with(values) {
-                put(MediaStore.Images.Media.TITLE, fileName)
-                put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                put(MediaStore.Images.Media.BUCKET_ID, fileName)
-                put(MediaStore.Images.Media.DATA, imgFile.absolutePath)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            }
-            this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+    fun rotateBtnClick(){
+        isFront = if(isFront){
+            frontCard.setTarget(cv_edit_diary_edit)
+            backCard.setTarget(cv_edit_diary_poster)
+            frontCard.start()
+            backCard.start()
+            //frontCardView()
+            backCardView()
+            false
+        } else {
+            frontCard.setTarget(cv_edit_diary_poster)
+            backCard.setTarget(cv_edit_diary_edit)
+            frontCard.start()
+            backCard.start()
+            //backCardView()
+            frontCardView()
+            true
         }
     }
+
+    fun frontCardView(){
+        edit_et_title.visibility = View.VISIBLE
+        edit_tv_date.visibility = View.VISIBLE
+        edit_rating_bar.visibility = View.VISIBLE
+        edit_et_comment.visibility = View.VISIBLE
+        tv_movie_title.visibility = View.GONE
+        tv_movie_release_date.visibility = View.GONE
+        tv_movie_overview.visibility = View.GONE
+    }
+
+    fun backCardView(){
+        tv_movie_title.visibility = View.VISIBLE
+        tv_movie_release_date.visibility = View.VISIBLE
+        tv_movie_overview.visibility = View.VISIBLE
+        edit_et_title.visibility = View.GONE
+        edit_tv_date.visibility = View.GONE
+        edit_rating_bar.visibility = View.GONE
+        edit_et_comment.visibility = View.GONE
+
+    }
+
+    private fun showDatePickerDialog() {
+        val cal = Calendar.getInstance()
+        val y = cal.get(Calendar.YEAR)
+        val m = cal.get(Calendar.MONTH)
+        val d = cal.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(
+            this, R.style.CustomDatePickerDialogTheme,
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                d("Selected Birthday", "$year  $monthOfYear  $dayOfMonth")
+                // Display Selected date in textbox
+                val birthDay = "${year}-${monthOfYear + 1}-${dayOfMonth}"
+                viewDataBinding.editTvDate.text = birthDay
+            },
+            y, m, d
+        ).apply {
+            show()
+        }
+    }
+
 }

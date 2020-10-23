@@ -33,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_below="@id/edit_toolbar"
             android:layout_height="match_parent">
+
             <androidx.cardview.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
@@ -40,8 +41,11 @@
                 card_view:cardBackgroundColor="#793E3E3E"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="0dp"
+                android:id="@+id/cv_edit_diary_edit"
                 android:layout_margin="36dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="4dp"
+                >
+
                 <LinearLayout
                     android:id="@+id/edit_review_container"
                     android:layout_width="match_parent"
@@ -98,6 +102,69 @@
                         style="@style/BodyTextViewStyle2"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:cardBackgroundColor="#793E3E3E"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="0dp"
+                android:id="@+id/cv_edit_diary_poster"
+                android:layout_margin="36dp"
+                card_view:contentPadding="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/spacing_24"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_movie_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/MiddleTitleTextViewStyle"
+                        android:text="범죄의 도시 "
+                        android:visibility="gone"
+                        />
+                    <TextView
+                        android:id="@+id/tv_movie_release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/SubTitleTextViewStyle1"
+                        android:text="2020/01/01"
+                        android:visibility="gone"
+                        android:onClick="@{() -> activity.btnClick()}"/>
+
+                    <TextView
+                        android:id="@+id/tv_movie_overview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top"
+                        android:singleLine="false"
+                        android:text="@string/test_overview"
+                        android:textColor="@color/colorWhite"
+                        android:focusable="true"
+                        android:scrollbars="vertical"
+                        android:background="@color/transparent"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:visibility="gone"
+                        style="@style/BodyTextViewStyle2"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <ImageView
+                android:id="@+id/iv_rotate"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:rotation="180"
+                android:src="@drawable/ic_baseline_rotate"
+                android:layout_alignBottom="@+id/cv_edit_diary_edit"
+                android:layout_centerInParent="true"
+                android:onClick="@{() -> activity.rotateBtnClick()}"
+                />
         </RelativeLayout>
+
     </RelativeLayout>
 </layout>
