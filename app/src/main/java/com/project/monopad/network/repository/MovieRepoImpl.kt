@@ -17,9 +17,10 @@ class MovieRepoImpl (private val movieRemoteDataSource : MovieRemoteDataSource) 
     override fun getUpComingMovie(
         apikey: String,
         language: String,
-        page: Int
+        page: Int,
+        region: String
     ): Single<MovieInfoResponse> {
-        return movieRemoteDataSource.getUpComingMovie(apikey,language,page)
+        return movieRemoteDataSource.getUpComingMovie(apikey,language,page,region)
     }
 
     override fun getPopularMovie(
