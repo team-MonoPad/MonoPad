@@ -37,7 +37,6 @@ object DetailImageBinding {
         Glide.with(view.context)
             .load(BaseUtil.THUMBNAIL_URL(imageUrl))
             .fitCenter()
-            .placeholder(R.drawable.ic_baseline_error_outline_24)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
