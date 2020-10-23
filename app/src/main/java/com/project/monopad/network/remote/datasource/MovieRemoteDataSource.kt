@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 interface MovieRemoteDataSource {
     fun getNowPlayMovie(apikey : String, language : String, page: Int) : Single<MovieInfoResponse>
-    fun getUpComingMovie(apikey : String, language : String, page: Int) : Single<MovieInfoResponse>
+    fun getUpComingMovie(apikey : String, language : String, page: Int, region : String) : Single<MovieInfoResponse>
     fun getPopularMovie(apikey : String, language : String, page: Int, region : String) : Single<MovieInfoResponse>
     fun getTopRatedMovie(apikey : String, language : String, page: Int, region : String) : Single<MovieInfoResponse>
     fun getLatestMovie(apikey : String, language : String) : Single<MovieInfoResponse>
