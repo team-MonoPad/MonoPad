@@ -89,7 +89,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             rv_detail_similar_movie.adapter = similarMovieAdapter
             similarMovieAdapter.setList(it)
         })
-        similarMovieAdapter.setOnSimilarClickListener {
+        similarMovieAdapter.setOnOtherClickListener {
             val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
             startActivity(intent)
             finish()
@@ -102,7 +102,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             rv_detail_recommend_movie.adapter = recommendMovieAdapter
             recommendMovieAdapter.setList(it)
         })
-        recommendMovieAdapter.setOnRecommendClickListener {
+        recommendMovieAdapter.setOnOtherClickListener {
             val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
             startActivity(intent)
             finish()
