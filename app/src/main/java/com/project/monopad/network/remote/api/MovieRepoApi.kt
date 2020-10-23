@@ -19,7 +19,8 @@ interface MovieRepoApi {
     fun getUpComingMovie(
         @Query("api_key") api_key:String,
         @Query("language") language:String,
-        @Query("page") page:Int
+        @Query("page") page:Int,
+        @Query("region") region:String
     ): Single<MovieInfoResponse>
 
     @GET("movie/popular")

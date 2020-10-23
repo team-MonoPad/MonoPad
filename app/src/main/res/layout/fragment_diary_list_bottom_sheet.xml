@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        style="@style/CornerRadius6"
+        android:background="@color/colorBlack"
+        tools:context=".ui.view.diary.DiaryListBottomSheetFragment">
+
+
+        <ImageView
+            android:id="@+id/iv_slide"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_remove_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_bs_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_slide"
+            tools:listitem="@layout/item_bs_list_movie"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

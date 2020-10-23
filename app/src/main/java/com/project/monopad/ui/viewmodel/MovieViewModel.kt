@@ -75,7 +75,8 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
             repo.getUpComingMovie(
                 apikey = "84301bd818cef2f63643e7dffa8998ab",
                 language = "ko-KR",
-                page = 1
+                page = 1,
+                region = "kr"
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
