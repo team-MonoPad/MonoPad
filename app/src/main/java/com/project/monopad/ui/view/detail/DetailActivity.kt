@@ -1,7 +1,9 @@
 package com.project.monopad.ui.view.detail
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -12,14 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.youtube.player.internal.v
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
-import com.project.monopad.ui.adapter.CasterAdapter
-import com.project.monopad.ui.adapter.RecommendMovieAdapter
-import com.project.monopad.ui.adapter.SimilarMovieAdapter
-import com.project.monopad.ui.adapter.TrailerAdapter
+import com.project.monopad.ui.adapter.*
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.review.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
 import com.project.monopad.util.DetailParsingUtil
+import com.project.monopad.util.OtherMovieCase
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_scrolling.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -84,7 +84,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     }
 
     private fun observeSimilarMovieData(){
-        val similarMovieAdapter = SimilarMovieAdapter()
+        val similarMovieAdapter = OtherMovieAdapter(OtherMovieCase.SIMILAR)
         viewModel.similarMovieData.observe(this, {
             rv_detail_similar_movie.adapter = similarMovieAdapter
             similarMovieAdapter.setList(it)
@@ -97,7 +97,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     }
 
     private fun observeRecommendMovieData(){
-        val recommendMovieAdapter = RecommendMovieAdapter()
+        val recommendMovieAdapter = OtherMovieAdapter(OtherMovieCase.RECOMMEND)
         viewModel.recommendMovieData.observe(this, {
             rv_detail_recommend_movie.adapter = recommendMovieAdapter
             recommendMovieAdapter.setList(it)
@@ -126,20 +126,22 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     /* view setting */
     private fun recyclerViewSetting(){
+        val layout = { context: Context -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)}
+
         rv_detail_caster.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = layout(context)
             setHasFixedSize(true)
         }
         rv_detail_similar_movie.apply{
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = layout(context)
             setHasFixedSize(true)
         }
         rv_detail_recommend_movie.apply{
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =layout(context)
             setHasFixedSize(true)
         }
         rv_detail_trailer.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = layout(context)
             setHasFixedSize(true)
         }
     }
@@ -180,6 +182,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         inflater.inflate(R.menu.menu_detail, menu)
         return true
     }
+
 
 
 }
