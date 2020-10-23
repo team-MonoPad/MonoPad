@@ -1,6 +1,8 @@
 package com.project.monopad.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.monopad.model.network.response.MovieInfoResponse
 import com.project.monopad.model.network.response.MovieInfoResultResponse
@@ -14,8 +16,6 @@ import java.util.*
 class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
 
     private val TAG = "MovieViewModel"
-
-    val loading: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val _popularMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
     val popularMovieData = _popularMovieData
@@ -39,7 +39,6 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loading.postValue(true) }
                 .subscribe({ it ->
                     it.run {
                         popularMovieData.value = it.results
@@ -58,7 +57,6 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { loading.postValue(true) }
             .subscribe({ it ->
                 it.run {
                     nowPlayingMovieData.value = it.results
@@ -80,7 +78,6 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loading.postValue(true) }
                 .subscribe({ it ->
                     it.run {
                         //개봉일 순으로 정렬
@@ -106,7 +103,6 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { loading.postValue(true) }
                 .subscribe({ it ->
                     it.run {
                         it.results.sort()

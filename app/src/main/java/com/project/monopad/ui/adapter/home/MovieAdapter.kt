@@ -110,8 +110,6 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
 
     override fun getItemCount(): Int = movies.size
 
-
-
     inner class PopularMovieViewHolder(@NonNull itemView: View) : MovieItemView(itemView) {
         var binding: ItemPopularPageBinding? = DataBindingUtil.bind(itemView)
 
@@ -131,7 +129,6 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
             binding!!.itemMovieBtTrailer.setOnClickListener {
                 listener?.invoke(movie.id)
             }
-
         }
     }
 
@@ -199,7 +196,5 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
             }
         }
     }
-
-
 
 }
