@@ -2,10 +2,7 @@ package com.project.monopad.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.project.monopad.model.network.response.MovieCastResponse
-import com.project.monopad.model.network.response.MovieCrewResponse
-import com.project.monopad.model.network.response.MovieDetailResponse
-import com.project.monopad.model.network.response.MovieInfoResultResponse
+import com.project.monopad.model.network.response.*
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.BaseUtil
@@ -30,6 +27,9 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
 
     private val _recommendMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
     val recommendMovieData = _recommendMovieData
+
+    private val _movieTrailerData = MutableLiveData<List<MovieVideoResultResponse>>()
+    val movieTrailerData = _movieTrailerData
 
     fun getDetailData(movieId : Int){
         /* 영화 상세 정보 데이터 가져오기 */
@@ -96,6 +96,23 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .subscribe({
                 it.run {
                     _recommendMovieData.value = it.results
+                }
+            },{
+                Log.d(TAG, it.localizedMessage)
+            })
+        )
+
+        /* 영화 트레일러 가져오기 */
+        addDisposable(repo.getMovieVideo(
+            movie_id = movieId,
+            apikey = BaseUtil.API_KEY,
+            language = BaseUtil.KR_LANGUAGE,
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it.run {
+                   _movieTrailerData.value = it.results
                 }
             },{
                 Log.d(TAG, it.localizedMessage)

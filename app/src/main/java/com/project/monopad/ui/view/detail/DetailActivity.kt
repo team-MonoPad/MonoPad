@@ -5,14 +5,17 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.youtube.player.internal.v
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.RecommendMovieAdapter
 import com.project.monopad.ui.adapter.SimilarMovieAdapter
+import com.project.monopad.ui.adapter.TrailerAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.review.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
@@ -46,6 +49,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         observeMovieCasterData()
         observeSimilarMovieData()
         observeRecommendMovieData()
+        observeTrailerMovieData()
     }
 
     /* observe */
@@ -88,6 +92,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         similarMovieAdapter.setOnSimilarClickListener {
             val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -100,9 +105,24 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         recommendMovieAdapter.setOnRecommendClickListener {
             val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
             startActivity(intent)
+            finish()
         }
     }
 
+    private fun observeTrailerMovieData(){
+        val trailerAdapter = TrailerAdapter()
+        viewModel.movieTrailerData.observe(this, {
+            rv_detail_trailer.adapter = trailerAdapter
+            trailerAdapter.setList(it)
+        })
+        trailerAdapter.setOnTrailerClickListener {
+            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
+            /* key 넘겨주기
+            val intent = Intent(this, CLASS).putExtra("key", it)
+            startActivity(intent)
+             */
+        }
+    }
 
     /* view setting */
     private fun recyclerViewSetting(){
@@ -115,6 +135,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             setHasFixedSize(true)
         }
         rv_detail_recommend_movie.apply{
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+        }
+        rv_detail_trailer.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
