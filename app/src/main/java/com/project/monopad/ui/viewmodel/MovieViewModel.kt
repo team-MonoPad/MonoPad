@@ -3,6 +3,7 @@ package com.project.monopad.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.monopad.model.network.response.MovieInfoResponse
+import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.DateUtil
@@ -16,21 +17,17 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
 
     val loading: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val livePopularMovie: MutableLiveData<MovieInfoResponse> by lazy {
-        MutableLiveData<MovieInfoResponse>()
-    }
+    private val _popularMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
+    val popularMovieData = _popularMovieData
 
-    val liveNowPlayingMovie: MutableLiveData<MovieInfoResponse> by lazy {
-        MutableLiveData<MovieInfoResponse>()
-    }
+    private val _nowPlayingMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
+    val nowPlayingMovieData = _nowPlayingMovieData
 
-    val liveUpcomingMovie: MutableLiveData<MovieInfoResponse> by lazy {
-        MutableLiveData<MovieInfoResponse>()
-    }
+    private val _upcomingMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
+    val upcomingMovieData = _upcomingMovieData
 
-    val liveTopRatedMovie: MutableLiveData<MovieInfoResponse> by lazy {
-        MutableLiveData<MovieInfoResponse>()
-    }
+    private val _topRatedMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
+    val topRatedMovieData = _topRatedMovieData
 
     fun popularMovieData() {
         addDisposable(
@@ -45,7 +42,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .doOnSubscribe { loading.postValue(true) }
                 .subscribe({ it ->
                     it.run {
-                        livePopularMovie.value = it
+                        popularMovieData.value = it.results
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -64,7 +61,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
             .doOnSubscribe { loading.postValue(true) }
             .subscribe({ it ->
                 it.run {
-                    liveNowPlayingMovie.value = it
+                    nowPlayingMovieData.value = it.results
                 }
             }, {
                 Log.d(TAG, it.message.toString())
@@ -89,11 +86,8 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                         it.results.sortWith(Comparator { a, b ->
                             DateUtil.getDayDifference(a.release_date).toInt() - DateUtil.getDayDifference(b.release_date).toInt()
                             Log.d(TAG, "${a.release_date}")
-                        }
-                        )
-                        liveUpcomingMovie.value = it
-
-
+                        })
+                        upcomingMovieData.value = it.results
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -115,7 +109,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .subscribe({ it ->
                     it.run {
                         it.results.sort()
-                        liveTopRatedMovie.value = it
+                        topRatedMovieData.value = it.results
                     }
                 }, {
                     Log.d(TAG, it.message.toString())

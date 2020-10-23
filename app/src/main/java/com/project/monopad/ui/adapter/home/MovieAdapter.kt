@@ -1,4 +1,4 @@
-package com.project.monopad.ui.adapter
+package com.project.monopad.ui.adapter.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
+import com.project.monopad.databinding.ItemNowPlayingBinding
+import com.project.monopad.databinding.ItemPopularPageBinding
+import com.project.monopad.databinding.ItemTopRatedBinding
+import com.project.monopad.databinding.ItemUpcomingBinding
 import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
+import com.project.monopad.util.BaseUtil
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 //https://lakue.tistory.com/16?category=853542
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
-    val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
     private var movies: ArrayList<MovieInfoResultResponse> = ArrayList()
 
     private var listener: ((id: Int) -> Unit)? = null
@@ -28,8 +32,8 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         this.listener = listener
     }
 
-    fun setMovies(movies: ArrayList<MovieInfoResultResponse>){
-        this.movies = movies
+    fun setMovies(movies: List<MovieInfoResultResponse>){
+        this.movies = movies as ArrayList<MovieInfoResultResponse>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemView {
@@ -48,6 +52,7 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
                 )
                 return PopularMovieViewHolder(view)
             }
+
             MovieCase.NOW_PLAYING -> {
                 view = LayoutInflater.from(parent.context).inflate(
                     R.layout.item_now_playing,
@@ -56,6 +61,7 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
                 )
                 return NowPlayingMovieViewHolder(view)
             }
+
             MovieCase.UPCOMING -> {
                 view = LayoutInflater.from(parent.context).inflate(
                     R.layout.item_upcoming,
@@ -64,6 +70,7 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
                 )
                 return UpcomingViewHolder(view)
             }
+
             MovieCase.TOP_RATED -> {
                 view = LayoutInflater.from(parent.context).inflate(
                     R.layout.item_top_rated,
@@ -109,13 +116,12 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemPopularPageBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
-            val moviePosterURL = POSTER_BASE_URL + movie.poster_path
             Glide.with(itemView.context)
-                .load(moviePosterURL)
+                .load(BaseUtil.IMAGE_URL+movie.poster_path)
                 .into(binding!!.itemMovieIvPoster)
 
             Glide.with(itemView.context)
-                .load(moviePosterURL)
+                .load(BaseUtil.IMAGE_URL+movie.poster_path)
                 .apply(RequestOptions.bitmapTransform(BlurTransformation(13,3)))
                 .into(binding!!.itemMovieIvBlurPoster)
 
@@ -133,13 +139,12 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemNowPlayingBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
-            val moviePosterURL = POSTER_BASE_URL + movie.poster_path
             binding!!.itemNowIvPoster.apply {
                 background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
                 clipToOutline = true
             }
             Glide.with(itemView.context)
-                .load(moviePosterURL)
+                .load(BaseUtil.IMAGE_URL+movie.poster_path)
                 .into(binding!!.itemNowIvPoster)
 
             binding!!.itemNowTvTitle.text = movie.title
@@ -154,14 +159,13 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemUpcomingBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
-            val moviePosterURL = POSTER_BASE_URL + movie.poster_path
             //이미지뷰 라운딩 처리
             binding!!.itemUpcomingIvPoster.apply {
                 background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
                 clipToOutline = true
             }
             Glide.with(itemView.context)
-                .load(moviePosterURL)
+                .load(BaseUtil.IMAGE_URL+movie.poster_path)
                 .into(binding!!.itemUpcomingIvPoster)
 //            d("dday", movie.release_date)
             binding!!.itemUpcomingTvDDay.text = dDay(movie.release_date)
@@ -176,7 +180,6 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemTopRatedBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(position:Int, movie: MovieInfoResultResponse){
-            val moviePosterURL = POSTER_BASE_URL + movie.poster_path
 
             //이미지뷰 라운딩 처리
             binding!!.itemTopRatedIvPoster.apply {
@@ -184,7 +187,7 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
                 clipToOutline = true
             }
             Glide.with(itemView.context)
-                .load(moviePosterURL)
+                .load(BaseUtil.IMAGE_URL+movie.poster_path)
                 .into(binding!!.itemTopRatedIvPoster)
 
             binding!!.itemTopRatedTvRanking.text = (position+1).toString()
