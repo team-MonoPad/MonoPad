@@ -2,13 +2,6 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="viewModel"
-            type="com.project.monopad.ui.viewmodel.MovieViewModel" />
-    </data>
-
     <androidx.core.widget.NestedScrollView
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -37,17 +30,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Top Rated Movies"
+                    android:layout_marginStart="@dimen/spacing_8"
                     style="@style/HomeTitleTextViewStyle"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/home_rv_top_rated"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_top_rated" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
                     android:text="Now Playing Movies"
                     style="@style/HomeTitleTextViewStyle"/>
 
@@ -59,6 +53,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
                     android:text="Upcoming Movies"
                     style="@style/HomeTitleTextViewStyle"/>
 

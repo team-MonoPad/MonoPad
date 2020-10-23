@@ -1,5 +1,6 @@
 package com.project.monopad.ui.adapter.home
 
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -114,17 +115,7 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemPopularPageBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
-            Glide.with(itemView.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .into(binding!!.itemMovieIvPoster)
-
-            Glide.with(itemView.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(13,3)))
-                .into(binding!!.itemMovieIvBlurPoster)
-
-            binding!!.itemMovieTvTitle.text = movie.title
-            binding!!.itemMovieTv1.text = movie.release_date.split("-")[0] //연도
+            binding!!.model = movie
 
             binding!!.itemMovieBtTrailer.setOnClickListener {
                 listener?.invoke(movie.id)
@@ -136,15 +127,12 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemNowPlayingBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
+            binding!!.model = movie
+
             binding!!.itemNowIvPoster.apply {
                 background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
                 clipToOutline = true
             }
-            Glide.with(itemView.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .into(binding!!.itemNowIvPoster)
-
-            binding!!.itemNowTvTitle.text = movie.title
 
             itemView.setOnClickListener {
                 listener?.invoke(movie.id)
@@ -156,15 +144,15 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemUpcomingBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(movie: MovieInfoResultResponse){
+            binding!!.model = movie
+
             //이미지뷰 라운딩 처리
             binding!!.itemUpcomingIvPoster.apply {
                 background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
                 clipToOutline = true
             }
-            Glide.with(itemView.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .into(binding!!.itemUpcomingIvPoster)
-//            d("dday", movie.release_date)
+
+            d("dday", movie.release_date)
             binding!!.itemUpcomingTvDDay.text = dDay(movie.release_date)
 
             itemView.setOnClickListener {
@@ -177,19 +165,12 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         var binding: ItemTopRatedBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(position:Int, movie: MovieInfoResultResponse){
-
-            //이미지뷰 라운딩 처리
+            binding!!.model = movie
+            binding!!.position = position + 1
             binding!!.itemTopRatedIvPoster.apply {
                 background = ContextCompat.getDrawable(itemView.context, R.drawable.image_shape) //이미지 라운딩 처리
                 clipToOutline = true
             }
-            Glide.with(itemView.context)
-                .load(BaseUtil.IMAGE_URL+movie.poster_path)
-                .into(binding!!.itemTopRatedIvPoster)
-
-            binding!!.itemTopRatedTvRanking.text = (position+1).toString()
-            binding!!.itemTopRatedTvTitle.text = movie.title
-//            d("top rated", .vote_count.toString())
 
             itemView.setOnClickListener {
                 listener?.invoke(movie.id)

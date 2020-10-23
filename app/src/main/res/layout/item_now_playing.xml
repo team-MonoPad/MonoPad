@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.project.monopad.ui.viewmodel.MovieViewModel" />
+        <variable
+            name="model"
+            type="com.project.monopad.model.network.response.MovieInfoResultResponse" />
+    </data>
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -11,13 +19,16 @@
             android:id="@+id/item_now_iv_poster"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            style="@style/DefaultImageViewStyle"/>
+            style="@style/DefaultImageViewStyle"
+            android:scaleType="centerCrop"
+            app:homeBindPoster="@{model.poster_path}"/>
         <TextView
             android:id="@+id/item_now_tv_title"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_8"
-            style="@style/SubTitleTextViewStyle1"
-            android:text="text"/>
+            android:text="@{model.title}"
+            android:maxLines="1"
+            style="@style/SubTitleTextViewStyle1"/>
     </LinearLayout>
 </layout>
