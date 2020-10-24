@@ -1,4 +1,4 @@
-package com.project.monopad.ui.view.calendar
+package com.project.monopad.ui.view.custom.calendar
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -24,12 +24,12 @@ class CalendarView : LinearLayout {
     private var month = calendar.get(Calendar.MONTH)
     private var day = calendar.get(Calendar.DATE)
 
+    private var onDayClickListener: ((Int, Day) -> Unit)? = null
+
     private lateinit var topMonthView : View
 
-    var calendarAdapter =
+    val calendarAdapter =
         CalendarAdapter(context)
-
-    private var onDayClickListener: ((Int, Day) -> Unit)? = null
 
     fun setonDayClickListener(listener: ((Int, Day) -> Unit)) {
         this.onDayClickListener = listener
@@ -62,7 +62,7 @@ class CalendarView : LinearLayout {
         topMonthView = layoutInflater.inflate(R.layout.calendar_top_layout, null)
 
         topMonthView.date_tv.apply {
-            text = CalendarUtil.calendarToString(calendar, monthDateFormat)
+            text = CalendarUtil.convertCalendarToString(calendar, monthDateFormat)
             textSize = 20F
             setOnClickListener{
                 DatePickerDialog(context, R.style.myDialogTheme
@@ -164,7 +164,7 @@ class CalendarView : LinearLayout {
 
     private fun onMonthUpdated(itemYear : Int, itemMonth : Int, itemDay : Int) {
         calendar.set(itemYear, itemMonth, itemDay, 0, 0, 0)
-        topMonthView.date_tv.text = CalendarUtil.calendarToString(calendar, monthDateFormat)
+        topMonthView.date_tv.text = CalendarUtil.convertCalendarToString(calendar, monthDateFormat)
         calendarAdapter.updateCalendar(calendar)
     }
 }

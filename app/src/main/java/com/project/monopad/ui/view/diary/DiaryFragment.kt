@@ -1,6 +1,5 @@
 package com.project.monopad.ui.view.diary
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.observe
 import com.project.monopad.R
@@ -9,9 +8,10 @@ import com.project.monopad.model.entity.Movie
 import com.project.monopad.model.entity.Review
 import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.ui.base.BaseFragment
+import com.project.monopad.ui.view.custom.bottomsheetdialog.BottomSheetListAdapter
+import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheetFragment
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -22,6 +22,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_diary
 
+
     override fun initStartView() {
         listenerSetting()
     }
@@ -31,16 +32,12 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
 
         val poster_path = "https://image.tmdb.org/t/p/w342/5lgyNwFqyaMMNW484rLgw7aRRZs.jpg"
         val title = "괴물"
-        val testDate = "2020-10-24"
-        val f = SimpleDateFormat("yyyy-MM-dd")
-        val parseTestDate: Date = f.parse(testDate)
+        val nowDate = Date()
 
         viewModel.downloadImage(poster_path, title)
 
         viewModel.imagePathData.observe(this) {
-            Log.d("Diary Fragment 1 ", it)
             if (it.isNotBlank()){
-                Log.d("Diary Fragment 2 ", it)
                 val sampleMovie = Movie(
                     id = 1225,
                     poster = it,
@@ -51,16 +48,21 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
                 )
                 val sampleReview = Review(
                     review_poster = it
-                    , title = "괴물"
-                    , date = parseTestDate
+                    , title = "괴물은 재밌다"
+                    , date = nowDate
                     , comment = "good!! nice!!"
                     , rating = 1.1
                     , movie = sampleMovie
                 )
                 viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(sampleReview)
             }
         }
-
         viewModel.getAllReview()
     }
 
@@ -70,7 +72,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
 
     private fun observeReviewData() {
         viewModel.reviewData.observe(this) {
-            viewDataBinding.calendarView.calendarAdapter.setReview(it)
+            viewDataBinding.calendarView.calendarAdapter.setList(it)
             viewDataBinding.calendarView.notifyCalendarChanged()
         }
     }
@@ -87,16 +89,32 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
             }
             else {
                 if(!reviews.isNullOrEmpty()){
-                    Toast.makeText(context,"리뷰"+reviews.size+"개", Toast.LENGTH_SHORT).show()
-                    val bottomFrag = DiaryListBottomSheetFragment()
-                    bottomFrag.show(requireActivity().supportFragmentManager, "approval")
+                    Toast.makeText(context,"리뷰 "+reviews.size+"개", Toast.LENGTH_SHORT).show()
+                    showBottomListDialog(reviews)
                 }
                 else {
                     Toast.makeText(context,"리뷰없음", Toast.LENGTH_SHORT).show()
+                    showBottomSearchDialog()
                 }
             }
         }
     }
 
+    private fun showBottomListDialog(reviews: List<Review>) {
+        val bottomSheetListAdapter = BottomSheetListAdapter()
+        val bottomSheetFragment = DiaryListBottomSheetFragment(bottomSheetListAdapter)
+
+        bottomSheetListAdapter.setList(reviews)
+        bottomSheetListAdapter.setOnReviewClickListener {
+            Toast.makeText(context, "review id: $it", Toast.LENGTH_SHORT).show()
+            bottomSheetFragment.dismiss()
+        }
+
+        bottomSheetFragment.show(requireActivity().supportFragmentManager, "approval")
+    }
+
+    private fun showBottomSearchDialog() {
+
+    }
 
 }
