@@ -34,6 +34,7 @@
     <string name="detail_similar_movie">비슷한 콘텐츠</string>
     <string name="detail_recommend_movie">추천 콘텐츠</string>
     <string name="person_detail_text_filmography">필모그라피</string>
+    <string name="detail_trailer">트레일러</string>
 
     <!--ImageSelect-->
     <string name="image_select_title">이미지 선택</string>

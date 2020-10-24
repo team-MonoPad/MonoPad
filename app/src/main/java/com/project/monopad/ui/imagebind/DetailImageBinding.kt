@@ -30,4 +30,14 @@ object DetailImageBinding {
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
+
+    @JvmStatic
+    @BindingAdapter("bindThumbNail")
+    fun bindThumbNail(view: ImageView, imageUrl: String?) {
+        Glide.with(view.context)
+            .load(BaseUtil.THUMBNAIL_URL(imageUrl))
+            .fitCenter()
+            .error(R.drawable.ic_baseline_error_outline_24)
+            .into(view)
+    }
 }
