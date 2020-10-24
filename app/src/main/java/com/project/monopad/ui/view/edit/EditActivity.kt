@@ -20,6 +20,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.graphics.drawable.DrawableCompat
 import com.bumptech.glide.Glide
@@ -57,9 +58,11 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override val viewModel: DiaryViewModel by viewModel()
 
     private lateinit var imm: InputMethodManager
-    internal lateinit var frontCard : AnimatorSet
-    internal lateinit var backCard : AnimatorSet
-    internal var isFront = true
+    private lateinit var frontCard : AnimatorSet
+    private lateinit var backCard : AnimatorSet
+    private var isFront = true
+
+    private var isFirst = true;
 
     //override 된 메소드는 모두 onCreate 내에 존재함으로 activity가 시작되고 자동적으로 그려진다.
     override fun initStartView() {
@@ -70,9 +73,16 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) //back button
         supportActionBar!!.setDisplayShowCustomEnabled(true)
 
+        //1. 처음 작성인지, 아닌지 -> true false
+
+        //2. 처음 작성이면, intent 값으로 받아온 영화 데이터, 배경 이미지 세팅
+        //3. 처음 작성이 아니라면 , local db 에서 받아온 값으로 데이터 세팅? intent 로 세팅?
+
         //get Movie Data
         if (intent != null){
-//            movie = intent.getParcelableExtra<Movie>("movie")!!
+            //받아온 값으로 영화정보, 포스터, 세팅
+            //movie = intent.getParcelableExtra<Movie>("movie")!!
+
         }
 
         //Init Date Text
@@ -95,8 +105,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     }
 
     override fun initBeforeBinding() {
-        // get data
-        viewModel.getReviewByReviewId()
+
     }
 
     override fun initAfterBinding() {
@@ -107,14 +116,21 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.menu_edit, menu)
-        setEditableMode(true) //intent 를 통해 데이터를 받아온 후, 값 설정
+        setEditableMode(isFirst) //intent 를 통해 데이터를 받아온 후, 값 설정
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_save -> {
+                isFirst = false
                 setEditableMode(false)
                 saveReview()
+                if (isFirst){
+                    saveReview() //insert
+                }else{
+//                    update()
+                }
                 return true
             }
             R.id.menu_edit -> {
@@ -122,7 +138,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                 return true
             }
             R.id.menu_share -> {
-                saveImageInAlbum()
+                Toast.makeText(this@EditActivity, "준비 중 입니다.", Toast.LENGTH_SHORT).show()
                 return true
             }
             else -> {
@@ -200,25 +216,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             }
     }
 
-    private fun convertViewToDrawable(): Bitmap {
-        val view = viewDataBinding.editReviewContainer
-        val bitmap = Bitmap.createBitmap(
-            view.measuredWidth, view.measuredHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val b = Bitmap.createBitmap(
-            bitmap,
-            0,
-            0,
-            view.measuredWidth,
-            view.measuredHeight - view.edit_toolbar.measuredHeight,
-        )
-
-        val canvas = Canvas(b)
-        canvas.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
-        view.draw(canvas)
-        return bitmap
-    }
 
     //로컬디비에 리뷰 저장
     private fun saveReview() {
@@ -243,117 +240,8 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         )
 
         d("review", review.toString())
-
-//        viewModel.insertReviewWithMovie(review)
+        viewModel.insertReviewWithMovie(review)
     }
-
-    //결과 화면 File 로 만들어서 return
-    fun ScreenShot(): File? {
-        val screenBitmap = convertViewToDrawable()
-        val date = Date()
-        val filename = "monopad" + DATE_FORMAT.format(date)
-
-        val file = File(Environment.getExternalStorageDirectory().toString() + "/MonoPad", filename)
-        var os: FileOutputStream? = null
-        try {
-            os = FileOutputStream(file)
-            screenBitmap.compress(Bitmap.CompressFormat.JPEG, 100, os) //save file
-            os.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return null
-        }
-
-        return file
-    }
-
-
-    fun saveImage() {
-        val view = viewDataBinding.editReviewContainer
-
-        val path = Environment.getExternalStorageDirectory().absolutePath + "/MonoPad"
-        //처음 생성한 path 경로가 존재하는지 확인 후 존재하지 않을 시 경로를 생성
-        val file = File(path)
-        if (!file.exists()) {
-            file.mkdirs()
-            //            printToast("폴더가 생성되었습니다.");
-        }
-        val date = Date()
-        val day = SimpleDateFormat("yyyyMMddHHmmss")
-        view.buildDrawingCache() //drawingCache에 저장
-        val captureView = view.drawingCache //비트맵 형식으로 저장
-        var fos: FileOutputStream? = null
-        try {
-            fos = FileOutputStream(path + "/MonoPad" + day.format(date) + ".jpeg")
-            captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos) //save file
-//            mResultActivityView.validateSuccessSaveImage("결과가 갤러리에 저장되었습니다.", path, day, date)
-            //            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path + "/EndGame" + day.format(date) + ".JPEG")));
-            fos.flush()
-            fos.close()
-            view.destroyDrawingCache()
-        } catch (e: IOException) {
-            e.printStackTrace()
-//            mResultActivityView.validateFailureSaveImage("저장 실패ㅠㅠ. [설정] > [권한] 에서 외부 접근 권한을 허용해주세요.")
-        }
-    }
-
-    //https://boilerplate.tistory.com/43
-    fun saveImageInAlbum() {
-        val bitmap: Bitmap = convertViewToDrawable()
-        val fileName = "MonoPad" + DATE_FORMAT.format(Date())
-        //API 29 이상일 경우
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val values = ContentValues()
-            with(values) {
-                put(MediaStore.Images.Media.TITLE, fileName)
-                put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/MonoPad")
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            }
-
-            val uri = this.contentResolver
-                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            val fos = this.contentResolver.openOutputStream(uri!!)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-            fos?.run {
-                flush()
-                close()
-            }
-        } else { //API 29 미만일 경우
-            val path = Environment.getExternalStorageDirectory().absolutePath + "/MonoPad"
-
-//            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() +
-//                    File.separator +
-//                    "MonoPad"
-
-            //처음 생성한 path 경로가 존재하는지 확인 후 존재하지 않을 시 경로를 생성
-            val file = File(path)
-            if (!file.exists()) {
-                file.mkdirs()
-                //            printToast("폴더가 생성되었습니다.");
-            }
-
-//            fos = FileOutputStream(path + "/MonoPad" + day.format(date) + ".jpeg")
-
-            val imgFile = File(file, fileName)
-            val os = FileOutputStream(path + fileName + ".jpeg")
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
-            os.flush()
-            os.close()
-
-            val values = ContentValues()
-            with(values) {
-                put(MediaStore.Images.Media.TITLE, fileName)
-                put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                put(MediaStore.Images.Media.BUCKET_ID, fileName)
-                put(MediaStore.Images.Media.DATA, imgFile.absolutePath)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            }
-            this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        }
-    }
-
-
 
     fun rotateBtnClick(){
         isFront = if(isFront){
@@ -376,27 +264,27 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     }
 
     private fun frontCardView(){
-//        edit_et_title.visibility = View.VISIBLE
-//        edit_tv_date.visibility = View.VISIBLE
-//        edit_rating_bar.visibility = View.VISIBLE
-//        edit_et_comment.visibility = View.VISIBLE
         cv_edit_diary_poster.visibility = View.GONE
         cv_edit_diary_edit.visibility = View.VISIBLE
-//        tv_movie_title.visibility = View.GONE
-//        tv_movie_release_date.visibility = View.GONE
-//        tv_movie_overview.visibility = View.GONE
     }
 
     private fun backCardView(){
-//        tv_movie_title.visibility = View.VISIBLE
-//        tv_movie_release_date.visibility = View.VISIBLE
-//        tv_movie_overview.visibility = View.VISIBLE
-//        edit_et_title.visibility = View.GONE
-//        edit_tv_date.visibility = View.GONE
-//        edit_rating_bar.visibility = View.GONE
-//        edit_et_comment.visibility = View.GONE
         cv_edit_diary_edit.visibility = View.GONE
         cv_edit_diary_poster.visibility = View.VISIBLE
+    }
+
+
+    private fun convertViewToDrawable(): Bitmap {
+        val view = viewDataBinding.editReviewContainer
+        val bitmap = Bitmap.createBitmap(
+            view.measuredWidth, view.measuredHeight,
+            Bitmap.Config.ARGB_8888
+        )
+
+        val canvas = Canvas(bitmap)
+        canvas.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
+        view.draw(canvas)
+        return bitmap
     }
 
 }

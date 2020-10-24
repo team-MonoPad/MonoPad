@@ -61,13 +61,12 @@
                             android:gravity="top"
                             android:background="@null"
                             android:inputType="text"
-                            android:hint="리뷰 제목"
+                            android:hint="@string/review_title_hint"
                             android:textColorHint="@color/grey300"
                             android:textCursorDrawable="@drawable/cursor_style"
                             android:textColor="@color/colorWhite"
                             android:focusable="true"
-                            android:maxLines="1"
-                            android:layout_marginTop="@dimen/spacing_8"/>
+                            android:maxLines="1"/>
                         <TextView
                             android:id="@+id/edit_tv_date"
                             android:layout_width="wrap_content"
@@ -130,6 +129,7 @@
                             android:id="@+id/tv_movie_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+
                             style="@style/MiddleTitleTextViewStyle"
                             android:text="범죄의 도시 "
                             />
@@ -168,9 +168,6 @@
                     android:onClick="@{() -> activity.rotateBtnClick()}"
                     />
             </FrameLayout>
-
-
-
 
         </RelativeLayout>
 
