@@ -16,12 +16,12 @@ class SearchViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
     private val _searchMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
     val searchMovieData = _searchMovieData
 
-    fun getSearchData(){
+    fun getSearchData(query: String){
         /* 비슷한 영화 정보 가져오기 */
         addDisposable(repo.getMovieSearch(
             apikey = BaseUtil.API_KEY,
             language = BaseUtil.KR_LANGUAGE,
-            query = "범죄",
+            query = query,
             page = 1
         )
             .subscribeOn(Schedulers.io())

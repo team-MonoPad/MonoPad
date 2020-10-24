@@ -10,6 +10,12 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     private var movieList = ArrayList<MovieInfoResultResponse>()
 
+    private var listener: ((id: Int) -> Unit)? = null
+
+    fun setOnSearchClickListener(listener: (id: Int) -> Unit){
+        this.listener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemSearchMovieBinding = ItemSearchMovieBinding.inflate(inflater, parent, false)
@@ -18,6 +24,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindView(movieList[position])
+        holder.onClick(movieList[position])
     }
 
     override fun getItemCount(): Int {
@@ -31,6 +38,12 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemSearchMovieBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(movie: MovieInfoResultResponse){
             binding.movie = movie
+        }
+
+        fun onClick(movie: MovieInfoResultResponse){
+            binding.ivSearchPoster.setOnClickListener {
+                listener?.invoke(movie.id)
+            }
         }
     }
 
