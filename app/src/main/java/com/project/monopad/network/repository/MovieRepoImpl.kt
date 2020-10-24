@@ -83,13 +83,13 @@ class MovieRepoImpl (private val movieRemoteDataSource : MovieRemoteDataSource) 
         return movieRemoteDataSource.getRecommendationsMovie(movie_id,apikey,language,page)
     }
 
-    override fun getSearch(
+    override fun getMovieSearch(
         apikey: String,
         language: String,
         query: String,
         page: Int
     ): Single<OtherMovieInfoResponse> {
-        return movieRemoteDataSource.getSearch(apikey,language,query,page)
+        return movieRemoteDataSource.getMovieSearch(apikey,language,query,page)
     }
 
     override fun getPeopleDetail(

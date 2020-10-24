@@ -63,7 +63,7 @@ class MovieRemoteDataSourceImpl (private val movieRepoApi: MovieRepoApi) : Movie
         return movieRepoApi.getRecommendationsMovie(movie_id = movie_id, api_key = apikey, language = language, page = page)
     }
 
-    override fun getSearch(
+    override fun getMovieSearch(
         apikey: String,
         language: String,
         query: String,

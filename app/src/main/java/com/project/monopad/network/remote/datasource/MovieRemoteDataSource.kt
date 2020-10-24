@@ -14,7 +14,7 @@ interface MovieRemoteDataSource {
     fun getMovieCredits(movie_id : Int, apikey: String) : Single<MovieCreditsResponse>
     fun getSimilarMovie(movie_id : Int, apikey: String, language: String, page: Int) : Single<OtherMovieInfoResponse>
     fun getRecommendationsMovie(movie_id : Int, apikey: String, language: String, page: Int) : Single<OtherMovieInfoResponse>
-    fun getSearch(apikey : String, language : String, query : String, page: Int) : Single<OtherMovieInfoResponse>
+    fun getMovieSearch(apikey : String, language : String, query : String, page: Int) : Single<OtherMovieInfoResponse>
     fun getPersonDetail(person_id : Int, apikey: String, language: String) : Single<PersonDetailResponse>
     fun getPersonDetailCredits(person_id : Int, apikey: String, language: String) : Single<PersonDetailCreditsResponse>
     fun getMovieImages(movie_id : Int, apikey: String) : Single<MovieImageResponse>
