@@ -200,68 +200,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             }
     }
 
-    private fun shareFileToInstagram(uri: Uri, isVideo: Boolean) {
-        val feedIntent = Intent(Intent.ACTION_SEND)
-        feedIntent.type = if (isVideo) "video/*" else "image/*"
-        feedIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        feedIntent.setPackage("com.instagram.android")
-        val storiesIntent = Intent("com.instagram.share.ADD_TO_STORY")
-        storiesIntent.setDataAndType(uri, if (isVideo) "mp4" else "jpg")
-        storiesIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        storiesIntent.setPackage("com.instagram.android")
-        this.grantUriPermission(
-            "com.instagram.android", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        val chooserIntent = Intent.createChooser(feedIntent, "insta")
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(storiesIntent))
-        startActivity(chooserIntent)
-    }
-//    private fun shareStory() {
-//        val backgroundAssetUri =
-//            FileProvider.getUriForFile(this, "your_package_name.provider", ScreenShot())
-//        val storiesIntent = Intent("com.instagram.share.ADD_TO_STORY")
-//        storiesIntent.setDataAndType(backgroundAssetUri, "image/*")
-//        storiesIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//        storiesIntent.setPackage("com.instagram.android")
-//        grantUriPermission(
-//            "com.instagram.android", backgroundAssetUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-//        )
-//        this.startActivity(storiesIntent)
-//    }
-
-    private fun shareInstagramStory() {
-        // Define image asset URI and attribution link URL
-
-        // Define image asset URI and attribution link URL
-        val stickerAssetUri: Uri = Uri.parse("your-image-asset-uri-goes-here")
-        val attributionLinkUrl = "https://www.my-aweseome-app.com/p/BhzbIOUBval/"
-        val sourceApplication = "com.my.app"
-
-// Instantiate implicit intent with ADD_TO_STORY action,
-// sticker asset, background colors, and attribution link
-
-// Instantiate implicit intent with ADD_TO_STORY action,
-// sticker asset, background colors, and attribution link
-        val intent = Intent("com.instagram.share.ADD_TO_STORY")
-        intent.putExtra("source_application", sourceApplication)
-
-        intent.type = "MEDIA_TYPE_JPEG"
-        intent.putExtra("interactive_asset_uri", stickerAssetUri)
-        intent.putExtra("content_url", attributionLinkUrl)
-        intent.putExtra("top_background_color", "#33FF33")
-        intent.putExtra("bottom_background_color", "#FF00FF")
-
-// Instantiate activity and verify it will resolve implicit intent
-
-// Instantiate activity and verify it will resolve implicit intent
-        this.grantUriPermission(
-            "com.instagram.android", stickerAssetUri, Intent.FLAG_GRANT_READ_URI_PERMISSION
-        )
-        if (this.packageManager.resolveActivity(intent, 0) != null) {
-            this.startActivityForResult(intent, 0)
-        }
-    }
-
     private fun convertViewToDrawable(): Bitmap {
         val view = viewDataBinding.editReviewContainer
         val bitmap = Bitmap.createBitmap(

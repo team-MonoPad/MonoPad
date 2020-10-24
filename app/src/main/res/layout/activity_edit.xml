@@ -42,11 +42,10 @@
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp"
                     android:id="@+id/cv_edit_diary_edit"
-                    android:layout_marginHorizontal="36dp"
-                    android:layout_marginTop="36dp"
-                    android:layout_marginBottom="48dp"
-                    app:contentPadding="4dp"
-                    >
+                    android:layout_marginHorizontal="@dimen/spacing_36"
+                    android:layout_marginTop="@dimen/spacing_36"
+                    android:layout_marginBottom="@dimen/spacing_60"
+                    app:contentPadding="4dp">
 
                     <LinearLayout
                         android:id="@+id/edit_review_container"
@@ -116,9 +115,9 @@
                     card_view:cardCornerRadius="10dp"
                     card_view:cardElevation="0dp"
                     android:id="@+id/cv_edit_diary_poster"
-                    android:layout_marginHorizontal="36dp"
-                    android:layout_marginTop="36dp"
-                    android:layout_marginBottom="48dp"
+                    android:layout_marginHorizontal="@dimen/spacing_36"
+                    android:layout_marginTop="@dimen/spacing_36"
+                    android:layout_marginBottom="@dimen/spacing_60"
                     android:visibility="gone"
                     card_view:contentPadding="4dp">
 
@@ -164,7 +163,7 @@
                     android:rotation="180"
                     android:src="@drawable/ic_baseline_rotate"
                     android:bottom="@+id/cv_edit_diary_edit"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="bottom|center"
                     android:layout_marginBottom="16dp"
                     android:onClick="@{() -> activity.rotateBtnClick()}"
                     />
