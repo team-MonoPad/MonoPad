@@ -306,7 +306,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
         d("review", review.toString())
 
-        viewModel.insertReviewWithMovie(review)
+//        viewModel.insertReviewWithMovie(review)
     }
 
     //결과 화면 File 로 만들어서 return
@@ -437,24 +437,28 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         }
     }
 
-    fun frontCardView(){
-        edit_et_title.visibility = View.VISIBLE
-        edit_tv_date.visibility = View.VISIBLE
-        edit_rating_bar.visibility = View.VISIBLE
-        edit_et_comment.visibility = View.VISIBLE
-        tv_movie_title.visibility = View.GONE
-        tv_movie_release_date.visibility = View.GONE
-        tv_movie_overview.visibility = View.GONE
+    private fun frontCardView(){
+//        edit_et_title.visibility = View.VISIBLE
+//        edit_tv_date.visibility = View.VISIBLE
+//        edit_rating_bar.visibility = View.VISIBLE
+//        edit_et_comment.visibility = View.VISIBLE
+        cv_edit_diary_poster.visibility = View.GONE
+        cv_edit_diary_edit.visibility = View.VISIBLE
+//        tv_movie_title.visibility = View.GONE
+//        tv_movie_release_date.visibility = View.GONE
+//        tv_movie_overview.visibility = View.GONE
     }
 
-    fun backCardView(){
-        tv_movie_title.visibility = View.VISIBLE
-        tv_movie_release_date.visibility = View.VISIBLE
-        tv_movie_overview.visibility = View.VISIBLE
-        edit_et_title.visibility = View.GONE
-        edit_tv_date.visibility = View.GONE
-        edit_rating_bar.visibility = View.GONE
-        edit_et_comment.visibility = View.GONE
+    private fun backCardView(){
+//        tv_movie_title.visibility = View.VISIBLE
+//        tv_movie_release_date.visibility = View.VISIBLE
+//        tv_movie_overview.visibility = View.VISIBLE
+//        edit_et_title.visibility = View.GONE
+//        edit_tv_date.visibility = View.GONE
+//        edit_rating_bar.visibility = View.GONE
+//        edit_et_comment.visibility = View.GONE
+        cv_edit_diary_edit.visibility = View.GONE
+        cv_edit_diary_poster.visibility = View.VISIBLE
     }
 
 }
