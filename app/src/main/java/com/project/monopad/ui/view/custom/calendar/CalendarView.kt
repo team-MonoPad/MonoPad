@@ -8,16 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.databinding.DataBindingUtil
 import com.project.monopad.R
+import com.project.monopad.databinding.CalendarTopLayoutBinding
 import com.project.monopad.model.entity.Day
 import com.project.monopad.util.CalendarUtil
-import kotlinx.android.synthetic.main.calendar_top_layout.view.*
 import java.util.*
 
 class CalendarView : LinearLayout {
 
-    private val monthDateFormat = "yyyy년 MM월"
-    private val dayOfWeek = mutableListOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    companion object{
+        private const val PREVIOUS_MONTH = -1
+        private const val NEXT_MONTH = 1
+        private const val monthDateFormat = "yyyy년 MM월"
+        private val dayOfWeek = mutableListOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    }
     private val calendar = Calendar.getInstance()
 
     private var year = calendar.get(Calendar.YEAR)
@@ -26,7 +31,7 @@ class CalendarView : LinearLayout {
 
     private var onDayClickListener: ((Int, Day) -> Unit)? = null
 
-    private lateinit var topMonthView : View
+    private lateinit var topMonthViewBinding: CalendarTopLayoutBinding
 
     val calendarAdapter =
         CalendarAdapter(context)
@@ -58,10 +63,10 @@ class CalendarView : LinearLayout {
     }
 
     private fun createTopMonthView(): View {
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        topMonthView = layoutInflater.inflate(R.layout.calendar_top_layout, null)
+        val inflater: LayoutInflater = LayoutInflater.from(context)
+        topMonthViewBinding = DataBindingUtil.inflate(inflater, R.layout.calendar_top_layout, this, false)
 
-        topMonthView.date_tv.apply {
+        topMonthViewBinding.dateTv.apply {
             text = CalendarUtil.convertCalendarToString(calendar, monthDateFormat)
             textSize = 20F
             setOnClickListener{
@@ -73,13 +78,13 @@ class CalendarView : LinearLayout {
                     .show()
             }
         }
-        topMonthView.pre_btn.setOnClickListener {
-            moveMonth(-1)
+        topMonthViewBinding.preBtn.setOnClickListener {
+            moveMonth(PREVIOUS_MONTH)
         }
-        topMonthView.next_btn.setOnClickListener {
-            moveMonth(1)
+        topMonthViewBinding.nextBtn.setOnClickListener {
+            moveMonth(NEXT_MONTH)
         }
-        return topMonthView
+        return topMonthViewBinding.root
     }
 
     private fun createTopDayView(): LinearLayout {
@@ -87,8 +92,7 @@ class CalendarView : LinearLayout {
         val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             setMargins(0,10,0,10)
         }
-
-        linearLayout.run {
+        linearLayout.apply {
             orientation = HORIZONTAL
             layoutParams = params
             weightSum = 7F
@@ -164,7 +168,7 @@ class CalendarView : LinearLayout {
 
     private fun onMonthUpdated(itemYear : Int, itemMonth : Int, itemDay : Int) {
         calendar.set(itemYear, itemMonth, itemDay, 0, 0, 0)
-        topMonthView.date_tv.text = CalendarUtil.convertCalendarToString(calendar, monthDateFormat)
+        topMonthViewBinding.dateTv.text = CalendarUtil.convertCalendarToString(calendar, monthDateFormat)
         calendarAdapter.updateCalendar(calendar)
     }
 }
