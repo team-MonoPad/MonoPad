@@ -1,5 +1,6 @@
 package com.project.monopad.ui.view.home
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -8,8 +9,10 @@ import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.base.BaseFragment
+
 import com.project.monopad.ui.adapter.home.MovieAdapter
 import com.project.monopad.ui.adapter.home.MovieCase
+
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
