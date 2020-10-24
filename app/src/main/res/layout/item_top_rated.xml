@@ -5,9 +5,6 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.project.monopad.ui.viewmodel.MovieViewModel" />
-        <variable
             name="model"
             type="com.project.monopad.model.network.response.MovieInfoResultResponse" />
         <variable

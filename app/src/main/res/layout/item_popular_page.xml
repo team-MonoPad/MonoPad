@@ -4,9 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel"
-            type="com.project.monopad.ui.viewmodel.MovieViewModel" />
-        <variable
             name="model"
             type="com.project.monopad.model.network.response.MovieInfoResultResponse" />
     </data>
