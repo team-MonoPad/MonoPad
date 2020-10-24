@@ -93,13 +93,14 @@ class DiaryViewModel(
     }
 
     fun downloadImage (imageURL : String, title:String) {
-        val sliceTag = "/"
         val teamName = "MONOPAD"
-        val dirPath = context.getExternalFilesDir(teamName)?.absolutePath+sliceTag+title+sliceTag
+        val dirPath = "${context.getExternalFilesDir(teamName)?.absolutePath}/${title}/"
         val dir = File(dirPath)
         val fileName = title+"_download_poster"
 
-        Glide.with(context).load(imageURL).into(object : CustomTarget<Drawable>() {
+        Glide.with(context)
+            .load(imageURL)
+            .into(object : CustomTarget<Drawable>() {
             override fun onLoadCleared(placeholder: Drawable?) {}
             override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                 val bitmap = (resource as BitmapDrawable).bitmap
