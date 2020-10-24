@@ -60,8 +60,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_search, menu)
 
-        val mainSearchView = menu.findItem(R.id.action_search)
-        val sv = mainSearchView.actionView as SearchView
+        val sv = menu.findItem(R.id.action_search).actionView as SearchView
 
         sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String): Boolean {
