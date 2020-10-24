@@ -16,7 +16,7 @@ import com.project.monopad.util.OtherMovieCase
 class OtherMovieAdapter(private val otherMovieCase: OtherMovieCase) : RecyclerView.Adapter<MovieItemView>() {
 
     private var otherMovieList = ArrayList<MovieInfoResultResponse>()
-    
+
     private var listener: ((id: Int) -> Unit)? = null
 
     fun setOnOtherClickListener(listener: (id: Int) -> Unit){

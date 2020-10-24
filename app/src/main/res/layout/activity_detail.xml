@@ -30,7 +30,7 @@
                 app:toolbarId="@+id/detail_toolbar">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/iv_detail_backposter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/spacing_5"
@@ -38,7 +38,7 @@
                     app:bindBackPoster="@{viewModel.movieDetailData.poster_path}" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/iv_detail_poster"
                     android:layout_width="@dimen/detail_poster_width"
                     android:layout_height="@dimen/detail_poster_height"
                     android:layout_marginStart="@dimen/spacing_30"
