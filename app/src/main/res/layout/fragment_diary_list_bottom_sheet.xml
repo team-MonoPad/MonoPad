@@ -8,7 +8,7 @@
         android:layout_height="500dp"
         style="@style/CornerRadius6"
         android:background="@color/colorBlack"
-        tools:context=".ui.view.diary.DiaryListBottomSheetFragment">
+        tools:context=".ui.view.custom.bottomsheetdialog.DiaryListBottomSheetFragment">
 
 
         <ImageView
@@ -21,12 +21,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_bs_list_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:paddingVertical="30dp"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,4 +34,5 @@
             tools:listitem="@layout/item_bs_list_movie"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

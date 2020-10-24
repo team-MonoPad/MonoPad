@@ -1,4 +1,4 @@
-package com.project.monopad.ui.view.calendar
+package com.project.monopad.ui.view.custom.calendar
 
 import android.content.Context
 import android.graphics.Color
@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.project.monopad.R
 import com.project.monopad.model.entity.Day
 import com.project.monopad.model.entity.Review
+import com.project.monopad.util.CalendarUtil
 import kotlinx.android.synthetic.main.calendar_item_layout.view.*
 import java.util.*
 
@@ -18,23 +19,22 @@ class CalendarAdapter(context: Context) : BaseAdapter() {
 
     private val SIZE_OF_DAY = 7*6
     private val dayList = mutableListOf<Day>()
+    private val reviewList = mutableListOf<Review>()
 
     private var mContext : Context = context
     private var calendar = Calendar.getInstance()
     private var month = Calendar.getInstance().get(Calendar.MONTH)
     private var day = Calendar.getInstance().get(Calendar.DATE)
 
-    private val reviewList = mutableListOf<Review>()
+    init {
+        setCalendar()
+    }
 
-    fun setReview(list : List<Review>) {
+    fun setList(list : List<Review>) {
         reviewList.apply {
             clear()
             addAll(list)
         }
-    }
-
-    init {
-        setCalendar()
     }
 
     fun updateCalendar(cal: Calendar){
@@ -93,9 +93,9 @@ class CalendarAdapter(context: Context) : BaseAdapter() {
 
         month = calendar.get(Calendar.MONTH)
 
-        var cal = calendar
+        val cal = calendar
         cal.set(Calendar.DATE, 1)
-        var startOfMonth = cal.get(Calendar.DAY_OF_WEEK) - 1
+        val startOfMonth = cal.get(Calendar.DAY_OF_WEEK) - 1
         cal.add(Calendar.DATE, -startOfMonth)
 
         while (dayList.size < SIZE_OF_DAY) {
@@ -103,7 +103,7 @@ class CalendarAdapter(context: Context) : BaseAdapter() {
             val reviews = mutableListOf<Review>()
             while(it.hasNext()){
                 val item = it.next()
-                if(calendar.time.toString() == item.date.toString()){
+                if(CalendarUtil.isCalendarAndDateSame(cal, item.date)){
                     reviews.add(item)
                 }
             }
