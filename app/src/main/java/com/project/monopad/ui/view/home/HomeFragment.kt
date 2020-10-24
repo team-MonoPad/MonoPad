@@ -1,5 +1,6 @@
 package com.project.monopad.ui.view.home
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -10,6 +11,7 @@ import com.project.monopad.model.network.response.MovieInfoResponse
 import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.view.home.adapter.MovieAdapter
 import com.project.monopad.ui.view.home.adapter.MovieCase
+import com.project.monopad.ui.view.video.VideoActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -76,6 +78,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
        //Set Click Listener
        popularAdapter.setOnTrailerClickListener {
            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+           val intent = Intent(activity, VideoActivity::class.java)
+           startActivity(intent)
        }
 
        nowPlayingAdapter.setOnItemClickListener {

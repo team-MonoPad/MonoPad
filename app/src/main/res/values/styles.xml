@@ -96,7 +96,14 @@
         <item name="android:textColorSecondary">@color/colorWhite</item>
     </style>
 
-    <!--calendar-->
+    <style name="VideoDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:windowBackground">#80000000</item>
+    </style>
+
+  <!--calendar-->
     <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
         <item name="android:datePickerMode">spinner</item>
     </style>
