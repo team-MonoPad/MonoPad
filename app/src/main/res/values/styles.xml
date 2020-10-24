@@ -8,6 +8,9 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
+        <item name="android:dialogTheme">@style/myDialogTheme</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -99,5 +102,19 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:windowBackground">#80000000</item>
     </style>
+
+  <!--calendar-->
+    <style name="myDatePickerStyle" parent="android:Widget.Material.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
+    </style>
+    <style name="myDialogTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
+    </style>
+
+    <!--bottom fragment-->
+    <style name="CornerRadius6" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">6dp</item>
+    </style>
+
 
 </resources>
