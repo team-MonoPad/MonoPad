@@ -7,11 +7,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
-import com.project.monopad.model.network.response.MovieInfoResponse
+import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.base.BaseFragment
-import com.project.monopad.ui.view.home.adapter.MovieAdapter
-import com.project.monopad.ui.view.home.adapter.MovieCase
-import com.project.monopad.ui.view.video.VideoActivity
+
+import com.project.monopad.ui.adapter.home.MovieAdapter
+import com.project.monopad.ui.adapter.home.MovieCase
+
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -43,29 +44,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     }
 
     private fun observeMovieLiveData(){
-        viewModel.livePopularMovie.observe(this, Observer<MovieInfoResponse>{
-            popularAdapter.setMovies(it.results)
+        viewModel.popularMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+            popularAdapter.setMovies(it)
             viewDataBinding.homeViewpager.adapter = popularAdapter
-
         })
 
-        viewModel.liveNowPlayingMovie.observe(this, Observer<MovieInfoResponse>{
-            nowPlayingAdapter.setMovies(it.results)
+        viewModel.nowPlayingMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+            nowPlayingAdapter.setMovies(it)
             viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
-
-
         })
 
-        viewModel.liveUpcomingMovie.observe(this, Observer<MovieInfoResponse>{
-            upcomingAdapter.setMovies(it.results)
+        //region 추가
+        viewModel.upcomingMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+            upcomingAdapter.setMovies(it)
             viewDataBinding.homeRvUpcoming.adapter = upcomingAdapter
-
         })
 
-        viewModel.liveTopRatedMovie.observe(this, Observer<MovieInfoResponse>{
-            topRatedAdapter.setMovies(it.results)
+        viewModel.topRatedMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+            topRatedAdapter.setMovies(it)
             viewDataBinding.homeRvTopRated.adapter = topRatedAdapter
-
         })
     }
 
@@ -78,8 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
        //Set Click Listener
        popularAdapter.setOnTrailerClickListener {
            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-           val intent = Intent(activity, VideoActivity::class.java)
-           startActivity(intent)
+//           startActivity(Intent(activity, VideoActivity.class::java))
        }
 
        nowPlayingAdapter.setOnItemClickListener {

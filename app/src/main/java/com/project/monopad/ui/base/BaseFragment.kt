@@ -39,24 +39,4 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel> : Fragment()
         return view
     }
 
-    private fun progressOn(activity: Activity, layoutId:Int) {
-
-    }
-
-    private fun progressOff() {
-
-    }
-
-    /**
-     * isProgress(activity as Activity, R.layout.progress_bar, true/false)
-     */
-    fun isProgress(activity: Activity, layoutId: Int, flag: Boolean) {
-        if(flag){
-            progressOn(activity, layoutId)
-        }else{
-            progressOff()
-        }
-    }
-
-
 }
