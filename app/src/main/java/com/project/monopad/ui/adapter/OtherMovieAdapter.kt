@@ -10,7 +10,7 @@ import com.project.monopad.R
 import com.project.monopad.databinding.RecommendMovieViewBinding
 import com.project.monopad.databinding.SimilarMovieViewBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.ui.view.home.adapter.MovieItemView
+import com.project.monopad.ui.adapter.home.MovieItemView
 import com.project.monopad.util.OtherMovieCase
 
 class OtherMovieAdapter(private val otherMovieCase: OtherMovieCase) : RecyclerView.Adapter<MovieItemView>() {

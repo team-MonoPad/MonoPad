@@ -1,13 +1,12 @@
 package com.project.monopad.ui.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.project.monopad.model.network.response.MovieInfoResponse
 import com.project.monopad.model.network.response.MovieInfoResultResponse
+import com.project.monopad.model.network.response.MovieVideoResultResponse
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
+import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.DateUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -28,6 +27,13 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
 
     private val _topRatedMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
     val topRatedMovieData = _topRatedMovieData
+
+    private val _popularMovieVideoData = MutableLiveData<List<MovieVideoResultResponse>>()
+    val popularMovieVideoData = _popularMovieVideoData
+
+
+
+
 
     fun popularMovieData() {
         addDisposable(
@@ -111,6 +117,24 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 }, {
                     Log.d(TAG, it.message.toString())
                 })
+        )
+    }
+
+    fun popularMovieVideoData(movieId: Int){
+        addDisposable(repo.getMovieVideo(
+            movie_id = movieId,
+            apikey = BaseUtil.API_KEY,
+            language = BaseUtil.KR_LANGUAGE,
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it.run {
+                    _popularMovieVideoData.value = it.results
+                }
+            },{
+                Log.d(TAG, it.localizedMessage)
+            })
         )
     }
 }

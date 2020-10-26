@@ -29,6 +29,7 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
     fun setOnTrailerClickListener(listener: (id: Int) -> Unit) {
         this.listener = listener
     }
+
     fun setOnItemClickListener(listener: (id: Int) -> Unit) {
         this.listener = listener
     }
@@ -117,9 +118,19 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         fun bind(movie: MovieInfoResultResponse){
             binding!!.model = movie
 
+//            binding!!.itemPopularContainer.setOnClickListener {
+//                listener?.invoke(movie.id)
+//            }
+
+            binding!!.itemMovieBtDetail.setOnClickListener{
+                listener?.invoke(movie.id)
+            }
+
             binding!!.itemMovieBtTrailer.setOnClickListener {
                 listener?.invoke(movie.id)
             }
+
+
         }
     }
 
