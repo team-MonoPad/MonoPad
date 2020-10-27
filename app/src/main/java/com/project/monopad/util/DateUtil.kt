@@ -26,9 +26,4 @@ object DateUtil{
     fun convertDateToString(date : Date, format : String) : String{
         return simpleDateFormat.format(date)
     }
-
-    fun convertDateToString(date : Date, format : String) : String{
-        val simpleFormat = SimpleDateFormat(format)
-        return simpleFormat.format(date)
-    }
 }
