@@ -6,7 +6,7 @@ import java.util.*
 
 @Entity(tableName = "Review")
 data class Review(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0, // pk
+    @PrimaryKey var id: Int,
     var review_poster: String,
     var title: String,
     var date: Date,
