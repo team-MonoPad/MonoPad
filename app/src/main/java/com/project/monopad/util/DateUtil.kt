@@ -10,14 +10,20 @@ object DateUtil{
         val date = simpleDateFormat.parse(releaseDate)
         val today = Calendar.getInstance()
         val diffDate = (today.time.time - date.time) / (60 * 60 * 24 * 1000)
-        if (diffDate >= 0) {
-            return "+$diffDate"
+        return when {
+            diffDate > 0 -> {
+                "+$diffDate"
+            }
+            diffDate < 0 -> {
+                diffDate.toString()
+            }
+            else -> {
+                "-Day"
+            }
         }
-        return diffDate.toString()
     }
 
     fun convertDateToString(date : Date, format : String) : String{
-        val simpleFormat = SimpleDateFormat(format)
-        return simpleFormat.format(date)
+        return simpleDateFormat.format(date)
     }
 }

@@ -7,7 +7,7 @@ import com.project.monopad.model.network.response.MovieVideoResultResponse
 import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.BaseUtil
-import com.project.monopad.util.DateUtil
+import com.project.monopad.util.DateComparator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -56,20 +56,21 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     }
 
     fun nowPlayMovieData() {
-        addDisposable(repo.getNowPlayMovie(
-            apikey = "84301bd818cef2f63643e7dffa8998ab",
-            language = "ko-KR",
-            page = 1
-        )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ it ->
-                it.run {
-                    nowPlayingMovieData.value = it.results
-                }
-            }, {
-                Log.d(TAG, it.message.toString())
-            })
+        addDisposable(
+            repo.getNowPlayMovie(
+                apikey = "84301bd818cef2f63643e7dffa8998ab",
+                language = "ko-KR",
+                page = 1
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ it ->
+                    it.run {
+                        nowPlayingMovieData.value = it.results
+                    }
+                }, {
+                    Log.d(TAG, it.message.toString())
+                })
         )
 
     }
@@ -87,10 +88,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .subscribe({ it ->
                     it.run {
                         //개봉일 순으로 정렬
-                        it.results.sortWith(Comparator { a, b ->
-                            DateUtil.getDayDifference(a.release_date).toInt() - DateUtil.getDayDifference(b.release_date).toInt()
-                            Log.d(TAG, "${a.release_date}")
-                        })
+                        Collections.sort(it.results, DateComparator())
                         upcomingMovieData.value = it.results
                     }
                 }, {
@@ -111,7 +109,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     it.run {
-                        it.results.sort()
+                        it.results.sort() //vote_count 순 으로 정렬
                         topRatedMovieData.value = it.results
                     }
                 }, {
@@ -121,20 +119,21 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     }
 
     fun popularMovieVideoData(movieId: Int){
-        addDisposable(repo.getMovieVideo(
-            movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
-        )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                it.run {
-                    _popularMovieVideoData.value = it.results
-                }
-            },{
-                Log.d(TAG, it.localizedMessage)
-            })
+        addDisposable(
+            repo.getMovieVideo(
+                movie_id = movieId,
+                apikey = BaseUtil.API_KEY,
+                language = BaseUtil.KR_LANGUAGE,
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it.run {
+                        _popularMovieVideoData.value = it.results
+                    }
+                }, {
+                    Log.d(TAG, it.localizedMessage)
+                })
         )
     }
 }

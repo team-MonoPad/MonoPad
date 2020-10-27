@@ -1,22 +1,18 @@
 package com.project.monopad.ui.view.home
 
 import android.content.Intent
-import android.util.Log
 import android.util.Log.d
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.ui.base.BaseFragment
-
 import com.project.monopad.ui.adapter.home.MovieAdapter
 import com.project.monopad.ui.adapter.home.MovieCase
+import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.view.video.VideoActivity
-
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -81,19 +77,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         }
 
         popularAdapter.setOnItemClickListener {
-           startActivity(Intent(activity, VideoActivity::class.java).putExtra("id", it))
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
         }
 
         nowPlayingAdapter.setOnItemClickListener {
-            startActivity(Intent(activity, VideoActivity::class.java).putExtra("id", it))
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
         }
 
         topRatedAdapter.setOnItemClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.action_home_to_detail)
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+//            Navigation.findNavController(requireView()).navigate(R.id.action_home_to_detail)
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+
         }
 
         upcomingAdapter.setOnItemClickListener {
-            startActivity(Intent(activity, VideoActivity::class.java).putExtra("id", it))
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
         }
     }
 
@@ -131,9 +134,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         })
 
         viewModel.popularMovieVideoData.observe(this, {
-//            Toast.makeText(activity, it[0].key, Toast.LENGTH_SHORT).show()
-            d("트레일러3", "트레일러3")
-
             startActivity(Intent(activity, VideoActivity::class.java).putExtra("key", it[0].key))
         })
     }
