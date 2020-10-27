@@ -10,7 +10,7 @@ import com.project.monopad.network.local.converter.DateConverter
 import com.project.monopad.network.local.converter.GenreConverter
 import com.project.monopad.network.local.converter.MovieConverter
 
-@Database(entities = [Review::class, Movie::class, Genre::class], version = 3, exportSchema = false)
+@Database(entities = [Review::class, Movie::class, Genre::class], version = 4, exportSchema = false)
 @TypeConverters(*[GenreConverter::class, MovieConverter::class, DateConverter::class])
 abstract class DiaryDatabase : RoomDatabase(){
 
