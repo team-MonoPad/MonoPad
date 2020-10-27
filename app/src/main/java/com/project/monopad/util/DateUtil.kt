@@ -15,4 +15,9 @@ object DateUtil{
         }
         return diffDate.toString()
     }
+
+    fun convertDateToString(date : Date, format : String) : String{
+        val simpleFormat = SimpleDateFormat(format)
+        return simpleFormat.format(date)
+    }
 }

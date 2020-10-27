@@ -2,9 +2,7 @@ package com.project.monopad.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.project.monopad.R
 import com.project.monopad.databinding.CasterViewBinding
 import com.project.monopad.model.network.response.MovieCastResponse
 

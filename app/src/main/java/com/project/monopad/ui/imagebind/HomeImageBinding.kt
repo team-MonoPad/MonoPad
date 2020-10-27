@@ -8,10 +8,10 @@ import com.project.monopad.R
 import com.project.monopad.util.BaseUtil
 import jp.wasabeef.glide.transformations.BlurTransformation
 
-object DetailImageBinding {
+object HomeImageBinding {
 
     @JvmStatic
-    @BindingAdapter("bindBackPoster")
+    @BindingAdapter("homeBindBackPoster")
     fun bindBackPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
             .load(BaseUtil.IMAGE_URL + imageUrl)
@@ -22,21 +22,11 @@ object DetailImageBinding {
     }
 
     @JvmStatic
-    @BindingAdapter("bindPoster")
+    @BindingAdapter("homeBindPoster")
     fun bindPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
             .load(BaseUtil.IMAGE_URL + imageUrl)
-            .fitCenter()
-            .error(R.drawable.ic_baseline_error_outline_24)
-            .into(view)
-    }
-
-    @JvmStatic
-    @BindingAdapter("bindThumbNail")
-    fun bindThumbNail(view: ImageView, imageUrl: String?) {
-        Glide.with(view.context)
-            .load(BaseUtil.THUMBNAIL_URL(imageUrl))
-            .fitCenter()
+            .centerCrop()
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
