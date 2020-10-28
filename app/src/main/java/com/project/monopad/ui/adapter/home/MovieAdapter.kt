@@ -154,7 +154,6 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
                 clipToOutline = true
             }
 
-            d("dday", movie.release_date)
             binding!!.itemUpcomingTvDDay.text = dDay(movie.release_date)
 
             itemView.setOnClickListener {

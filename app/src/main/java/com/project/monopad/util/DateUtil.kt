@@ -4,10 +4,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtil{
-    private val simpleDateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+    private val simpleDateFormat1 = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
 
     fun getDayDifference(releaseDate: String): String {
-        val date = simpleDateFormat.parse(releaseDate)
+        val date = simpleDateFormat1.parse(releaseDate)
         val today = Calendar.getInstance()
         val diffDate = (today.time.time - date.time) / (60 * 60 * 24 * 1000)
         return when {
@@ -24,5 +24,5 @@ object DateUtil{
     }
 
     fun convertDateToString(date : Date) : String
-        = simpleDateFormat.format(date)
+        = simpleDateFormat1.format(date)
 }
