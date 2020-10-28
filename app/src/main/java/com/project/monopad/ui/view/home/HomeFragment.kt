@@ -1,18 +1,19 @@
 package com.project.monopad.ui.view.home
 
+import android.content.Context
 import android.content.Intent
+import android.util.Log.d
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.ui.base.BaseFragment
-
 import com.project.monopad.ui.adapter.home.MovieAdapter
 import com.project.monopad.ui.adapter.home.MovieCase
-
+import com.project.monopad.ui.base.BaseFragment
+import com.project.monopad.ui.view.video.VideoActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,8 +29,76 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     private val topRatedAdapter = MovieAdapter(MovieCase.TOP_RATED)
     private val upcomingAdapter = MovieAdapter(MovieCase.UPCOMING)
 
+    private var mPopularListSize = 0
+    private val mIndicatorCount = 3
+
     override fun initStartView() {
-        adapterSetting()
+        //Set LayoutManager
+        val layout = { context: Context -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) }
+        viewDataBinding.homeRvNowPlaying.apply {
+            layoutManager = layout(context)
+            setHasFixedSize(true) //setHasFixedSize 를 설정하지 않으면 항목의 크기가 변경되어 비용이 많이 드는 작업을 하는지 확인한다.
+        }
+        viewDataBinding.homeRvUpcoming.apply {
+            layoutManager = layout(context)
+            setHasFixedSize(true)
+        }
+        viewDataBinding.homeRvTopRated.apply {
+            layoutManager = layout(context)
+            setHasFixedSize(true)
+        }
+
+        //set Indicator
+        viewDataBinding.homeIndicator.apply {
+            createIndicators(mIndicatorCount,0)
+            setViewPager(viewDataBinding.homeViewpager)
+        }
+
+
+//        popularAdapter.registerAdapterDataObserver(viewDataBinding.homeIndicator.adapterDataObserver) //어댑터의 데이터 변화를 구독한다.
+        viewDataBinding.homeViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
+            // 화면 전환이 끝났을 때 해당 포지션을 반환. 페이지의 변화가 생겼을때 호출되는 메서드이다.
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                d("TEST onPageSelected", position.toString())
+                when (position) {
+                    0 -> viewDataBinding.homeIndicator.animatePageSelected(0) //첫 번째 페이지 -> 0
+                    mPopularListSize-1 -> viewDataBinding.homeIndicator.animatePageSelected(2)//마지막 페이지 -> 2
+                    else -> viewDataBinding.homeIndicator.animatePageSelected(1) // 이외의 페이지 -> 1
+                }
+
+            }
+        })
+
+
+        //Set ClickListener
+        popularAdapter.setOnTrailerClickListener {
+            viewModel.popularMovieVideoData(it)
+        }
+
+        popularAdapter.setOnItemClickListener {
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+        }
+
+        nowPlayingAdapter.setOnItemClickListener {
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+        }
+
+        topRatedAdapter.setOnItemClickListener {
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+//            Navigation.findNavController(requireView()).navigate(R.id.action_home_to_detail)
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+
+        }
+
+        upcomingAdapter.setOnItemClickListener {
+            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+        }
     }
 
     override fun initDataBinding() {
@@ -44,54 +113,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     }
 
     private fun observeMovieLiveData(){
-        viewModel.popularMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.popularMovieData.observe(this, {
             popularAdapter.setMovies(it)
             viewDataBinding.homeViewpager.adapter = popularAdapter
+            mPopularListSize = it.size
         })
 
-        viewModel.nowPlayingMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.nowPlayingMovieData.observe(this, {
             nowPlayingAdapter.setMovies(it)
             viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
         })
 
-        //region 추가
-        viewModel.upcomingMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.upcomingMovieData.observe(this, {
             upcomingAdapter.setMovies(it)
             viewDataBinding.homeRvUpcoming.adapter = upcomingAdapter
         })
 
-        viewModel.topRatedMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.topRatedMovieData.observe(this, {
             topRatedAdapter.setMovies(it)
             viewDataBinding.homeRvTopRated.adapter = topRatedAdapter
         })
+
+        viewModel.popularMovieVideoData.observe(this, {
+            startActivity(Intent(activity, VideoActivity::class.java).putExtra("key", it[0].key))
+        })
     }
-
-   private fun adapterSetting() {
-       //Set LayoutManager
-       viewDataBinding.homeRvNowPlaying.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-       viewDataBinding.homeRvUpcoming.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-       viewDataBinding.homeRvTopRated.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-
-       //Set Click Listener
-       popularAdapter.setOnTrailerClickListener {
-           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-//           startActivity(Intent(activity, VideoActivity.class::java))
-       }
-
-       nowPlayingAdapter.setOnItemClickListener {
-           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-       }
-
-       topRatedAdapter.setOnItemClickListener {
-           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-           Navigation.findNavController(requireView()).navigate(R.id.action_home_to_detail)
-       }
-
-       upcomingAdapter.setOnItemClickListener {
-           Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-       }
-
-    }
-
-
 }
