@@ -1,16 +1,19 @@
 package com.project.monopad
 
 import android.app.Application
-import com.project.monopad.di.monoDiModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import com.project.monopad.di.*
+import com.project.monopad.extension.setupKoin
 
 class MonoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidContext(applicationContext)
-            modules(monoDiModule)
-        }
+        setupKoin(
+            this,
+            networkModule,
+            remoteDataSourceModule,
+            localDataSourceModule,
+            repositoryModule,
+            viewModelModule
+        )
     }
 }
