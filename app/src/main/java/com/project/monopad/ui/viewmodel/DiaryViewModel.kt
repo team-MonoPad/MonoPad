@@ -30,6 +30,9 @@ class DiaryViewModel(
     private val _imagePathData = MutableLiveData<String>()
     val imagePathData = _imagePathData
 
+    private val _isCompleted = MutableLiveData<Boolean>()
+    val isCompleted = _isCompleted
+
     fun insertReviewWithMovie(review : Review){
         addDisposable(
             repo.insert(review)
@@ -37,7 +40,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
+                        isCompleted.value = true
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
