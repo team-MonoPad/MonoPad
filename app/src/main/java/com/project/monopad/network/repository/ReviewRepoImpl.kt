@@ -23,4 +23,8 @@ class ReviewRepoImpl (private val local: ReviewLocalDataSource): ReviewRepo{
         return local.getAllReview()
     }
 
+    override fun updateReview(review: Review): Completable {
+        return local.updateReview(review)
+    }
+
 }
