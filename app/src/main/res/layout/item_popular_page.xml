@@ -117,7 +117,7 @@
                         android:layout_marginEnd="@dimen/spacing_8"
                         android:background="@drawable/button_popular_shape"
                         android:backgroundTint="@color/colorAccent"
-                        android:text="상세보기" />
+                        android:text="@string/detail_text" />
 
                     <Button
                         android:id="@+id/item_movie_bt_trailer"
@@ -127,7 +127,7 @@
                         android:background="@drawable/button_popular_shape"
                         android:textSize="@dimen/caption_12"
                         android:backgroundTint="@color/colorLightGrey"
-                        android:text="트레일러" />
+                        android:text="@string/trailer_text" />
                 </LinearLayout>
 
             </LinearLayout>

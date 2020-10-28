@@ -22,7 +22,6 @@ object ReviewBinding {
     @JvmStatic
     @BindingAdapter("bindReviewDate")
     fun bindReviewDate(view: TextView, date : Date) {
-        val format = "yyyy년 MM월 dd일"
-        view.text = DateUtil.convertDateToString(date, format)
+        view.text = DateUtil.convertDateToString(date)
     }
 }

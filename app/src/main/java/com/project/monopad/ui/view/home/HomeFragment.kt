@@ -1,5 +1,6 @@
 package com.project.monopad.ui.view.home
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log.d
 import android.widget.Toast
@@ -33,31 +34,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
 
     override fun initStartView() {
         //Set LayoutManager
-        viewDataBinding.homeRvNowPlaying.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewDataBinding.homeRvUpcoming.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewDataBinding.homeRvTopRated.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val layout = { context: Context -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) }
+        viewDataBinding.homeRvNowPlaying.apply {
+            layoutManager = layout(context)
+            setHasFixedSize(true) //setHasFixedSize 를 설정하지 않으면 항목의 크기가 변경되어 비용이 많이 드는 작업을 하는지 확인한다.
+        }
+        viewDataBinding.homeRvUpcoming.apply {
+            layoutManager = layout(context)
+            setHasFixedSize(true)
+        }
+        viewDataBinding.homeRvTopRated.apply {
+            layoutManager = layout(context)
+            setHasFixedSize(true)
+        }
 
         //set Indicator
-        viewDataBinding.homeIndicator.createIndicators(mIndicatorCount,0)
-        viewDataBinding.homeIndicator.setViewPager(viewDataBinding.homeViewpager)
+        viewDataBinding.homeIndicator.apply {
+            createIndicators(mIndicatorCount,0)
+            setViewPager(viewDataBinding.homeViewpager)
+        }
 
-        popularAdapter.registerAdapterDataObserver(viewDataBinding.homeIndicator.adapterDataObserver)
-        // 뷰페이저 리스너 (ViewPager 1과 다르게 2는 필요한 것만 오버라이딩이 가능하다.
+
+//        popularAdapter.registerAdapterDataObserver(viewDataBinding.homeIndicator.adapterDataObserver) //어댑터의 데이터 변화를 구독한다.
         viewDataBinding.homeViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
-            //부드러운 스크롤 또는 사용자가 시작한 터치 스크롤의 일부로 현재 페이지가 스크롤 될 때 호출됩니다.
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if (positionOffsetPixels == 0) {
-                    viewDataBinding.homeViewpager.currentItem = position;
-                }
-            }
-
-            // 화면 전환이 끝났을 때 해당 포지션을 반환
+            // 화면 전환이 끝났을 때 해당 포지션을 반환. 페이지의 변화가 생겼을때 호출되는 메서드이다.
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 d("TEST onPageSelected", position.toString())
@@ -112,23 +113,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     }
 
     private fun observeMovieLiveData(){
-        viewModel.popularMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.popularMovieData.observe(this, {
             popularAdapter.setMovies(it)
             viewDataBinding.homeViewpager.adapter = popularAdapter
             mPopularListSize = it.size
         })
 
-        viewModel.nowPlayingMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.nowPlayingMovieData.observe(this, {
             nowPlayingAdapter.setMovies(it)
             viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
         })
 
-        viewModel.upcomingMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.upcomingMovieData.observe(this, {
             upcomingAdapter.setMovies(it)
             viewDataBinding.homeRvUpcoming.adapter = upcomingAdapter
         })
 
-        viewModel.topRatedMovieData.observe(this, Observer<List<MovieInfoResultResponse>>{
+        viewModel.topRatedMovieData.observe(this, {
             topRatedAdapter.setMovies(it)
             viewDataBinding.homeRvTopRated.adapter = topRatedAdapter
         })

@@ -32,16 +32,13 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     val popularMovieVideoData = _popularMovieVideoData
 
 
-
-
-
     fun popularMovieData() {
         addDisposable(
             repo.getPopularMovie(
-                apikey = "84301bd818cef2f63643e7dffa8998ab",
-                language = "ko-KR",
+                apikey = BaseUtil.API_KEY,
+                language = BaseUtil.KR_LANGUAGE,
                 page = 1,
-                region = "kr"
+                region = BaseUtil.KR_REGION
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,8 +55,8 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun nowPlayMovieData() {
         addDisposable(
             repo.getNowPlayMovie(
-                apikey = "84301bd818cef2f63643e7dffa8998ab",
-                language = "ko-KR",
+                apikey = BaseUtil.API_KEY,
+                language = BaseUtil.KR_LANGUAGE,
                 page = 1
             )
                 .subscribeOn(Schedulers.io())
@@ -78,10 +75,10 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun upcomingMovieData() {
         addDisposable(
             repo.getUpComingMovie(
-                apikey = "84301bd818cef2f63643e7dffa8998ab",
-                language = "ko-KR",
+                apikey = BaseUtil.API_KEY,
+                language = BaseUtil.KR_LANGUAGE,
                 page = 1,
-                region = "kr"
+                region = BaseUtil.KR_REGION
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -100,10 +97,10 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun topRatedMovieData() {
         addDisposable(
             repo.getTopRatedMovie(
-                apikey = "84301bd818cef2f63643e7dffa8998ab",
-                language = "ko-KR",
+                apikey = BaseUtil.API_KEY,
+                language = BaseUtil.KR_LANGUAGE,
                 page = 1,
-                region = "kr"
+                region = BaseUtil.KR_REGION
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
