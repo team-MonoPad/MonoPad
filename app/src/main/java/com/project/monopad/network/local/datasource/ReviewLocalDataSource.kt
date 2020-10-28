@@ -15,4 +15,6 @@ interface ReviewLocalDataSource{
 
     fun getAllReview() : Single<List<Review>>
 
+    fun updateReview(review:Review) : Completable
+
 }

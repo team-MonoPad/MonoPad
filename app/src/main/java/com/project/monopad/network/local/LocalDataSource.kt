@@ -24,4 +24,7 @@ class LocalDataSource (private val diaryDao: DiaryDao) {
         return diaryDao.getAllReview()
     }
 
+    fun updateReview(review: Review) : Completable {
+        return diaryDao.updateReview(review = review)
+    }
 }

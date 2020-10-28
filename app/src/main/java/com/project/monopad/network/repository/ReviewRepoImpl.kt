@@ -41,4 +41,8 @@ class ReviewRepoImpl (
         return local.getAllReview()
     }
 
+    override fun updateReview(review: Review): Completable {
+        return local.updateReview(review)
+    }
+
 }
