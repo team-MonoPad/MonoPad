@@ -117,23 +117,24 @@
         <item name="cardCornerRadius">6dp</item>
     </style>
 
-    <!--https://stackoverflow.com/questions/30239627/how-to-change-the-style-of-a-datepicker-in-android-->
-    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
-        <item name="colorAccent">@color/colorAccent</item>                   <!--header background-->
-        <item name="android:windowBackground">@color/colorBlack</item>     <!--calendar background-->
-        <item name="android:colorControlActivated">@color/colorAccent</item> <!--selected day-->
-        <item name="android:textColorPrimary">@color/colorWhite</item> <!--days of the month-->
-        <item name="android:textColorSecondary">@color/colorGrey</item>    <!--days of the week-->
+    <style name="ShadowTitleTextViewStyle">
+        <item name="android:textSize">@dimen/title_20</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowRadius">5.0</item>
+        <item name="android:shadowDx">5.0</item>
+        <item name="android:shadowDy">5.0</item>
+        <item name="android:shadowColor">@color/colorBlack</item>
+        <item name="android:paddingEnd">1dp</item>
+
     </style>
 
-    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
-        <item name="android:datePickerMode">spinner</item>
-    </style>
-
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/colorYellow</item>
-        <item name="colorControlActivated">@color/colorYellow</item>
+    <style name="ShadowBodyTextViewStyle" >
+        <item name="android:textSize">@dimen/caption_12</item>
+        <item name="android:shadowRadius">5.0</item>
+        <item name="android:shadowDx">5.0</item>
+        <item name="android:shadowDy">5.0</item>
+        <item name="android:shadowColor">@color/colorBlack</item>
+        <item name="android:paddingEnd">1dp</item>
     </style>
 
 </resources>

@@ -29,6 +29,7 @@
                 android:gravity="center"
                 android:text="@{String.valueOf(position)}"
                 android:layout_marginEnd="@dimen/spacing_8"
+
                 android:background="@color/colorAccent"
                 style="@style/BodyTextViewStyle2"/>
 
@@ -37,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{model.title}"
+                android:ellipsize="end"
                 android:maxLines="1"
                 style="@style/BodyTextViewStyle2" />
 

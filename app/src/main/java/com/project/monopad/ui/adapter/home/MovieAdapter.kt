@@ -8,8 +8,6 @@ import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
 import com.project.monopad.databinding.ItemNowPlayingBinding
 import com.project.monopad.databinding.ItemPopularPageBinding
@@ -17,18 +15,18 @@ import com.project.monopad.databinding.ItemTopRatedBinding
 import com.project.monopad.databinding.ItemUpcomingBinding
 import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.util.BaseUtil
-import jp.wasabeef.glide.transformations.BlurTransformation
 
 //https://lakue.tistory.com/16?category=853542
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
     private var movies: ArrayList<MovieInfoResultResponse> = ArrayList()
 
     private var listener: ((id: Int) -> Unit)? = null
+    private var trailerListener: ((id: Int) -> Unit)? = null
 
     fun setOnTrailerClickListener(listener: (id: Int) -> Unit) {
-        this.listener = listener
+        this.trailerListener = listener
     }
+
     fun setOnItemClickListener(listener: (id: Int) -> Unit) {
         this.listener = listener
     }
@@ -117,8 +115,12 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
         fun bind(movie: MovieInfoResultResponse){
             binding!!.model = movie
 
-            binding!!.itemMovieBtTrailer.setOnClickListener {
+            binding!!.itemMovieBtDetail.setOnClickListener{
                 listener?.invoke(movie.id)
+            }
+
+            binding!!.itemMovieBtTrailer.setOnClickListener {
+                trailerListener?.invoke(movie.id)
             }
         }
     }
@@ -152,7 +154,6 @@ class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<Movi
                 clipToOutline = true
             }
 
-            d("dday", movie.release_date)
             binding!!.itemUpcomingTvDDay.text = dDay(movie.release_date)
 
             itemView.setOnClickListener {

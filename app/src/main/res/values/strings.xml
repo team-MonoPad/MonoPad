@@ -36,12 +36,10 @@
     <string name="person_detail_text_filmography">필모그라피</string>
     <string name="detail_trailer">트레일러</string>
 
-    <string name="edit_diary_date_message">영화를 관람한 날짜를 선택해주세요!</string>
-    <string name="test_overview">2004년 서울…하얼빈에서 넘어와 단숨에 기존 조직들을 장악하고 가장 강력한 세력인 춘식이파 보스 ‘황사장(조재윤 분)’까지 위협하며 도시 일대의 최강자로 급부상한 신흥범죄조직의 악랄한 보스 ‘장첸(윤계상 분)’. 대한민국을 뒤흔든 ‘장첸(윤계상 분)’ 일당을 잡기 위해 오직 주먹 한방으로 도시의 평화를 유지해 온 괴물형사 ‘마석도(마동석 분)’와 인간미 넘치는 든든한 리더 ‘전일만(최귀화 분)’ 반장이 이끄는 강력반은 나쁜 놈들을 한방에 쓸어버릴 끝.짱.나.는. 작전을 세우는데… 통쾌하고! 화끈하고! 살벌하게!올 추석, 나쁜 놈들 때려잡는 강력반 형사들의 ‘조폭소탕작전’이 시작된다!</string>
-
     <!--ImageSelect-->
     <string name="image_select_title">이미지 선택</string>
     <string name="image_select_please">이미지를 선택하세요!</string>
     <string name="image_select_checkbox">한 개만 선택 가능합니다!\n 다른 선택을 해제하세요!</string>
-    <string name="review_title_hint">리뷰 제목</string>
+    <string name="trailer_text">트레일러</string>
+    <string name="detail_text">상세보기</string>
 </resources>
