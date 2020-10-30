@@ -1,10 +1,12 @@
 package com.project.monopad.ui.view.search
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentSearchBinding
@@ -21,6 +23,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_search
+
+    lateinit var searchView : SearchView
 
     override fun initStartView() {
         setHasOptionsMenu(true)
@@ -45,9 +49,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
             val intent = Intent(requireContext(), DetailActivity::class.java).putExtra("movie_id", it)
             startActivity(intent)
         }
+        searchAdapter.setOnSearchTouchListener {
+            searchViewHide()
+        }
+
     }
 
-    /* view setting */
+    /* recyclerview setting */
     private fun recyclerViewSetting(){
         rv_search_movie.apply {
             layoutManager = GridLayoutManager(context, 3)
@@ -55,14 +63,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         }
     }
 
-    /* menu setting */
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_search, menu)
+    /* searchview setting */
+    private fun searchViewSetting(){
+        searchView.isIconified = false
 
-        val sv = menu.findItem(R.id.action_search).actionView as SearchView
-
-        sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String): Boolean {
                 viewModel.getSearchData(p0)
                 return true
@@ -75,6 +80,23 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
         })
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun searchViewHide(){
+        searchView.clearFocus()
+        val im = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        im.hideSoftInputFromWindow(searchView.windowToken, 0)
+    }
+
+    /* menu setting */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+        searchView = menu.findItem(R.id.action_search).actionView as SearchView
+
+        searchViewSetting()
+    }
+
 
 
 }
