@@ -6,8 +6,7 @@ import com.project.monopad.model.network.dto.Genre
 
 @Entity(tableName = "Movie")
 data class Movie(
-    @PrimaryKey var id : Int, // pk
-    var poster : String,
+    @PrimaryKey var id : Int,
     var title : String,
     var overview : String,
     var release_date : String,

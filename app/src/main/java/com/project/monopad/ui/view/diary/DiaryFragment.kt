@@ -47,19 +47,15 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
                     genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
                 )
                 val sampleReview = Review(
-                    review_poster = it
+                    id = 1225
+                    , review_poster = it
                     , title = "괴물은 재밌다"
                     , date = nowDate
                     , comment = "good!! nice!!"
                     , rating = 1.1
                     , movie = sampleMovie
                 )
-                viewModel.insertReviewWithMovie(sampleReview)
-                viewModel.insertReviewWithMovie(sampleReview)
-                viewModel.insertReviewWithMovie(sampleReview)
-                viewModel.insertReviewWithMovie(sampleReview)
-                viewModel.insertReviewWithMovie(sampleReview)
-                viewModel.insertReviewWithMovie(sampleReview)
+
                 viewModel.insertReviewWithMovie(sampleReview)
             }
         }

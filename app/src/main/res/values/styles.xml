@@ -84,6 +84,7 @@
         <item name="android:layout_marginBottom">@dimen/spacing_16</item>
     </style>
 
+
     <!--detail-->
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">20sp</item>
@@ -116,5 +117,24 @@
         <item name="cardCornerRadius">6dp</item>
     </style>
 
+    <style name="ShadowTitleTextViewStyle">
+        <item name="android:textSize">@dimen/title_20</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowRadius">5.0</item>
+        <item name="android:shadowDx">5.0</item>
+        <item name="android:shadowDy">5.0</item>
+        <item name="android:shadowColor">@color/colorBlack</item>
+        <item name="android:paddingEnd">1dp</item>
+
+    </style>
+
+    <style name="ShadowBodyTextViewStyle" >
+        <item name="android:textSize">@dimen/caption_12</item>
+        <item name="android:shadowRadius">5.0</item>
+        <item name="android:shadowDx">5.0</item>
+        <item name="android:shadowDy">5.0</item>
+        <item name="android:shadowColor">@color/colorBlack</item>
+        <item name="android:paddingEnd">1dp</item>
+    </style>
 
 </resources>

@@ -24,4 +24,8 @@ class ReviewLocalDataSourceImpl(private val localDataSource: LocalDataSource): R
         return localDataSource.getAllReview()
     }
 
+    override fun updateReview(review: Review): Completable {
+        return localDataSource.updateReview(review)
+    }
+
 }

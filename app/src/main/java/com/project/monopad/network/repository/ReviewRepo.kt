@@ -10,4 +10,5 @@ interface ReviewRepo {
     fun delete() : Completable
     fun getReviewByReviewId(review_id : Int) : Single<Review>
     fun getAllReview() : Single<List<Review>>
+    fun updateReview(review: Review) : Completable
 }
