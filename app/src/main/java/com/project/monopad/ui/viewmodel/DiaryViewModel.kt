@@ -95,6 +95,19 @@ class DiaryViewModel(
         )
     }
 
+    fun updateReview(review: Review){
+        addDisposable(
+            repo.updateReview(review)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    getAllReview()
+                },{
+                    Log.d(TAG, it.localizedMessage)
+                })
+        )
+    }
+
     fun downloadImage (imageURL : String, title:String) {
         val teamName = "MONOPAD"
         val dirPath = "${context.getExternalFilesDir(teamName)?.absolutePath}/${title}/"

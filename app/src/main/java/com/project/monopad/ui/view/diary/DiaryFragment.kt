@@ -40,7 +40,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
             if (it.isNotBlank()){
                 val sampleMovie = Movie(
                     id = 1225,
-                    poster = it,
                     title = "괴물",
                     overview = "overview",
                     release_date = "2020/08/01",

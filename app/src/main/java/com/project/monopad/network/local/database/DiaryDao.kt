@@ -1,9 +1,6 @@
 package com.project.monopad.network.local.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.project.monopad.model.entity.Movie
 import com.project.monopad.model.entity.Review
 import io.reactivex.Completable
@@ -27,5 +24,9 @@ interface DiaryDao {
 
     @Query("SELECT * FROM Review")
     fun getAllReview() : Single<List<Review>>
+
+    @Update
+    fun updateReview(review: Review) : Completable
+
 
 }
