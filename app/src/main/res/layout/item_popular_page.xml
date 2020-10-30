@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:scaleType="centerCrop"
-            app:homeBindBackPoster="@{model.poster_path}"
+            app:bindBackPoster="@{model.poster_path}"
             android:contentDescription="@string/app_name" />
 
         <RelativeLayout
