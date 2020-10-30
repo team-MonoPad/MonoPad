@@ -27,6 +27,9 @@ class DiaryViewModel(
     private val _reviewData = MutableLiveData<List<Review>>()
     val reviewData = _reviewData
 
+    private val _singleReviewData = MutableLiveData<Review>()
+    val singleReviewData = _singleReviewData
+
     private val _imagePathData = MutableLiveData<String>()
     val imagePathData = _imagePathData
 
@@ -70,9 +73,10 @@ class DiaryViewModel(
         addDisposable(repo.getAllReview()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+            .subscribe({ it ->
                 it.run {
                     reviewData.value =it
+                    forEach { Log.d("getAllReview",it.toString()) }
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -87,7 +91,8 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it.run {
-                        Log.d(" REVIEW_TEST " , this.title)
+                        Log.d("getReviewByReviewId" , this.toString())
+                        singleReviewData.value = it
                     }
                 },{
                     Log.d(TAG, it.localizedMessage)
@@ -102,6 +107,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     getAllReview()
+                    isCompleted.value = true
                 },{
                     Log.d(TAG, it.localizedMessage)
                 })
