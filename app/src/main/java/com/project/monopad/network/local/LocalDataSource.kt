@@ -13,7 +13,7 @@ class LocalDataSource (private val diaryDao: DiaryDao) {
     }
 
     fun delete() : Completable {
-        return diaryDao.delete()
+        return diaryDao.deleteAllReview()
     }
 
     fun getReviewByReviewID(review_id : Int) : Single<Review> {

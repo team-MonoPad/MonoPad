@@ -14,7 +14,7 @@ interface DiaryDao {
     fun insertReviewAndMovie(review: Review) : Completable
 
     @Query("DELETE FROM Review")
-    fun delete() : Completable
+    fun deleteAllReview() : Completable
 
     @Query("DELETE FROM Review WHERE id = :id")
     fun deleteReviewByReviewId(id: Int) : Completable
