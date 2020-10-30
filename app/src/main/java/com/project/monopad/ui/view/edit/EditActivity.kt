@@ -84,7 +84,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override fun initAfterBinding() {
         //리뷰 저장/수정 응답 결과
         viewModel.isCompleted.observe(this){
-            isFirst = !it // Review insert/update 완료 시 flag 값 false 로 변경
+            isFirst = !it // Review insert/update 완료 시 isFirst 값 false 로 변경
             Toast.makeText(this@EditActivity, "리뷰 저장 성공", Toast.LENGTH_SHORT).show()
         }
 
@@ -132,6 +132,10 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             .fitCenter()
             .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
             .into(viewDataBinding.editIvBlurBackground)
+
+        viewDataBinding.editMovieTvTitle.text = movie!!.title
+        viewDataBinding.editMovieTvReleaseDate.text =movie!!.release_date
+        viewDataBinding.editMovieTvOverview.text = movie!!.overview
     }
 
     //로컬디비에 리뷰 저장
@@ -222,6 +226,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
         if(flag) showKeyboard() else hideKeyboard()
     }
+
     private fun showKeyboard() {
         viewDataBinding.editEtComment.requestFocus()
         imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager //앱에서 창을 제어하는 기능을 제공하는 클래스. 소프트키 제어하기 위해 사용
@@ -286,20 +291,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private fun backCardView(){
         cv_edit_diary_edit.visibility = View.GONE
         cv_edit_diary_poster.visibility = View.VISIBLE
-    }
-
-
-    private fun convertViewToDrawable(): Bitmap {
-        val view = viewDataBinding.editReviewContainer
-        val bitmap = Bitmap.createBitmap(
-            view.measuredWidth, view.measuredHeight,
-            Bitmap.Config.ARGB_8888
-        )
-
-        val canvas = Canvas(bitmap)
-        canvas.translate((-view.scrollX).toFloat(), (-view.scrollY).toFloat())
-        view.draw(canvas)
-        return bitmap
     }
 
 }
