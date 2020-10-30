@@ -1,6 +1,7 @@
 package com.project.monopad.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.monopad.model.network.response.*
 import com.project.monopad.network.repository.MovieRepoImpl
@@ -14,22 +15,28 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
     private val TAG = "DETAIL VIEWMODEL"
 
     private val _movieDetailData = MutableLiveData<MovieDetailResponse>()
-    val movieDetailData = _movieDetailData
+    val movieDetailData: LiveData<MovieDetailResponse>
+        get() = _movieDetailData
 
     private val _movieCastData = MutableLiveData<List<MovieCastResponse>>()
-    val movieCastData = _movieCastData
+    val movieCastData: LiveData<List<MovieCastResponse>>
+        get() = _movieCastData
 
     private val _movieCrewData = MutableLiveData<List<MovieCrewResponse>>()
-    val movieCrewData = _movieCrewData
+    val movieCrewData: LiveData<List<MovieCrewResponse>>
+        get() = _movieCrewData
 
     private val _similarMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val similarMovieData = _similarMovieData
+    val similarMovieData: LiveData<List<MovieInfoResultResponse>>
+        get() = _similarMovieData
 
     private val _recommendMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val recommendMovieData = _recommendMovieData
+    val recommendMovieData: LiveData<List<MovieInfoResultResponse>>
+        get() = _recommendMovieData
 
     private val _movieTrailerData = MutableLiveData<List<MovieVideoResultResponse>>()
-    val movieTrailerData = _movieTrailerData
+    val movieTrailerData: LiveData<List<MovieVideoResultResponse>>
+        get() = _movieTrailerData
 
     fun getDetailData(movieId : Int){
         /* 영화 상세 정보 데이터 가져오기 */
@@ -42,7 +49,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _movieDetailData.value = it
+                    _movieDetailData.postValue(it)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -58,8 +65,8 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _movieCastData.value = it.cast
-                    _movieCrewData.value = it.crew
+                    _movieCastData.postValue(it.cast)
+                    _movieCrewData.postValue(it.crew)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -77,7 +84,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _similarMovieData.value = it.results
+                    _similarMovieData.postValue(it.results)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -95,7 +102,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _recommendMovieData.value = it.results
+                    _recommendMovieData.postValue(it.results)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -112,7 +119,7 @@ class DetailViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                   _movieTrailerData.value = it.results
+                   _movieTrailerData.postValue(it.results)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
