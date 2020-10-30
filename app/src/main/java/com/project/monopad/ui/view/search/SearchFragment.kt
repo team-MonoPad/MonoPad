@@ -32,7 +32,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     }
 
     override fun initDataBinding() {
-        viewModel.getSearchData("")
+        //
     }
 
     override fun initAfterBinding() {
@@ -68,13 +68,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
         searchView.isIconified = false
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String): Boolean {
-                viewModel.getSearchData(p0)
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.getSearchData(query)
                 return true
             }
 
-            override fun onQueryTextChange(p0: String): Boolean {
-                viewModel.getSearchData(p0)
+            override fun onQueryTextChange(query: String): Boolean {
+                viewModel.getSearchData(query)
                 return true
             }
 
