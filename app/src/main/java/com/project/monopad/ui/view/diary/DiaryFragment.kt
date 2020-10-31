@@ -10,6 +10,7 @@ import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.view.custom.bottomsheetdialog.BottomSheetListAdapter
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheetFragment
+import com.project.monopad.ui.view.custom.bottomsheetdialog.DiarySearchMovieBottomSheetFragment
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -88,7 +89,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
                     showBottomListDialog(reviews)
                 }
                 else {
-                    Toast.makeText(context,"리뷰없음", Toast.LENGTH_SHORT).show()
                     showBottomSearchDialog()
                 }
             }
@@ -109,7 +109,8 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     private fun showBottomSearchDialog() {
-
+        val bottomSheetSearchFragment = DiarySearchMovieBottomSheetFragment()
+        bottomSheetSearchFragment.show(requireActivity().supportFragmentManager, "approval")
     }
 
 }

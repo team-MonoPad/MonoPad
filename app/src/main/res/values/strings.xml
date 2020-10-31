@@ -42,4 +42,8 @@
     <string name="image_select_checkbox">한 개만 선택 가능합니다!\n 다른 선택을 해제하세요!</string>
     <string name="trailer_text">트레일러</string>
     <string name="detail_text">상세보기</string>
+
+    <!--exception-->
+    <string name="network_false">네트워크 연결상태를 확인하세요.</string>
+    <string name="error_exception">Error</string>
 </resources>
