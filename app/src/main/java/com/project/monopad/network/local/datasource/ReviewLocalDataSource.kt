@@ -11,7 +11,9 @@ interface ReviewLocalDataSource{
 
     fun delete() : Completable
 
-    fun getReviewByReviewID(REVIEW_ID : Int) : Single<Review>
+    fun deleteReviewById(review_id: Int): Completable
+
+    fun getReviewById(REVIEW_ID : Int) : Single<Review>
 
     fun getAllReview() : Single<List<Review>>
 

@@ -8,12 +8,16 @@ import io.reactivex.Single
 
 class LocalDataSource (private val diaryDao: DiaryDao) {
 
-    fun insert(review: Review) : Completable {
+    fun insertReview(review: Review) : Completable {
         return diaryDao.insertReviewAndMovie(review = review)
     }
 
-    fun delete() : Completable {
+    fun deleteReview() : Completable {
         return diaryDao.deleteAllReview()
+    }
+
+    fun deleteReviewByReviewID(review_id: Int): Completable{
+        return diaryDao.deleteReviewByReviewId(id = review_id)
     }
 
     fun getReviewByReviewID(review_id : Int) : Single<Review> {
