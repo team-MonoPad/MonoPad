@@ -84,7 +84,7 @@ class DiaryViewModel(
 
     fun getReviewByReviewId(id : Int){
         addDisposable(
-            repo.getReviewByReviewId(id)
+            repo.getReviewById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

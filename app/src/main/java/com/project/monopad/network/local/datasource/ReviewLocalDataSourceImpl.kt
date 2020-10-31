@@ -1,6 +1,5 @@
 package com.project.monopad.network.local.datasource
 
-import com.project.monopad.model.entity.Movie
 import com.project.monopad.model.entity.Review
 import com.project.monopad.network.local.LocalDataSource
 import io.reactivex.Completable
@@ -9,14 +8,18 @@ import io.reactivex.Single
 class ReviewLocalDataSourceImpl(private val localDataSource: LocalDataSource): ReviewLocalDataSource{
 
     override fun insert(review: Review) : Completable {
-        return localDataSource.insert(review)
+        return localDataSource.insertReview(review)
     }
 
     override fun delete() : Completable{
-        return localDataSource.delete()
+        return localDataSource.deleteReview()
     }
 
-    override fun getReviewByReviewID(REVIEW_ID: Int): Single<Review> {
+    override fun deleteReviewById(review_id: Int): Completable {
+        return localDataSource.deleteReviewByReviewID(review_id)
+    }
+
+    override fun getReviewById(REVIEW_ID: Int): Single<Review> {
         return localDataSource.getReviewByReviewID(REVIEW_ID)
     }
 
