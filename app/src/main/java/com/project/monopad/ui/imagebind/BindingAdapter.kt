@@ -49,7 +49,7 @@ object BindingAdapter {
     fun homeBindPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
             .load(BaseUtil.IMAGE_URL + imageUrl)
-            .centerCrop()
+            .fitCenter()
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
