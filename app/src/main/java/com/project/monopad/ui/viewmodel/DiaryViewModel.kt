@@ -9,8 +9,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.project.monopad.model.entity.Review
+import com.project.monopad.model.network.response.MovieDetailResponse
 import com.project.monopad.network.repository.ReviewRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
+import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.DownloadUtil.saveImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -35,10 +37,13 @@ class DiaryViewModel(
 
     private val _isCompleted = MutableLiveData<Boolean>()
     val isCompleted = _isCompleted
+  
+    private val _movieDetailInfo = MutableLiveData<MovieDetailResponse>()
+    val movieDetailInfo = _movieDetailInfo
 
     fun insertReviewWithMovie(review : Review){
         addDisposable(
-            repo.insert(review)
+            repo.insertReview(review)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -54,7 +59,7 @@ class DiaryViewModel(
 
     fun deleteAllReview(){
         addDisposable(
-            repo.delete()
+            repo.deleteAllReview()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -97,6 +102,24 @@ class DiaryViewModel(
                 },{
                     Log.d(TAG, it.localizedMessage)
                 })
+        )
+    }
+
+    fun getMovieDetailInfo(movieId: Int){
+        addDisposable(repo.getMovieDetail(
+            movie_id = movieId,
+            apikey = BaseUtil.API_KEY,
+            language = BaseUtil.KR_LANGUAGE,
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it.run {
+                    _movieDetailInfo.value = it
+                }
+            },{
+                Log.d(TAG, it.localizedMessage)
+            })
         )
     }
 

@@ -8,5 +8,5 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single { MovieRepoImpl(get()) }
     single { UserRepoImpl(get()) }
-    single { ReviewRepoImpl(get()) }
+    single { ReviewRepoImpl(get(),get())}
 }
