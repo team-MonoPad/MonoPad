@@ -32,7 +32,7 @@ import java.util.*
 
 
 class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
-
+;
     override val layoutResourceId: Int
         get() = R.layout.activity_edit
 
@@ -41,15 +41,13 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private var isFirst = false
     private var movie: Movie? = null
     private var imagePath: String? = "aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg"
-
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
-    private var isFront = true
+    private var isFront = false
 
     override fun initStartView() {
         viewDataBinding.activity = this;
-
         //Set Toolbar
         setSupportActionBar(viewDataBinding.editToolbar) //툴바를 액션바로 등록
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) //back button
@@ -57,16 +55,22 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
 //        intent.let{
 //            isFirst = intent.getBooleanExtra("isFirst", false)
+//        movie = intent.getParcelableExtra<Movie>("movie")
 //            if (isFirst){ //첫 작성이라면,
 //                setFirstReview()
 //            }else{ //첫 작성이 아니라면
 //                viewModel.getReviewByReviewId(id = movie.id)
 //            }
 //        }
-        test()
 
-        //Init Date Text
-        viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
+        movie = Movie(
+            id = 1225,
+            title = "괴물",
+            overview = "overview",
+            release_date = "2020/08/01",
+            genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
+        )
+        if (isFirst) setFirstReview() else viewModel.getReviewByReviewId(id = movie!!.id)
 
         //Flip CardView Setting
         val scale : Float = applicationContext.resources.displayMetrics.density
@@ -85,57 +89,34 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         //리뷰 저장/수정 응답 결과
         viewModel.isCompleted.observe(this){
             isFirst = !it // Review insert/update 완료 시 isFirst 값 false 로 변경
-            Toast.makeText(this@EditActivity, "리뷰 저장 성공", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@EditActivity, "저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         //이미 저장한 리뷰가 있다면, 받아온 데이터로 View 세팅
         viewModel.singleReviewData.observe(this){
-            viewDataBinding.editEtTitle.setText(it.title)
+            viewDataBinding.review = it
+            viewDataBinding.movie = it.movie
+            imagePath = it.review_poster
             viewDataBinding.editTvDate.text = DateUtil.convertDateToString(it.date)
-            viewDataBinding.editEtComment.setText(it.comment)
-            viewDataBinding.editEtTitle.setText(it.title)
-            viewDataBinding.editRatingBar.rating = it.rating.toFloat()
 
             Glide.with(this@EditActivity)
                 .load(it.review_poster)
                 .fitCenter()
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
+                .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
                 .into(viewDataBinding.editIvBlurBackground)
-
-            viewDataBinding.editMovieTvTitle.text = it.movie.title
-            viewDataBinding.editMovieTvReleaseDate.text =it.movie.release_date
-            viewDataBinding.editMovieTvOverview.text = it.movie.overview
-        }
-    }
-
-    fun test(){
-        movie = Movie(
-            id = 1225,
-            title = "괴물",
-            overview = "overview",
-            release_date = "2020/08/01",
-            genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
-        )
-
-        if (isFirst){ //첫 작성이라면,
-            setFirstReview()
-        }else{ //첫 작성이 아니라면
-            viewModel.getReviewByReviewId(id = movie!!.id)
         }
     }
 
     private fun setFirstReview(){
 //        movie = intent.getParcelableExtra<Movie>("movie")!!
-//        val imagePath = intent.getStringExtra("image")
+//        imagePath = intent.getStringExtra("image")
+        viewDataBinding.movie = movie
+        viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
         Glide.with(this@EditActivity)
             .load(IMAGE_URL + imagePath)
             .fitCenter()
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
             .into(viewDataBinding.editIvBlurBackground)
-
-        viewDataBinding.editMovieTvTitle.text = movie!!.title
-        viewDataBinding.editMovieTvReleaseDate.text =movie!!.release_date
-        viewDataBinding.editMovieTvOverview.text = movie!!.overview
     }
 
     //로컬디비에 리뷰 저장
@@ -144,6 +125,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
         viewModel.imagePathData.observe(this) {
             d("local imagePathData", it)
+            imagePath = it
             if (it.isNotBlank()){
                 val sampleReview = Review(
                     id = movie!!.id,
@@ -154,13 +136,22 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                     rating = viewDataBinding.editRatingBar.rating.toDouble(),
                     movie = movie!!
                 )
-                if(isFirst){
-                    viewModel.insertReviewWithMovie(sampleReview)
-                }else{
-                    viewModel.updateReview(sampleReview)
-                }
+                viewModel.insertReviewWithMovie(sampleReview)
             }
         }
+    }
+
+    private fun updateReview() {
+        val sampleReview = Review(
+            id = movie!!.id,
+            review_poster = imagePath!!,
+            title = viewDataBinding.editEtTitle.text.toString(),
+            date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
+            comment = viewDataBinding.editEtComment.text.toString(),
+            rating = viewDataBinding.editRatingBar.rating.toDouble(),
+            movie = movie!!
+        )
+        viewModel.updateReview(sampleReview)
     }
 
     //ToolBar에 새로 만든 menu.xml을 인플레이트함
@@ -179,7 +170,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             }
             R.id.menu_save -> {
                 setEditableMode(false)
-                saveReview()
+                if (isFirst) saveReview() else updateReview()
                 return true
             }
             R.id.menu_edit -> {
@@ -188,6 +179,10 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             }
             R.id.menu_share -> {
                 Toast.makeText(this@EditActivity, "준비 중 입니다.", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.menu_delete -> {
+                viewModel.deleteReviewByReviewId(movie!!.id)
                 return true
             }
             else -> {
@@ -204,6 +199,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         //can't edit
         viewDataBinding.editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
         viewDataBinding.editToolbar.menu.findItem(R.id.menu_edit).isVisible = !flag
+        viewDataBinding.editToolbar.menu.findItem(R.id.menu_delete).isVisible = !flag
 
         viewDataBinding.editEtComment.isFocusable = flag
         viewDataBinding.editEtComment.isFocusableInTouchMode = flag
@@ -238,9 +234,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         imm.hideSoftInputFromWindow(viewDataBinding.editEtComment.windowToken, 0)
     }
 
-    //날짜 클릭 시 Show DatePicker
-    fun btnClick() {
-        println("dateOnClick")
+    fun dateBtnClick() {
         showDatePickerDialog()
     }
 

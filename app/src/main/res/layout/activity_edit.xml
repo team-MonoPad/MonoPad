@@ -6,6 +6,18 @@
         <variable
             name="activity"
             type="com.project.monopad.ui.view.edit.EditActivity"/>
+        <variable
+            name="viewmodel"
+            type="com.project.monopad.ui.viewmodel.DiaryViewModel"/>
+        <variable
+            name="review"
+            type="com.project.monopad.model.entity.Review" />
+        <variable
+            name="movie"
+            type="com.project.monopad.model.entity.Movie" />
+        <variable
+            name="dateutil"
+            type="com.project.monopad.util.DateUtil"/>
     </data>
     <RelativeLayout
         android:id="@+id/edit_top_layout"
@@ -57,6 +69,7 @@
                             android:id="@+id/edit_et_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{review.title}"
                             style="@style/MiddleTitleTextViewStyle"
                             android:gravity="top"
                             android:background="@null"
@@ -72,12 +85,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/SubTitleTextViewStyle1"
-                            tools:text="2020/01/01"
-                            android:onClick="@{() -> activity.btnClick()}"/>
+                            tools:text="2020년 01월 01일"
+                            android:onClick="@{() -> activity.dateBtnClick()}"/>
                         <RatingBar
                             android:id="@+id/edit_rating_bar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:rating="@{(float)review.rating}"
                             android:isIndicator="false"
                             android:progressTint="@color/colorYellow"
                             android:progressBackgroundTint="@color/colorYellow"
@@ -86,9 +100,10 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_et_comment"
-                            style="@style/BodyTextViewStyle2"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:text="@{review.comment}"
+                            style="@style/BodyTextViewStyle2"
                             android:layout_marginTop="@dimen/spacing_8"
                             android:layout_weight="1"
                             android:focusable="true"
@@ -129,19 +144,22 @@
                             android:id="@+id/edit_movie_tv_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{movie.title}"
                             style="@style/MiddleTitleTextViewStyle"
                             />
                         <TextView
                             android:id="@+id/edit_movie_tv_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{movie.release_date}"
                             style="@style/SubTitleTextViewStyle1"
-                            android:onClick="@{() -> activity.btnClick()}"/>
+                            android:onClick="@{() -> activity.dateBtnClick()}"/>
 
                         <TextView
                             android:id="@+id/edit_movie_tv_overview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:text="@{movie.overview}"
                             android:gravity="top"
                             android:singleLine="false"
                             android:textColor="@color/colorWhite"

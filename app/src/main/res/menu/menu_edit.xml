@@ -15,9 +15,16 @@
         android:title="share">
     </item>
     <item
+        android:id="@+id/menu_delete"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_delete_forever_24"
+        android:title="delete">
+    </item>
+    <item
         android:id="@+id/menu_edit"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_edit_24"
         android:title="edit">
     </item>
+
 </menu>

@@ -57,6 +57,24 @@ class DiaryViewModel(
         )
     }
 
+    fun deleteReviewByReviewId(review_id: Int){
+        addDisposable(
+            repo.deleteReviewById(review_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        getAllReview()
+                        isCompleted.value = false
+                    },
+                    {
+                        Log.d(TAG, it.localizedMessage)
+                    }
+                )
+
+        )
+    }
+
     fun deleteAllReview(){
         addDisposable(
             repo.deleteAllReview()
@@ -97,7 +115,7 @@ class DiaryViewModel(
                 .subscribe({
                     it.run {
                         Log.d("getReviewByReviewId" , this.toString())
-                        singleReviewData.value = it
+                        singleReviewData.postValue(it)
                     }
                 },{
                     Log.d(TAG, it.localizedMessage)
