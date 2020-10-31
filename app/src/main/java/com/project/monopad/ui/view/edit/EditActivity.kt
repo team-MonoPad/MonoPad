@@ -38,7 +38,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     override val viewModel: DiaryViewModel by viewModel()
 
-    private var isFirst = false
+    private var isFirst = true
     private var movie: Movie? = null
     private var imagePath: String? = "aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg"
     private lateinit var imm: InputMethodManager
@@ -73,9 +73,10 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         if (isFirst) setFirstReview() else viewModel.getReviewByReviewId(id = movie!!.id)
 
         //Flip CardView Setting
-        val scale : Float = applicationContext.resources.displayMetrics.density
-        cv_edit_diary_edit.cameraDistance = 8000 * scale
-        cv_edit_diary_poster.cameraDistance = 8000 * scale
+        applicationContext.resources.displayMetrics.density.let {
+            cv_edit_diary_edit.cameraDistance = it * 8000
+            cv_edit_diary_poster.cameraDistance = it * 8000
+        }
         frontCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.front_animator) as AnimatorSet
         backCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.back_animator) as AnimatorSet
     }
@@ -88,8 +89,8 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override fun initAfterBinding() {
         //리뷰 저장/수정 응답 결과
         viewModel.isCompleted.observe(this){
-            isFirst = !it // Review insert/update 완료 시 isFirst 값 false 로 변경
-            Toast.makeText(this@EditActivity, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            isFirst = !it // insert/update 완료 : true -> isFirst = false
+            if(!it) finish() //delete 완료 : false -> 종료
         }
 
         //이미 저장한 리뷰가 있다면, 받아온 데이터로 View 세팅
@@ -196,17 +197,20 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
      * true -> 편집 화면
      */
     private fun setEditableMode(flag: Boolean) {
-        //can't edit
-        viewDataBinding.editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
-        viewDataBinding.editToolbar.menu.findItem(R.id.menu_edit).isVisible = !flag
-        viewDataBinding.editToolbar.menu.findItem(R.id.menu_delete).isVisible = !flag
+        viewDataBinding.run {
+            //can't edit
+            editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
+            editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
+            editToolbar.menu.findItem(R.id.menu_edit).isVisible = !flag
+            editToolbar.menu.findItem(R.id.menu_delete).isVisible = !flag
+            editEtComment.isFocusable = flag
+            editEtComment.isFocusableInTouchMode = flag
+            editEtComment.isEnabled = flag
 
-        viewDataBinding.editEtComment.isFocusable = flag
-        viewDataBinding.editEtComment.isFocusableInTouchMode = flag
-        viewDataBinding.editEtComment.isEnabled = flag
-        d("flag ", flag.toString())
-        //can edit
-        viewDataBinding.editToolbar.menu.findItem(R.id.menu_save).isVisible = flag
+            //can edit
+            editToolbar.menu.findItem(R.id.menu_save).isVisible = flag
+        }
+
 
         //https://stackoverflow.com/questions/7068873/how-can-i-disable-all-views-inside-the-layout
         //카드뷰 안에 있는 모든 뷰를 활성화 or 비활성화

@@ -7,17 +7,11 @@
             name="activity"
             type="com.project.monopad.ui.view.edit.EditActivity"/>
         <variable
-            name="viewmodel"
-            type="com.project.monopad.ui.viewmodel.DiaryViewModel"/>
-        <variable
             name="review"
             type="com.project.monopad.model.entity.Review" />
         <variable
             name="movie"
             type="com.project.monopad.model.entity.Movie" />
-        <variable
-            name="dateutil"
-            type="com.project.monopad.util.DateUtil"/>
     </data>
     <RelativeLayout
         android:id="@+id/edit_top_layout"
@@ -108,7 +102,7 @@
                             android:layout_weight="1"
                             android:focusable="true"
                             android:gravity="center"
-                            android:hint="리뷰를 기록하고 SNS에 공유해보세요!"
+                            android:hint="@string/edit_review_comment_hint"
                             android:imeOptions="actionNone"
                             android:inputType="textMultiLine"
                             android:scrollbars="vertical"

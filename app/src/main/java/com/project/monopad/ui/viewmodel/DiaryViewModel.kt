@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -30,13 +31,16 @@ class DiaryViewModel(
     val reviewData = _reviewData
 
     private val _singleReviewData = MutableLiveData<Review>()
-    val singleReviewData = _singleReviewData
+    val singleReviewData : LiveData<Review>
+        get() = _singleReviewData
 
     private val _imagePathData = MutableLiveData<String>()
-    val imagePathData = _imagePathData
+    val imagePathData : LiveData<String>
+        get() = _imagePathData
 
     private val _isCompleted = MutableLiveData<Boolean>()
-    val isCompleted = _isCompleted
+    val isCompleted: LiveData<Boolean>
+        get() = _isCompleted
   
     private val _movieDetailInfo = MutableLiveData<MovieDetailResponse>()
     val movieDetailInfo = _movieDetailInfo
@@ -48,7 +52,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        isCompleted.value = true
+                        _isCompleted.postValue(true)
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
@@ -65,7 +69,7 @@ class DiaryViewModel(
                 .subscribe(
                     {
                         getAllReview()
-                        isCompleted.value = false
+                        _isCompleted.postValue(false)
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
@@ -115,7 +119,7 @@ class DiaryViewModel(
                 .subscribe({
                     it.run {
                         Log.d("getReviewByReviewId" , this.toString())
-                        singleReviewData.postValue(it)
+                        _singleReviewData.postValue(it)
                     }
                 },{
                     Log.d(TAG, it.localizedMessage)
@@ -148,7 +152,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     getAllReview()
-                    isCompleted.value = true
+                    _isCompleted.postValue(true)
                 },{
                     Log.d(TAG, it.localizedMessage)
                 })

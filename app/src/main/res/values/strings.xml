@@ -46,5 +46,6 @@
     <string name="trailer_text">트레일러</string>
     <string name="detail_text">상세보기</string>
     <string name="review_title_hint">리뷰 제목</string>
+    <string name="edit_review_comment_hint">리뷰를 기록하고 SNS에 공유해보세요!</string>
 
 </resources>
