@@ -46,4 +46,5 @@
     <!--exception-->
     <string name="network_false">네트워크 연결상태를 확인하세요.</string>
     <string name="error_exception">Error</string>
+    <string name="no_data_exception">No Data Found</string>
 </resources>

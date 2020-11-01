@@ -3,22 +3,17 @@ package com.project.monopad.ui.view.custom.bottomsheetdialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.marginTop
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
@@ -65,9 +60,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogs = BottomSheetDialog(requireContext(),theme)
-        dialogs.setOnShowListener {
-            setupFullHeight()
-        }
+        dialogs.setOnShowListener { setupFullHeight() }
         return  dialogs
     }
 
@@ -75,17 +68,20 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
         val behavior = BottomSheetBehavior.from(bottom_sheet)
         val layoutParams = bottom_sheet.layoutParams
         var windowHeight : Int = 0
-        windowHeight = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
-            getWindowHeightVerR()
-        }else{
-            getWindowHeightOld()
-        }
-        if (layoutParams != null) {
-            layoutParams.height = windowHeight
-        }
+        windowHeight = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){ getWindowHeightVerR() }else{ getWindowHeightOld() }
+        if (layoutParams != null) { layoutParams.height = windowHeight }
         bottom_sheet.layoutParams = layoutParams
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        behavior.isGestureInsetBottomIgnored
+        behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            isGestureInsetBottomIgnored
+            isFitToContents = true
+            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    if (newState==4){ dismiss() }
+                }
+            })
+        }
     }
 
     override fun onStart() {
@@ -102,8 +98,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
         val view = view
         requireView().post {
             val parent = view?.parent as View
-            val params =
-                parent.layoutParams as CoordinatorLayout.LayoutParams
+            val params = parent.layoutParams as CoordinatorLayout.LayoutParams
             val behavior = params.behavior
             val bottomSheetBehavior = behavior as BottomSheetBehavior<*>?
             bottomSheetBehavior!!.peekHeight = view.measuredHeight
@@ -158,7 +153,6 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
     private fun observeSearchMovieData(){
         viewModel.searchMovieData.observe(this) {
             rv_diary_search_movie.adapter = searchAdapter
-
             if (it.isNotEmpty()){
                 searchViewBinding.iv_search_state.visibility = View.GONE
                 searchViewBinding.tv_search_state.visibility = View.GONE
@@ -170,7 +164,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
                     visibility = View.VISIBLE
                 }
                 searchViewBinding.tv_search_state.apply {
-                    text = "No Data Found"
+                    text = getString(R.string.no_data_exception)
                     visibility = View.VISIBLE
                 }
             }
