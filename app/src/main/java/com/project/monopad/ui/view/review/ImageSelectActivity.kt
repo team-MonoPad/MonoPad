@@ -67,7 +67,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                 onBackPressed()
                 true
             }
-            R.id.action_save -> {
+            R.id.action_review -> {
                 val imageSelectAdapter = rv_image_select.adapter as ImageSelectAdapter
                 imageSelectAdapter.getImagePath().also {
                     if(it==null){

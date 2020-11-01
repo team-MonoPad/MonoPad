@@ -8,7 +8,7 @@ val viewModelModule = module {
     viewModel { MovieViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
-    viewModel { DetailViewModel(get()) }
+    viewModel { DetailViewModel(get(), get()) }
     viewModel { DiaryViewModel(get(),get()) }
     viewModel { PersonViewModel(get()) }
     viewModel { ImageSelectViewModel(get()) }
