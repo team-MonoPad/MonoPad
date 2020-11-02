@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    xmlns:androd="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@color/colorPrimaryDark"
+    android:paddingTop="@dimen/spacing_28"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/dialog_tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="정말로 삭제하시겠습니까?"
+        android:gravity="bottom"
+        style="@style/BodyTextViewStyle2"
+        android:layout_marginStart="@dimen/spacing_24"
+        android:layout_marginBottom="@dimen/spacing_28" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+        <Button
+            android:id="@+id/dialog_bt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_cancel"
+            android:background="@color/transparent"/>
+        <Button
+            android:id="@+id/dialog_bt_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_accept"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

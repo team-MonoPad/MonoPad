@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -29,9 +30,18 @@ class DiaryViewModel(
     private val _reviewData = MutableLiveData<List<Review>>()
     val reviewData = _reviewData
 
-    private val _imagePathData = MutableLiveData<String>()
-    val imagePathData = _imagePathData
+    private val _singleReviewData = MutableLiveData<Review>()
+    val singleReviewData : LiveData<Review>
+        get() = _singleReviewData
 
+    private val _imagePathData = MutableLiveData<String>()
+    val imagePathData : LiveData<String>
+        get() = _imagePathData
+
+    private val _isCompleted = MutableLiveData<Boolean>()
+    val isCompleted: LiveData<Boolean>
+        get() = _isCompleted
+  
     private val _movieDetailInfo = MutableLiveData<MovieDetailResponse>()
     val movieDetailInfo = _movieDetailInfo
 
@@ -42,12 +52,30 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
+                        _isCompleted.postValue(true)
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
                     }
                 )
+        )
+    }
+
+    fun deleteReviewByReviewId(review_id: Int){
+        addDisposable(
+            repo.deleteReviewById(review_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        getAllReview()
+                        _isCompleted.postValue(false)
+                    },
+                    {
+                        Log.d(TAG, it.localizedMessage)
+                    }
+                )
+
         )
     }
 
@@ -72,9 +100,10 @@ class DiaryViewModel(
         addDisposable(repo.getAllReview()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+            .subscribe({ it ->
                 it.run {
                     reviewData.value =it
+                    forEach { Log.d("getAllReview",it.toString()) }
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -89,7 +118,8 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it.run {
-                        Log.d(" REVIEW_TEST " , this.title)
+                        Log.d("getReviewByReviewId" , this.toString())
+                        _singleReviewData.postValue(it)
                     }
                 },{
                     Log.d(TAG, it.localizedMessage)
@@ -122,6 +152,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     getAllReview()
+                    _isCompleted.postValue(true)
                 },{
                     Log.d(TAG, it.localizedMessage)
                 })
