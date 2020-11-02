@@ -50,7 +50,7 @@
                     android:id="@+id/cv_edit_diary_edit"
                     android:layout_marginHorizontal="@dimen/spacing_36"
                     android:layout_marginTop="@dimen/spacing_36"
-                    android:layout_marginBottom="@dimen/spacing_60"
+                    android:layout_marginBottom="@dimen/spacing_80"
                     app:contentPadding="4dp">
 
                     <LinearLayout
@@ -63,9 +63,8 @@
                             android:id="@+id/edit_et_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{review.title}"
-                            style="@style/MiddleTitleTextViewStyle"
-                            android:gravity="top"
+android:text="@{activity.isFirst ? @string/edit_review_title(movie.title) : review.title}"
+                            style="@style/EditReviewTitleStyle"
                             android:background="@null"
                             android:inputType="text"
                             android:hint="@string/review_title_hint"
@@ -78,7 +77,7 @@
                             android:id="@+id/edit_tv_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/SubTitleTextViewStyle1"
+                            style="@style/EditReviewBodyStyle"
                             tools:text="2020년 01월 01일"
                             android:onClick="@{() -> activity.dateBtnClick()}"/>
                         <RatingBar
@@ -97,11 +96,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:text="@{review.comment}"
-                            style="@style/BodyTextViewStyle2"
+                            style="@style/EditReviewBodyStyle"
                             android:layout_marginTop="@dimen/spacing_8"
                             android:layout_weight="1"
-                            android:focusable="true"
-                            android:gravity="center"
+                            android:gravity="top"
                             android:hint="@string/edit_review_comment_hint"
                             android:imeOptions="actionNone"
                             android:inputType="textMultiLine"
@@ -139,14 +137,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{movie.title}"
-                            style="@style/MiddleTitleTextViewStyle"
+                            style="@style/EditReviewTitleStyle"
                             />
                         <TextView
                             android:id="@+id/edit_movie_tv_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{movie.release_date}"
-                            style="@style/SubTitleTextViewStyle1"
+                            style="@style/EditReviewBodyStyle"
                             android:onClick="@{() -> activity.dateBtnClick()}"/>
 
                         <TextView
@@ -161,7 +159,7 @@
                             android:scrollbars="vertical"
                             android:background="@color/transparent"
                             android:layout_marginTop="@dimen/spacing_8"
-                            style="@style/BodyTextViewStyle2"/>
+                            style="@style/EditReviewBodyStyle"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <ImageView

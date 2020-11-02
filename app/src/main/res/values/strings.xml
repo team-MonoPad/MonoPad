@@ -45,7 +45,15 @@
     <string name="image_select_checkbox">한 개만 선택 가능합니다!\n 다른 선택을 해제하세요!</string>
     <string name="trailer_text">트레일러</string>
     <string name="detail_text">상세보기</string>
+
+
+    <!--edit review-->
     <string name="review_title_hint">리뷰 제목</string>
     <string name="edit_review_comment_hint">리뷰를 기록하고 SNS에 공유해보세요!</string>
+    <string name="review_delete_title">리뷰 삭제</string>
+    <string name="dialog_delete_message">리뷰를 삭제할까요?</string>
+    <string name="dialog_cancel">아니오</string>
+    <string name="dialog_accept">예</string>
+    <string name="edit_review_title">%s 관람 후기</string>
 
 </resources>

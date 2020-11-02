@@ -14,17 +14,24 @@
         android:icon="@drawable/ic_baseline_share_24"
         android:title="share">
     </item>
-    <item
-        android:id="@+id/menu_delete"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_baseline_delete_forever_24"
-        android:title="delete">
-    </item>
+
     <item
         android:id="@+id/menu_edit"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_edit_24"
         android:title="edit">
+    </item>
+
+    <item
+        android:id="@+id/menu_delete"
+        app:showAsAction="never"
+        android:title="리뷰 삭제">
+    </item>
+
+    <item
+        android:id="@+id/menu_reselect_image"
+        app:showAsAction="never"
+        android:title="포스터 변경">
     </item>
 
 </menu>

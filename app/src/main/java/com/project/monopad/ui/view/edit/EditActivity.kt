@@ -4,8 +4,7 @@ package com.project.monopad.ui.view.edit
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.app.DatePickerDialog
-import android.graphics.Bitmap
-import android.graphics.Canvas
+import android.text.TextUtils
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
@@ -22,7 +21,6 @@ import com.project.monopad.model.entity.Review
 import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
-import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -38,21 +36,17 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     override val viewModel: DiaryViewModel by viewModel()
 
-    private var isFirst = true
+    var isFirst = true
     private var movie: Movie? = null
     private var imagePath: String? = "aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg"
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
-    private var isFront = false
+    private var isFront = true
 
     override fun initStartView() {
         viewDataBinding.activity = this;
-        //Set Toolbar
-        setSupportActionBar(viewDataBinding.editToolbar) //툴바를 액션바로 등록
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true) //back button
-        supportActionBar!!.setDisplayShowCustomEnabled(true)
-
+        initToolbar()
 //        intent.let{
 //            isFirst = intent.getBooleanExtra("isFirst", false)
 //        movie = intent.getParcelableExtra<Movie>("movie")
@@ -70,6 +64,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             release_date = "2020/08/01",
             genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
         )
+
         if (isFirst) setFirstReview() else viewModel.getReviewByReviewId(id = movie!!.id)
 
         //Flip CardView Setting
@@ -111,8 +106,12 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private fun setFirstReview(){
 //        movie = intent.getParcelableExtra<Movie>("movie")!!
 //        imagePath = intent.getStringExtra("image")
+        d("setFirst", "frist")
         viewDataBinding.movie = movie
         viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
+//        viewDataBinding.review = Review //리뷰 제목 초기화
+        viewDataBinding.editEtTitle.setText(String.format(getString(R.string.edit_review_title, movie!!.title))) //리뷰 제목 초기화
+
         Glide.with(this@EditActivity)
             .load(IMAGE_URL + imagePath)
             .fitCenter()
@@ -125,7 +124,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         viewModel.downloadImage(IMAGE_URL + imagePath, "Title")
 
         viewModel.imagePathData.observe(this) {
-            d("local imagePathData", it)
             imagePath = it
             if (it.isNotBlank()){
                 val sampleReview = Review(
@@ -183,7 +181,13 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                 return true
             }
             R.id.menu_delete -> {
-                viewModel.deleteReviewByReviewId(movie!!.id)
+                showDeleteDialog()
+                return true
+            }
+
+            R.id.menu_reselect_image -> {
+                //포스터 선택화면으로 이동
+//                finish()
                 return true
             }
             else -> {
@@ -203,6 +207,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
             editToolbar.menu.findItem(R.id.menu_edit).isVisible = !flag
             editToolbar.menu.findItem(R.id.menu_delete).isVisible = !flag
+            editToolbar.menu.findItem(R.id.menu_reselect_image).isVisible = !flag
             editEtComment.isFocusable = flag
             editEtComment.isFocusableInTouchMode = flag
             editEtComment.isEnabled = flag
@@ -211,8 +216,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             editToolbar.menu.findItem(R.id.menu_save).isVisible = flag
         }
 
-
-        //https://stackoverflow.com/questions/7068873/how-can-i-disable-all-views-inside-the-layout
         //카드뷰 안에 있는 모든 뷰를 활성화 or 비활성화
         for (i in 0 until viewDataBinding.editReviewContainer.childCount) {
             val child: View = viewDataBinding.editReviewContainer.getChildAt(i)
@@ -228,18 +231,24 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     }
 
     private fun showKeyboard() {
-        viewDataBinding.editEtComment.requestFocus()
+        viewDataBinding.editEtTitle.requestFocus()
         imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager //앱에서 창을 제어하는 기능을 제공하는 클래스. 소프트키 제어하기 위해 사용
-        imm.showSoftInput(viewDataBinding.editEtComment, 0)
+        imm.showSoftInput(viewDataBinding.editEtTitle, 0)
     }
 
     private fun hideKeyboard() {
         imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(viewDataBinding.editEtComment.windowToken, 0)
+        imm.hideSoftInputFromWindow(viewDataBinding.editEtTitle.windowToken, 0)
     }
 
     fun dateBtnClick() {
         showDatePickerDialog()
+    }
+    
+    private fun initToolbar(){
+        setSupportActionBar(viewDataBinding.editToolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowCustomEnabled(true)
     }
 
     private fun showDatePickerDialog() {
@@ -251,8 +260,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         DatePickerDialog(
             this, R.style.CustomDatePickerDialogTheme,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                d("Selected Birthday", "$year  $monthOfYear  $dayOfMonth")
-                // Display Selected date in textbox
                 val birthDay = "${year}년 ${monthOfYear + 1}월 ${dayOfMonth}일"
                 viewDataBinding.editTvDate.text = birthDay
             },
@@ -261,6 +268,14 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             .apply {
                 show()
             }
+    }
+
+    private fun showDeleteDialog(){
+        val dialog = CheckDialog(this)
+        dialog.setAcceptBtnOnClickListener{
+            viewModel.deleteReviewByReviewId(movie!!.id)
+        }
+        dialog.start(getString(R.string.dialog_delete_message))
     }
 
     fun rotateBtnClick(){

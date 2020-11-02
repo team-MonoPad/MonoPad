@@ -157,4 +157,14 @@
         <item name="android:paddingEnd">1dp</item>
     </style>
 
+    <!--edit review-->
+    <style name="EditReviewTitleStyle">
+        <item name="android:textSize">@dimen/title_24</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_5</item>
+    </style>
+    <style name="EditReviewBodyStyle">
+        <item name="android:textSize">@dimen/title_20</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_5</item>
+    </style>
 </resources>
