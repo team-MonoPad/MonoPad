@@ -78,7 +78,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState==4){ dismiss() }
+                    if (newState==BottomSheetBehavior.STATE_COLLAPSED){ dismiss() }
                 }
             })
         }
@@ -92,8 +92,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
     private fun setBottomSheetFullScreen(){
         val dialog = dialog
         if (dialog != null) {
-            val bottomSheet: View = dialog.findViewById(R.id.bottom_sheet)
-            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT //Can write to the height you want
+            searchViewBinding.bottom_sheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
         val view = view
         requireView().post {
@@ -108,19 +107,13 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
     @RequiresApi(Build.VERSION_CODES.R)
     private fun getWindowHeightVerR(): Int {
         val displayMetrics = DisplayMetrics()
-        activity?.let {
-            it.applicationContext.display!!.getRealMetrics(displayMetrics)
-            return displayMetrics.heightPixels
-        }
+        activity?.applicationContext?.display!!.getRealMetrics(displayMetrics)
         return displayMetrics.heightPixels
     }
 
     private fun getWindowHeightOld(): Int {
         val displayMetrics = DisplayMetrics()
-        activity?.let {
-            it.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-            return displayMetrics.heightPixels
-        }
+        activity?.windowManager?.defaultDisplay!!.getRealMetrics(displayMetrics)
         return displayMetrics.heightPixels
     }
 
@@ -154,19 +147,11 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
         viewModel.searchMovieData.observe(this) {
             rv_diary_search_movie.adapter = searchAdapter
             if (it.isNotEmpty()){
-                searchViewBinding.iv_search_state.visibility = View.GONE
-                searchViewBinding.tv_search_state.visibility = View.GONE
                 searchAdapter.setList(it)
+                hideSearchState()
             }else{
                 searchAdapter.refreshList()
-                searchViewBinding.iv_search_state.apply {
-                    setImageResource(R.drawable.ic_baseline_outlet_24)
-                    visibility = View.VISIBLE
-                }
-                searchViewBinding.tv_search_state.apply {
-                    text = getString(R.string.no_data_exception)
-                    visibility = View.VISIBLE
-                }
+                showNoDataState()
             }
         }
         searchAdapter.apply {
@@ -177,6 +162,22 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
             setOnSearchTouchListener {
                 searchViewHide()
             }
+        }
+    }
+
+    private fun hideSearchState(){
+        searchViewBinding.iv_search_state.visibility = View.GONE
+        searchViewBinding.tv_search_state.visibility = View.GONE
+    }
+
+    private fun showNoDataState(){
+        searchViewBinding.iv_search_state.apply {
+            setImageResource(R.drawable.ic_baseline_outlet_24)
+            visibility = View.VISIBLE
+        }
+        searchViewBinding.tv_search_state.apply {
+            text = getString(R.string.no_data_exception)
+            visibility = View.VISIBLE
         }
     }
 
