@@ -69,8 +69,8 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
         //Flip CardView Setting
         applicationContext.resources.displayMetrics.density.let {
-            cv_edit_diary_edit.cameraDistance = it * 8000
-            cv_edit_diary_poster.cameraDistance = it * 8000
+            viewDataBinding.cvEditDiaryEdit.cameraDistance = it * 8000
+            viewDataBinding.cvEditDiaryPoster.cameraDistance = it * 8000
         }
         frontCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.front_animator) as AnimatorSet
         backCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.back_animator) as AnimatorSet
@@ -264,10 +264,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                 viewDataBinding.editTvDate.text = birthDay
             },
             y, m, d
-        )
-            .apply {
-                show()
-            }
+        ).show()
     }
 
     private fun showDeleteDialog(){
