@@ -16,7 +16,6 @@ import com.project.monopad.databinding.ItemUpcomingBinding
 import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 
-//https://lakue.tistory.com/16?category=853542
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
     private var movies: ArrayList<MovieInfoResultResponse> = ArrayList()
 
