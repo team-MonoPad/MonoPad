@@ -4,16 +4,12 @@ package com.project.monopad.ui.view.edit
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.app.DatePickerDialog
-import android.text.TextUtils
-import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.lifecycle.observe
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityEditBinding
 import com.project.monopad.model.entity.Movie
@@ -23,7 +19,6 @@ import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_edit.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -38,7 +33,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     var isFirst = true
     private var movie: Movie? = null
-    private var imagePath: String? = "aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg"
+    var imagePath: String? = null
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
@@ -82,7 +77,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     //observing & add item to adapter\
     override fun initAfterBinding() {
-        //리뷰 저장/수정 응답 결과
+        //리뷰 저장 or 수정 응답 결과
         viewModel.isCompleted.observe(this){
             isFirst = !it // insert/update 완료 : true -> isFirst = false
             if(!it) finish() //delete 완료 : false -> 종료
@@ -94,39 +89,24 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             viewDataBinding.movie = it.movie
             imagePath = it.review_poster
             viewDataBinding.editTvDate.text = DateUtil.convertDateToString(it.date)
-
-            Glide.with(this@EditActivity)
-                .load(it.review_poster)
-                .fitCenter()
-                .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
-                .into(viewDataBinding.editIvBlurBackground)
         }
     }
 
     private fun setFirstReview(){
 //        movie = intent.getParcelableExtra<Movie>("movie")!!
 //        imagePath = intent.getStringExtra("image")
-        d("setFirst", "frist")
         viewDataBinding.movie = movie
+        imagePath = IMAGE_URL + "aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg"
         viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
-//        viewDataBinding.review = Review //리뷰 제목 초기화
-        viewDataBinding.editEtTitle.setText(String.format(getString(R.string.edit_review_title, movie!!.title))) //리뷰 제목 초기화
-
-        Glide.with(this@EditActivity)
-            .load(IMAGE_URL + imagePath)
-            .fitCenter()
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
-            .into(viewDataBinding.editIvBlurBackground)
     }
 
-    //로컬디비에 리뷰 저장
     private fun saveReview() {
-        viewModel.downloadImage(IMAGE_URL + imagePath, "Title")
+        viewModel.downloadImage(imagePath!!, "Title")
 
         viewModel.imagePathData.observe(this) {
             imagePath = it
             if (it.isNotBlank()){
-                val sampleReview = Review(
+                val review = Review(
                     id = movie!!.id,
                     review_poster = it, //로컬 경로
                     title = viewDataBinding.editEtTitle.text.toString(),
@@ -135,13 +115,13 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                     rating = viewDataBinding.editRatingBar.rating.toDouble(),
                     movie = movie!!
                 )
-                viewModel.insertReviewWithMovie(sampleReview)
+                viewModel.insertReviewWithMovie(review)
             }
         }
     }
 
     private fun updateReview() {
-        val sampleReview = Review(
+        val review = Review(
             id = movie!!.id,
             review_poster = imagePath!!,
             title = viewDataBinding.editEtTitle.text.toString(),
@@ -150,10 +130,9 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             rating = viewDataBinding.editRatingBar.rating.toDouble(),
             movie = movie!!
         )
-        viewModel.updateReview(sampleReview)
+        viewModel.updateReview(review)
     }
 
-    //ToolBar에 새로 만든 menu.xml을 인플레이트함
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.menu_edit, menu)
