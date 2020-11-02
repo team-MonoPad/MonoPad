@@ -78,7 +78,6 @@ object BindingAdapter {
             .load(imageUrl)
             .centerCrop()
             .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
-            .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
 }
