@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
@@ -87,8 +88,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun observeSimilarMovieData(){
         val similarMovieAdapter = OtherMovieAdapter(OtherMovieCase.SIMILAR)
         viewModel.similarMovieData.observe(this, {
-            viewDataBinding.contentLayout.rvDetailSimilarMovie.adapter = similarMovieAdapter
-            similarMovieAdapter.setList(it)
+            viewDataBinding.contentLayout.run {
+                rvDetailSimilarMovie.adapter = similarMovieAdapter
+                similarMovieAdapter.setList(it)
+                visibilitySetting(it.size, tvDetailSimilar, dvSimilarTop)
+            }
         })
         similarMovieAdapter.setOnOtherClickListener {
             val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
@@ -100,8 +104,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun observeRecommendMovieData(){
         val recommendMovieAdapter = OtherMovieAdapter(OtherMovieCase.RECOMMEND)
         viewModel.recommendMovieData.observe(this, {
-            viewDataBinding.contentLayout.rvDetailRecommendMovie.adapter = recommendMovieAdapter
-            recommendMovieAdapter.setList(it)
+            viewDataBinding.contentLayout.run {
+                rvDetailRecommendMovie.adapter = recommendMovieAdapter
+                recommendMovieAdapter.setList(it)
+                visibilitySetting(it.size, tvDetailRecommend, dvRecommendTop)
+            }
         })
         recommendMovieAdapter.setOnOtherClickListener {
             val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
@@ -113,8 +120,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun observeTrailerMovieData(){
         val trailerAdapter = TrailerAdapter()
         viewModel.movieTrailerData.observe(this, {
-            viewDataBinding.contentLayout.rvDetailTrailer.adapter = trailerAdapter
-            trailerAdapter.setList(it)
+            viewDataBinding.contentLayout.run {
+                rvDetailTrailer.adapter = trailerAdapter
+                trailerAdapter.setList(it)
+                visibilitySetting(it.size, tvDetailTrailer, dvTrailerTop)
+            }
         })
         trailerAdapter.setOnTrailerClickListener {
             Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
@@ -167,6 +177,16 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewDataBinding.toolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar)
 
+    }
+
+    private fun visibilitySetting(size: Int, vararg v: View){
+        if(size == 0){
+            v[0].visibility = View.GONE
+            v[1].visibility = View.GONE
+        } else {
+            v[0].visibility = View.VISIBLE
+            v[1].visibility = View.VISIBLE
+        }
     }
 
     /* toolbar menu setting */
