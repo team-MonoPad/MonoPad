@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="activity"
+            type="com.project.monopad.ui.view.edit.EditActivity"/>
+        <variable
+            name="review"
+            type="com.project.monopad.model.entity.Review" />
+        <variable
+            name="movie"
+            type="com.project.monopad.model.entity.Movie" />
+    </data>
+    <RelativeLayout
+        android:id="@+id/edit_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorGrey"
+        tools:context=".ui.view.edit.EditActivity">
+        <ImageView
+            android:id="@+id/edit_iv_blur_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:bindEditReviewBackPoster ="@{activity.isFirst ? activity.imagePath : review.review_poster}"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/edit_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/transparent"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:elevation="0dp"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/edit_toolbar"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="#793E3E3E"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    android:id="@+id/cv_edit_diary_edit"
+                    android:layout_marginHorizontal="@dimen/spacing_36"
+                    android:layout_marginTop="@dimen/spacing_36"
+                    android:layout_marginBottom="@dimen/spacing_80"
+                    app:contentPadding="4dp">
+
+                    <LinearLayout
+                        android:id="@+id/edit_review_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/spacing_24"
+                        android:orientation="vertical">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_et_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{activity.isFirst ? @string/edit_review_title(movie.title) : review.title}"
+                            style="@style/EditReviewTitleStyle"
+                            android:background="@null"
+                            android:inputType="text"
+                            android:hint="@string/review_title_hint"
+                            android:textColorHint="@color/grey300"
+                            android:textCursorDrawable="@drawable/cursor_style"
+                            android:textColor="@color/colorWhite"
+                            android:focusable="true"
+                            android:maxLines="1"/>
+                        <TextView
+                            android:id="@+id/edit_tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/EditReviewBodyStyle"
+                            tools:text="2020년 01월 01일"
+                            android:onClick="@{() -> activity.dateBtnClick()}"/>
+                        <RatingBar
+                            android:id="@+id/edit_rating_bar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:rating="@{(float)review.rating}"
+                            android:isIndicator="false"
+                            android:progressTint="@color/colorYellow"
+                            android:progressBackgroundTint="@color/colorYellow"
+                            android:secondaryProgressTint="@color/colorYellow"
+                            style="@style/Widget.AppCompat.RatingBar.Indicator"/>
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_et_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="@{review.comment}"
+                            style="@style/EditReviewBodyStyle"
+                            android:layout_marginTop="@dimen/spacing_8"
+                            android:layout_weight="1"
+                            android:gravity="top"
+                            android:hint="@string/edit_review_comment_hint"
+                            android:imeOptions="actionNone"
+                            android:inputType="textMultiLine"
+                            android:scrollbars="vertical"
+                            android:singleLine="false"
+                            android:background="@null"
+                            android:textColor="@color/colorWhite"
+                            android:textColorHint="@color/grey300"
+                            android:textCursorDrawable="@drawable/cursor_style"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    card_view:cardBackgroundColor="#793E3E3E"
+                    card_view:cardCornerRadius="10dp"
+                    card_view:cardElevation="0dp"
+                    android:id="@+id/cv_edit_diary_poster"
+                    android:layout_marginHorizontal="@dimen/spacing_36"
+                    android:layout_marginTop="@dimen/spacing_36"
+                    android:layout_marginBottom="@dimen/spacing_80"
+                    android:visibility="gone"
+                    card_view:contentPadding="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/spacing_24"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/edit_movie_tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{movie.title}"
+                            style="@style/EditReviewTitleStyle"
+                            />
+                        <TextView
+                            android:id="@+id/edit_movie_tv_release_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{movie.release_date}"
+                            style="@style/EditReviewBodyStyle"
+                            android:onClick="@{() -> activity.dateBtnClick()}"/>
+
+                        <TextView
+                            android:id="@+id/edit_movie_tv_overview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@{movie.overview}"
+                            android:gravity="top"
+                            android:singleLine="false"
+                            android:textColor="@color/colorWhite"
+                            android:focusable="true"
+                            android:scrollbars="vertical"
+                            android:background="@color/transparent"
+                            android:layout_marginTop="@dimen/spacing_8"
+                            style="@style/EditReviewBodyStyle"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/edit_iv_rotate"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:rotation="180"
+                    android:src="@drawable/ic_baseline_rotate"
+                    android:bottom="@+id/cv_edit_diary_edit"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="16dp"
+                    android:onClick="@{() -> activity.rotateBtnClick()}"
+                    />
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>
