@@ -52,6 +52,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        getAllReview()
                         _isCompleted.postValue(true)
                     },
                     {

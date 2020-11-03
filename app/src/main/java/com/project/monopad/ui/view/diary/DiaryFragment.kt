@@ -68,13 +68,32 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
 
     private fun observeReviewData() {
         viewModel.reviewData.observe(this) {
-            viewDataBinding.calendarView.calendarAdapter.setList(it)
-            viewDataBinding.calendarView.notifyCalendarChanged()
+            //viewDataBinding.calendarView.calendarAdapter.setList(it)
+            //viewDataBinding.calendarView.notifyCalendarChanged()
+            viewDataBinding.calendarView2.calendarPagerAdapter.setList(it)
         }
     }
 
     private fun listenerSetting() {
-        viewDataBinding.calendarView.setonDayClickListener{ month, item ->
+        viewDataBinding.calendarView2.setonDayClickListener { month, item ->
+            val itemYear = item.year
+            val itemMonth = item.month
+            val itemDay = item.day
+            val reviews = item.reviews
+
+            if(itemMonth!=month){
+                viewDataBinding.calendarView2.moveMonth(itemMonth-month)
+            }
+            else {
+                if(!reviews.isNullOrEmpty()){
+                    showBottomListDialog(reviews)
+                }
+                else {
+                    showBottomSearchDialog()
+                }
+            }
+        }
+        /*viewDataBinding.calendarView.setonDayClickListener{ month, item ->
             val itemYear = item.year
             val itemMonth = item.month
             val itemDay = item.day
@@ -92,7 +111,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
                     showBottomSearchDialog()
                 }
             }
-        }
+        }*/
     }
 
     private fun showBottomListDialog(reviews: List<Review>) {

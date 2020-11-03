@@ -10,10 +10,17 @@
         android:orientation="vertical"
         tools:context=".ui.view.MainActivity">
 
-        <com.project.monopad.ui.view.custom.calendar.CalendarView
+        <!--<com.project.monopad.ui.view.custom.calendar.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" />-->
+
+        <com.project.monopad.ui.view.custom.viewpager.CalendarView2
+            android:id="@+id/calendarView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"/>
+
 
     </LinearLayout>
 
