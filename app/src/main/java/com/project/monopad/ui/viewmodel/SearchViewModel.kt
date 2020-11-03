@@ -1,6 +1,7 @@
 package com.project.monopad.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.network.repository.MovieRepoImpl
@@ -14,7 +15,8 @@ class SearchViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
     private val TAG = "SEARCH VIEWMODEL"
 
     private val _searchMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val searchMovieData = _searchMovieData
+    val searchMovieData : LiveData<List<MovieInfoResultResponse>>
+        get() = _searchMovieData
 
     fun getSearchData(query: String){
         /* 비슷한 영화 정보 가져오기 */
@@ -28,7 +30,7 @@ class SearchViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _searchMovieData.value = it.results
+                    _searchMovieData.postValue(it.results)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)

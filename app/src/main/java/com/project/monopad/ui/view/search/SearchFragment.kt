@@ -42,7 +42,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     private fun observeSearchMovieData(){
         val searchAdapter = SearchAdapter()
         viewModel.searchMovieData.observe(this, {
-            rv_search_movie.adapter = searchAdapter
+           viewDataBinding.rvSearchMovie.adapter = searchAdapter
             searchAdapter.setList(it)
         })
         searchAdapter.setOnSearchClickListener {

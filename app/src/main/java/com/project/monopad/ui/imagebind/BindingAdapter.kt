@@ -71,4 +71,13 @@ object BindingAdapter {
         view.text = DateUtil.convertDateToString(date)
     }
 
+    @JvmStatic
+    @BindingAdapter("bindEditReviewBackPoster")
+    fun bindEditReviewBackPoster(view: ImageView, imageUrl: String?) {
+        Glide.with(view.context)
+            .load(imageUrl)
+            .centerCrop()
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
+            .into(view)
+    }
 }
