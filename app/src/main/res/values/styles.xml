@@ -128,6 +128,7 @@
         <item name="searchIcon">@null</item>
         <item name="goIcon">@drawable/abc_ic_go_search_api_material</item>
         <item name="suggestionRowLayout">@layout/abc_search_dropdown_item_icons_2line</item>
+    </style>
     <!--Edit Review-->
     <!--https://stackoverflow.com/questions/30239627/how-to-change-the-style-of-a-datepicker-in-android-->
     <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
@@ -166,32 +167,6 @@
         <item name="android:shadowDy">5.0</item>
         <item name="android:shadowColor">@color/colorBlack</item>
         <item name="android:paddingEnd">1dp</item>
-    </style>
-
-    <style name="CustomDialogTheme" parent="DialogFragmentTheme">
-        <item name="android:windowBackground">@color/colorBlack</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowAnimationStyle">@style/AddonDialogAnimation</item>
-    </style>
-
-    <style name="DialogFragmentTheme" parent="MatchParentLayout">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowAnimationStyle">@style/Animation.Dialog</item>
-    </style>
-
-    <style name="Animation.Dialog" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/order_detail_dialog_in</item>
-        <item name="android:windowExitAnimation">@anim/order_detail_dialog_out</item>
-    </style>
-
-    <style name="AddonDialogAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/addon_dialog_anim_in</item>
-        <item name="android:windowExitAnimation">@anim/addon_dialog_anim_out</item>
     </style>
 
     <style name="MatchParentLayout">
