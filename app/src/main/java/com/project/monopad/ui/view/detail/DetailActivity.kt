@@ -1,20 +1,17 @@
 package com.project.monopad.ui.view.detail
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.youtube.player.internal.v
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
-import com.project.monopad.ui.adapter.*
+import com.project.monopad.ui.adapter.CasterAdapter
+import com.project.monopad.ui.adapter.OtherMovieAdapter
+import com.project.monopad.ui.adapter.TrailerAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.review.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel

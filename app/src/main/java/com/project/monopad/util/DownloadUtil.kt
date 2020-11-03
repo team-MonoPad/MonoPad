@@ -5,6 +5,7 @@ import android.util.Log
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.lang.Exception
 
 object DownloadUtil {
     fun saveImage(

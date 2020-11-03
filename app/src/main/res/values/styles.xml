@@ -117,6 +117,37 @@
         <item name="cardCornerRadius">6dp</item>
     </style>
 
+    <!--bottom search fragment-->
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="cardCornerRadius">9dp</item>
+        <item name="searchHintIcon">@null</item>
+        <item name="layout">@layout/abc_search_view</item>
+        <item name="queryBackground">@color/colorWhite</item>
+        <item name="submitBackground">@color/colorWhite</item>
+        <item name="closeIcon">@drawable/abc_ic_clear_material</item>
+        <item name="searchIcon">@null</item>
+        <item name="goIcon">@drawable/abc_ic_go_search_api_material</item>
+        <item name="suggestionRowLayout">@layout/abc_search_dropdown_item_icons_2line</item>
+    <!--Edit Review-->
+    <!--https://stackoverflow.com/questions/30239627/how-to-change-the-style-of-a-datepicker-in-android-->
+    <style name="CustomDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+        <item name="colorAccent">@color/colorAccent</item>                   <!--header background-->
+        <item name="android:windowBackground">@color/colorBlack</item>     <!--calendar background-->
+        <item name="android:colorControlActivated">@color/colorAccent</item> <!--selected day-->
+        <item name="android:textColorPrimary">@color/colorWhite</item> <!--days of the month-->
+        <item name="android:textColorSecondary">@color/colorGrey</item>    <!--days of the week-->
+    </style>
+
+    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorYellow</item>
+        <item name="colorControlActivated">@color/colorYellow</item>
+    </style>
+
     <style name="ShadowTitleTextViewStyle">
         <item name="android:textSize">@dimen/title_20</item>
         <item name="android:textStyle">bold</item>
@@ -137,4 +168,45 @@
         <item name="android:paddingEnd">1dp</item>
     </style>
 
+    <style name="CustomDialogTheme" parent="DialogFragmentTheme">
+        <item name="android:windowBackground">@color/colorBlack</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/AddonDialogAnimation</item>
+    </style>
+
+    <style name="DialogFragmentTheme" parent="MatchParentLayout">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Dialog</item>
+    </style>
+
+    <style name="Animation.Dialog" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/order_detail_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/order_detail_dialog_out</item>
+    </style>
+
+    <style name="AddonDialogAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/addon_dialog_anim_in</item>
+        <item name="android:windowExitAnimation">@anim/addon_dialog_anim_out</item>
+    </style>
+
+    <style name="MatchParentLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <!--edit review-->
+    <style name="EditReviewTitleStyle">
+        <item name="android:textSize">@dimen/title_24</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_5</item>
+    </style>
+    <style name="EditReviewBodyStyle">
+        <item name="android:textSize">@dimen/title_20</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_5</item>
+    </style>
 </resources>
