@@ -12,4 +12,5 @@ val viewModelModule = module {
     viewModel { DiaryViewModel(get(),get()) }
     viewModel { PersonViewModel(get()) }
     viewModel { ImageSelectViewModel(get()) }
+    viewModel { SearchViewModel(get()) }
 }
