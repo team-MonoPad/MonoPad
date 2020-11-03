@@ -42,6 +42,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
         this.movieList = list as ArrayList<MovieInfoResultResponse>
     }
 
+    fun refreshList(){
+        this.movieList.clear()
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(private val binding: ItemSearchMovieBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(movie: MovieInfoResultResponse){
             binding.movie = movie
