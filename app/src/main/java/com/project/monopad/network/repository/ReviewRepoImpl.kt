@@ -25,16 +25,20 @@ class ReviewRepoImpl (
         return remote.getMovieImages(movie_id, apikey)
     }
 
-    override fun insertReview(review: Review) : Completable{
+    override fun insertReview(review: Review): Completable {
         return local.insert(review)
     }
 
-    override fun deleteAllReview() : Completable {
+    override fun deleteAllReview(): Completable {
         return local.delete()
     }
 
-    override fun getReviewByReviewId(review_id: Int) : Single<Review> {
-        return local.getReviewByReviewID(review_id)
+    override fun deleteReviewById(review_id: Int): Completable {
+        return local.deleteReviewById(review_id)
+    }
+
+    override fun getReviewById(review_id: Int) : Single<Review> {
+        return local.getReviewById(review_id)
     }
 
     override fun getAllReview(): Single<List<Review>> {

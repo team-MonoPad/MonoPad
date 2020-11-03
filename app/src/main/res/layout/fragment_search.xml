@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout
-        xmlns:tools="http://schemas.android.com/tools"
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.project.monopad.ui.viewmodel.SearchViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.MainActivity">
+        android:focusable="auto"
+        android:focusableInTouchMode="true">
 
-        <TextView
-            android:id="@+id/search_text"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello Search Fragment" />
-
-    </FrameLayout>
+            android:layout_marginStart="@dimen/spacing_10"
+            android:layout_marginTop="@dimen/spacing_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
