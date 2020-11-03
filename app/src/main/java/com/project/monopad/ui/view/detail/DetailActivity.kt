@@ -17,8 +17,6 @@ import com.project.monopad.ui.view.review.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
 import com.project.monopad.util.DetailParsingUtil
 import com.project.monopad.util.OtherMovieCase
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.content_scrolling.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
@@ -57,24 +55,26 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     /* observe */
     private fun observeMovieDetailData(){
         viewModel.movieDetailData.observe(this, {
-                toolbar_layout.title = it.title
-                tv_detail_release_date.text = DetailParsingUtil.releaseDateParsing(it.release_date)
-                tv_detail_runtime.text = DetailParsingUtil.runtimeParsing(it.runtime)
-                tv_detail_genre.text = DetailParsingUtil.genreParsing(it.genres)
-                tv_detail_overview.text = it.overview
+            viewDataBinding.toolbarLayout.title = it.title
+            viewDataBinding.contentLayout.apply {
+                tvDetailReleaseDate.text = DetailParsingUtil.releaseDateParsing(it.release_date)
+                tvDetailRuntime.text = DetailParsingUtil.runtimeParsing(it.runtime)
+                tvDetailGenre.text = DetailParsingUtil.genreParsing(it.genres)
+                tvDetailOverview.text = it.overview
+            }
         })
     }
 
     private fun observeMovieCrewData(){
         viewModel.movieCrewData.observe(this, {
-            tv_detail_director.text = DetailParsingUtil.directorParsing(it)
+            viewDataBinding.contentLayout.tvDetailDirector.text = DetailParsingUtil.directorParsing(it)
         })
     }
 
     private fun observeMovieCasterData(){
         val casterAdapter = CasterAdapter()
         viewModel.movieCastData.observe(this, {
-            rv_detail_caster.adapter = casterAdapter
+            viewDataBinding.contentLayout.rvDetailCaster.adapter = casterAdapter
             casterAdapter.setList(DetailParsingUtil.casterParsing(it))
         })
         casterAdapter.setOnCasterClickListener {
@@ -87,7 +87,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun observeSimilarMovieData(){
         val similarMovieAdapter = OtherMovieAdapter(OtherMovieCase.SIMILAR)
         viewModel.similarMovieData.observe(this, {
-            rv_detail_similar_movie.adapter = similarMovieAdapter
+            viewDataBinding.contentLayout.rvDetailSimilarMovie.adapter = similarMovieAdapter
             similarMovieAdapter.setList(it)
         })
         similarMovieAdapter.setOnOtherClickListener {
@@ -100,7 +100,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun observeRecommendMovieData(){
         val recommendMovieAdapter = OtherMovieAdapter(OtherMovieCase.RECOMMEND)
         viewModel.recommendMovieData.observe(this, {
-            rv_detail_recommend_movie.adapter = recommendMovieAdapter
+            viewDataBinding.contentLayout.rvDetailRecommendMovie.adapter = recommendMovieAdapter
             recommendMovieAdapter.setList(it)
         })
         recommendMovieAdapter.setOnOtherClickListener {
@@ -113,7 +113,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun observeTrailerMovieData(){
         val trailerAdapter = TrailerAdapter()
         viewModel.movieTrailerData.observe(this, {
-            rv_detail_trailer.adapter = trailerAdapter
+            viewDataBinding.contentLayout.rvDetailTrailer.adapter = trailerAdapter
             trailerAdapter.setList(it)
         })
         trailerAdapter.setOnTrailerClickListener {
@@ -142,29 +142,30 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     /* view setting */
     private fun recyclerViewSetting(){
         val layout = { context: Context -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)}
-
-        rv_detail_caster.apply {
-            layoutManager = layout(context)
-            setHasFixedSize(true)
-        }
-        rv_detail_similar_movie.apply{
-            layoutManager = layout(context)
-            setHasFixedSize(true)
-        }
-        rv_detail_recommend_movie.apply{
-            layoutManager =layout(context)
-            setHasFixedSize(true)
-        }
-        rv_detail_trailer.apply {
-            layoutManager = layout(context)
-            setHasFixedSize(true)
+        viewDataBinding.contentLayout.apply {
+            rvDetailCaster.apply {
+                layoutManager = layout(context)
+                setHasFixedSize(true)
+            }
+            rvDetailSimilarMovie.apply{
+                layoutManager = layout(context)
+                setHasFixedSize(true)
+            }
+            rvDetailRecommendMovie.apply{
+                layoutManager =layout(context)
+                setHasFixedSize(true)
+            }
+            rvDetailTrailer.apply {
+                layoutManager = layout(context)
+                setHasFixedSize(true)
+            }
         }
     }
 
     private fun toolbarLayoutSetting(){
-        setSupportActionBar(detail_toolbar)
+        setSupportActionBar(viewDataBinding.detailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar_layout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar)
+        viewDataBinding.toolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar)
 
     }
 
