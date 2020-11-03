@@ -16,71 +16,64 @@ import com.project.monopad.model.entity.Review
 import com.project.monopad.util.CalendarUtil
 import java.util.*
 
-class CalendarAdapter(private val context: Context) : BaseAdapter() {
+class CalendarGridAdapter(private val context: Context, private val calendar: Calendar) :
+    BaseAdapter() {
 
-    companion object{
-        private const val SIZE_OF_DAY = 7*6
-        private val dayList = mutableListOf<Day>()
+    companion object {
+        private const val SIZE_OF_DAY = 7 * 6
+        private const val SUNDAY = 0
+        private const val SATURDAY = 6
         private val reviewList = mutableListOf<Review>()
     }
 
-    private var calendar = Calendar.getInstance()
-    private var month = Calendar.getInstance().get(Calendar.MONTH)
-    private var day = Calendar.getInstance().get(Calendar.DATE)
+    private val dayList = mutableListOf<Day>()
+    private val month = calendar.get(Calendar.MONTH)
 
     init {
         setCalendar()
     }
 
-    fun setList(list : List<Review>) {
+    fun setList(list: List<Review>) {
         reviewList.apply {
             clear()
             addAll(list)
         }
-    }
-
-    fun updateCalendar(cal: Calendar){
-        this.calendar = cal
         setCalendar()
         notifyDataSetChanged()
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val mView = view ?: layoutInflater.inflate(R.layout.calendar_item_layout, null)
+        val mView = view ?: layoutInflater.inflate(R.layout.view_calendar_day_layout, null)
 
-        val dayTv : TextView = mView.findViewById(R.id.day_tv)
-        val posterIv : ImageView = mView.findViewById(R.id.poster_iv)
+        val dayTv: TextView = mView.findViewById(R.id.day_tv)
+        val posterIv: ImageView = mView.findViewById(R.id.poster_iv)
 
         val day: Day = getItem(position) as Day
 
-        val itemYear = day.year
-        val itemMonth = day.month
-        val itemDay = day.day
-
-        calendar.set(itemYear, itemMonth, itemDay,0,0,0)
+        val itemMonth = day.calendar.get(Calendar.MONTH)
+        val itemDay = day.calendar.get(Calendar.DATE)
 
         dayTv.apply {
             text = itemDay.toString()
-            when(position%7) {
-                0 -> setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
-                6 -> setTextColor(ContextCompat.getColor(context, R.color.colorBlue))
+            when (position % 7) {
+                SUNDAY -> setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                SATURDAY -> setTextColor(ContextCompat.getColor(context, R.color.colorBlue))
                 else -> setTextColor(Color.WHITE)
             }
         }
 
-        val alphaValue = if(itemMonth!=month) 0.4F else 1.0F
+        val alphaValue = if (itemMonth != month) 0.4F else 1.0F
         dayTv.alpha = alphaValue
         posterIv.alpha = alphaValue
 
-        if(day.reviews.isNotEmpty()){
+        if (day.reviews.isNotEmpty()) {
             posterIv.visibility = View.VISIBLE
 
             Glide.with(mView.context)
-                .load(day.reviews.get(0).review_poster)
+                .load(day.reviews[0].review_poster)
                 .into(posterIv)
-        }
-        else {
+        } else {
             posterIv.visibility = View.GONE
         }
 
@@ -93,12 +86,10 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
 
     override fun getCount(): Int = dayList.size
 
-    private fun setCalendar(){
+    private fun setCalendar() {
         dayList.clear()
 
-        month = calendar.get(Calendar.MONTH)
-
-        val cal = calendar
+        val cal = calendar.clone() as Calendar
         cal.set(Calendar.DATE, 1)
         val startOfMonth = cal.get(Calendar.DAY_OF_WEEK) - 1
         cal.add(Calendar.DATE, -startOfMonth)
@@ -106,14 +97,14 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
         while (dayList.size < SIZE_OF_DAY) {
             val it = reviewList.iterator()
             val reviews = mutableListOf<Review>()
-            while(it.hasNext()){
+            while (it.hasNext()) {
                 val item = it.next()
-                if(CalendarUtil.isCalendarAndDateSame(cal, item.date)){
+                if (CalendarUtil.isCalendarAndDateSame(cal, item.date)) {
                     reviews.add(item)
                 }
             }
-            dayList.add(Day(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DATE),reviews))
-            cal.add(Calendar.DATE, 1);
+            dayList.add(Day(cal.clone() as Calendar, reviews))
+            cal.add(Calendar.DATE, 1)
         }
     }
 }

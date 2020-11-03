@@ -1,7 +1,6 @@
-package com.project.monopad.ui.view.custom.viewpager
+package com.project.monopad.ui.view.custom.calendar
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
@@ -11,19 +10,18 @@ import com.project.monopad.model.entity.Day
 import com.project.monopad.model.entity.Review
 import java.util.*
 
-class CalendarPagerAdapter2(private val context : Context) : PagerAdapter() {
+class CalendarPagerAdapter(private val context: Context) : PagerAdapter() {
 
-    companion object{
-        const val NUMBER_OF_PAGES = 12*10
-    }
-    private var onDayClickListener: ((Int, Day) -> Unit)? = null
-
-    fun setonDayClickListener(listener: ((Int, Day) -> Unit)) {
-        this.onDayClickListener = listener
+    companion object {
+        const val NUMBER_OF_PAGES = 12 * 10
     }
 
     private var viewContainer: ViewGroup? = null
+    private var onDayClickListener: ((Calendar, Day) -> Unit)? = null
 
+    fun setonDayClickListener(listener: ((Calendar, Day) -> Unit)) {
+        this.onDayClickListener = listener
+    }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val gridView = GridView(context)
@@ -36,13 +34,11 @@ class CalendarPagerAdapter2(private val context : Context) : PagerAdapter() {
             overScrollMode = GridView.OVER_SCROLL_NEVER
             layoutParams = params
             numColumns = 7
-
-            adapter = CalendarGridAdapter(context, position)
-
+            adapter = CalendarGridAdapter(context, getCalendar(position))
             setSelector(R.drawable.calendar_list_selector)
-            setOnItemClickListener { adapterView, view, pos, l ->
+            setOnItemClickListener { adapterView, _, pos, _ ->
                 val item = adapterView.getItemAtPosition(pos) as Day
-                onDayClickListener?.invoke(getMonth(position), item)
+                onDayClickListener?.invoke(getCalendar(position), item)
             }
         }
 
@@ -52,29 +48,24 @@ class CalendarPagerAdapter2(private val context : Context) : PagerAdapter() {
         return gridView
     }
 
-
     override fun getCount(): Int = NUMBER_OF_PAGES
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean
-            = (view == `object`)
+    override fun isViewFromObject(view: View, `object`: Any): Boolean = (view == `object`)
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View?)
     }
 
-    fun getMonth(position: Int) : Int{
+    private fun getCalendar(position: Int): Calendar {
         return Calendar.getInstance().apply {
             add(Calendar.MONTH, position - NUMBER_OF_PAGES / 2)
         }
-            .get(Calendar.MONTH)
     }
 
-    fun setList(list : List<Review>) {
-        Log.e("SEULGI adapter list",""+list.size)
+    fun setList(list: List<Review>) {
         val views = viewContainer ?: return
         (0 until views.childCount).forEach { i ->
-            ((views.getChildAt(i) as? GridView)?.adapter as? CalendarGridAdapter)?.setList(list)
+            ((views.getChildAt(i) as GridView).adapter as? CalendarGridAdapter)?.setList(list)
         }
     }
-
 }
