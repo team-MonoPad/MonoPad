@@ -1,8 +1,8 @@
 package com.project.monopad.model.entity
 
+import java.util.*
+
 data class Day (
-    var year : Int,
-    var month : Int,
-    var day : Int,
+    var calendar: Calendar,
     var reviews : List<Review>
 )

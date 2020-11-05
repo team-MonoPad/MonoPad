@@ -1,5 +1,6 @@
 package com.project.monopad.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.monopad.model.network.response.MovieImagePosterResponse
 import com.project.monopad.network.repository.MovieRepoImpl
@@ -11,7 +12,8 @@ import io.reactivex.schedulers.Schedulers
 class ImageSelectViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
 
     private val _movieImageData = MutableLiveData<List<MovieImagePosterResponse>>()
-    val movieImageData = _movieImageData
+    val movieImageData : LiveData<List<MovieImagePosterResponse>>
+        get() = _movieImageData
 
 
     fun getMovieData(movieId: Int){
@@ -23,7 +25,7 @@ class ImageSelectViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _movieImageData.value = it.posters
+                    _movieImageData.postValue(it.posters)
                 }
             },{
                 //

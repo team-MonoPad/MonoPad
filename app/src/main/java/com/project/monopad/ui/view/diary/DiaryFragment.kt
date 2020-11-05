@@ -1,6 +1,6 @@
 package com.project.monopad.ui.view.diary
 
-import android.widget.Toast
+import android.content.Intent
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryBinding
@@ -8,8 +8,10 @@ import com.project.monopad.model.entity.Movie
 import com.project.monopad.model.entity.Review
 import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.ui.base.BaseFragment
-import com.project.monopad.ui.view.custom.bottomsheetdialog.BottomSheetListAdapter
+import com.project.monopad.ui.adapter.DiaryListBottomSheetAdapter
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheetFragment
+import com.project.monopad.ui.view.custom.bottomsheetdialog.DiarySearchMovieBottomSheetFragment
+import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -24,7 +26,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
 
 
     override fun initStartView() {
-        listenerSetting()
+        initClickEvent()
     }
 
     override fun initDataBinding() {
@@ -33,7 +35,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
         val poster_path = "https://image.tmdb.org/t/p/w342/5lgyNwFqyaMMNW484rLgw7aRRZs.jpg"
         val title = "괴물"
         val nowDate = Date()
-
         viewModel.downloadImage(poster_path, title)
 
         viewModel.imagePathData.observe(this) {
@@ -58,6 +59,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
                 viewModel.insertReviewWithMovie(sampleReview)
             }
         }
+
         viewModel.getAllReview()
     }
 
@@ -67,49 +69,45 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
 
     private fun observeReviewData() {
         viewModel.reviewData.observe(this) {
-            viewDataBinding.calendarView.calendarAdapter.setList(it)
-            viewDataBinding.calendarView.notifyCalendarChanged()
+            viewDataBinding.calendarView.notifyDataChanged(it)
         }
     }
 
-    private fun listenerSetting() {
-        viewDataBinding.calendarView.setonDayClickListener{ month, item ->
-            val itemYear = item.year
-            val itemMonth = item.month
-            val itemDay = item.day
+    private fun initClickEvent() {
+        viewDataBinding.calendarView.setonDayClickListener { item ->
             val reviews = item.reviews
-
-            if(itemMonth!=month){
-                viewDataBinding.calendarView.onCalendarUpdated(itemYear, itemMonth, 1)
+            if(reviews.isNotEmpty()){
+                showBottomListDialog(reviews)
             }
             else {
-                if(!reviews.isNullOrEmpty()){
-                    Toast.makeText(context,"리뷰 "+reviews.size+"개", Toast.LENGTH_SHORT).show()
-                    showBottomListDialog(reviews)
-                }
-                else {
-                    Toast.makeText(context,"리뷰없음", Toast.LENGTH_SHORT).show()
-                    showBottomSearchDialog()
-                }
+                showBottomSearchDialog()
             }
         }
     }
 
     private fun showBottomListDialog(reviews: List<Review>) {
-        val bottomSheetListAdapter = BottomSheetListAdapter()
-        val bottomSheetFragment = DiaryListBottomSheetFragment(bottomSheetListAdapter)
+        val bottomSheetListAdapter = DiaryListBottomSheetAdapter()
+        val bottomSheetDiaryListFragment = DiaryListBottomSheetFragment(bottomSheetListAdapter)
 
         bottomSheetListAdapter.setList(reviews)
         bottomSheetListAdapter.setOnReviewClickListener {
-            Toast.makeText(context, "review id: $it", Toast.LENGTH_SHORT).show()
-            bottomSheetFragment.dismiss()
+            startEditActivity(id)
+            bottomSheetDiaryListFragment.dismiss()
         }
 
-        bottomSheetFragment.show(requireActivity().supportFragmentManager, "approval")
+        bottomSheetDiaryListFragment.show(requireActivity().supportFragmentManager, "approval")
     }
 
     private fun showBottomSearchDialog() {
+        val bottomSheetSearchFragment = DiarySearchMovieBottomSheetFragment()
+        bottomSheetSearchFragment.show(requireActivity().supportFragmentManager, "approval")
+    }
 
+    private fun startEditActivity(id : Int) {
+        val intent = Intent(requireContext(), EditActivity::class.java).apply {
+            putExtra("review_id", id)
+        }
+        startActivity(intent)
     }
 
 }

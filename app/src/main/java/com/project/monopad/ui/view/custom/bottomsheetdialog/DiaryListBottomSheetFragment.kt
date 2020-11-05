@@ -8,9 +8,10 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryListBottomSheetBinding
+import com.project.monopad.ui.adapter.DiaryListBottomSheetAdapter
 import kotlinx.android.synthetic.main.fragment_diary_list_bottom_sheet.view.*
 
-class DiaryListBottomSheetFragment(private val adapter : BottomSheetListAdapter) : BottomSheetDialogFragment(){
+class DiaryListBottomSheetFragment(private val adapter : DiaryListBottomSheetAdapter) : BottomSheetDialogFragment(){
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
