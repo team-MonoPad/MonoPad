@@ -5,7 +5,7 @@ import java.util.*
 
 object CalendarUtil {
     fun convertCalendarToString(calendar: Calendar, format : String) : String{
-        val simpleFormat = SimpleDateFormat(format)
+        val simpleFormat = SimpleDateFormat(format, Locale.KOREA)
         return simpleFormat.format(calendar.time)
     }
 
