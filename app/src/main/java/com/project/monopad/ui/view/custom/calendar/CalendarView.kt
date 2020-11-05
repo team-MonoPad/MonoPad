@@ -22,34 +22,30 @@ class CalendarView(
     , attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
-    companion object {
-        private const val PREVIOUS_MONTH = -1
-        private const val NEXT_MONTH = 1
-        private const val monthDateFormat = "yyyy년 MM월"
-        private val dayOfWeek = mutableListOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-        private val baseCalendar = Calendar.getInstance()
-    }
-
+    private val baseCalendar = Calendar.getInstance()
     private val calendarViewPager: CalendarViewPager by lazy { CalendarViewPager(context) }
     private val calendarPagerAdapter: CalendarPagerAdapter by lazy { CalendarPagerAdapter(context) }
 
+    private var onDayClickListener: ((Day) -> Unit)? = null
     private lateinit var topMonthViewBinding: ViewCalendarTopLayoutBinding
 
     init {
-        init()
+        createCalendarView()
     }
 
-    private fun init() {
+    private fun createCalendarView() {
         orientation = VERTICAL
         addView(createTopMonthView())
         addView(createTopDayView())
         addView(createViewPager())
     }
 
-    private var onDayClickListener: ((Day) -> Unit)? = null
-
     fun setonDayClickListener(listener: ((Day) -> Unit)) {
         this.onDayClickListener = listener
+    }
+
+    fun notifyDataChanged(list: List<Review>) {
+        calendarPagerAdapter.setList(list)
     }
 
     private fun createTopMonthView(): View {
@@ -148,7 +144,10 @@ class CalendarView(
         topMonthViewBinding.dateTv.text = convertCalendarToString(calendar, monthDateFormat)
     }
 
-    fun notifyDataChanged(list: List<Review>) {
-        calendarPagerAdapter.setList(list)
+    companion object {
+        private const val PREVIOUS_MONTH = -1
+        private const val NEXT_MONTH = 1
+        private const val monthDateFormat = "yyyy년 MM월"
+        private val dayOfWeek = mutableListOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     }
 }

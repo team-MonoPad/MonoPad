@@ -43,7 +43,8 @@ class CalendarGridAdapter(private val context: Context, private val calendar: Ca
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val mView = view ?: layoutInflater.inflate(R.layout.view_calendar_day_layout, null)
 
         val dayTv: TextView = mView.findViewById(R.id.day_tv)
@@ -90,9 +91,11 @@ class CalendarGridAdapter(private val context: Context, private val calendar: Ca
         dayList.clear()
 
         val cal = calendar.clone() as Calendar
-        cal.set(Calendar.DATE, 1)
-        val startOfMonth = cal.get(Calendar.DAY_OF_WEEK) - 1
-        cal.add(Calendar.DATE, -startOfMonth)
+        cal.apply {
+            set(Calendar.DATE, 1)
+            val startOfMonth = cal.get(Calendar.DAY_OF_WEEK) - 1
+            add(Calendar.DATE, -startOfMonth)
+        }
 
         while (dayList.size < SIZE_OF_DAY) {
             val it = reviewList.iterator()

@@ -86,17 +86,16 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     private fun showBottomListDialog(reviews: List<Review>) {
-        val bottomSheetListAdapter =
-            DiaryListBottomSheetAdapter()
-        val bottomSheetFragment = DiaryListBottomSheetFragment(bottomSheetListAdapter)
+        val bottomSheetListAdapter = DiaryListBottomSheetAdapter()
+        val bottomSheetDiaryListFragment = DiaryListBottomSheetFragment(bottomSheetListAdapter)
 
         bottomSheetListAdapter.setList(reviews)
         bottomSheetListAdapter.setOnReviewClickListener {
             startEditActivity(id)
-            bottomSheetFragment.dismiss()
+            bottomSheetDiaryListFragment.dismiss()
         }
 
-        bottomSheetFragment.show(requireActivity().supportFragmentManager, "approval")
+        bottomSheetDiaryListFragment.show(requireActivity().supportFragmentManager, "approval")
     }
 
     private fun showBottomSearchDialog() {

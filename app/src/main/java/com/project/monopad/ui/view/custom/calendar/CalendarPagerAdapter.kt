@@ -23,6 +23,13 @@ class CalendarPagerAdapter(private val context: Context) : PagerAdapter() {
         this.onDayClickListener = listener
     }
 
+    fun setList(list: List<Review>) {
+        val views = viewContainer ?: return
+        (0 until views.childCount).forEach { i ->
+            ((views.getChildAt(i) as GridView).adapter as? CalendarGridAdapter)?.setList(list)
+        }
+    }
+
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val gridView = GridView(context)
         val params = ViewGroup.LayoutParams(
@@ -59,13 +66,6 @@ class CalendarPagerAdapter(private val context: Context) : PagerAdapter() {
     private fun getCalendar(position: Int): Calendar {
         return Calendar.getInstance().apply {
             add(Calendar.MONTH, position - NUMBER_OF_PAGES / 2)
-        }
-    }
-
-    fun setList(list: List<Review>) {
-        val views = viewContainer ?: return
-        (0 until views.childCount).forEach { i ->
-            ((views.getChildAt(i) as GridView).adapter as? CalendarGridAdapter)?.setList(list)
         }
     }
 }
