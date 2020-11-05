@@ -7,10 +7,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityImageSelectBinding
-import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.adapter.ImageSelectAdapter
+import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.ImageSelectViewModel
-import kotlinx.android.synthetic.main.activity_image_select.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelectViewModel>() {
@@ -41,21 +40,21 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
     private fun observeImageList(){
         val imageSelectAdapter = ImageSelectAdapter()
         viewModel.movieImageData.observe(this, {
-            rv_image_select.adapter = imageSelectAdapter
+            viewDataBinding.rvImageSelect.adapter = imageSelectAdapter
             imageSelectAdapter.setList(it)
         })
     }
 
     /* view setting */
     private fun recyclerViewSetting(){
-        rv_image_select.apply {
+        viewDataBinding.rvImageSelect.apply {
             layoutManager = GridLayoutManager(context, 3)
             setHasFixedSize(true)
         }
     }
 
     private fun toolbarSetting(){
-        setSupportActionBar(image_select_toolbar)
+        setSupportActionBar(viewDataBinding.imageSelectToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle(R.string.image_select_title)
     }
@@ -67,12 +66,13 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                 onBackPressed()
                 true
             }
-            R.id.action_save -> {
-                val imageSelectAdapter = rv_image_select.adapter as ImageSelectAdapter
+            R.id.action_review -> {
+                val imageSelectAdapter = viewDataBinding.rvImageSelect.adapter as ImageSelectAdapter
                 imageSelectAdapter.getImagePath().also {
                     if(it==null){
                         Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT).show()
                     } else {
+                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                         // go to review edit view
                     }
                 }

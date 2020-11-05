@@ -23,6 +23,7 @@ class ImageSelectAdapter : RecyclerView.Adapter<ImageSelectAdapter.ViewHolder>()
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindView(imageList[position])
         holder.clickCheckBox()
+        holder.clickImageView()
     }
 
     override fun getItemCount(): Int {
@@ -40,19 +41,29 @@ class ImageSelectAdapter : RecyclerView.Adapter<ImageSelectAdapter.ViewHolder>()
             binding.image = image
         }
 
-        fun clickCheckBox(){
-            binding.cbImageSelect.setOnClickListener{
+        fun clickImageView(){
+            binding.ivImageSelect.setOnClickListener{
                 binding.cbImageSelect.also {
-                    if(checkBox != null) {
-                        if (checkBox != it) {
-                            checkBox!!.isChecked = false;
-                        }
-                    }
-                    checkBox =  it
-                    saveImagePath = if(checkBox!!.isChecked) binding.image!!.file_path else null
+                    it.isChecked = !it.isChecked
+                    clickEvent(it)
                 }
-
             }
+        }
+
+        fun clickCheckBox(){
+            binding.cbImageSelect.setOnClickListener{ view ->
+                clickEvent(view as CheckBox)
+            }
+        }
+
+        private fun clickEvent(cb : CheckBox){
+            if(checkBox != null) {
+                if (checkBox != cb) {
+                    checkBox!!.isChecked = false;
+                }
+            }
+            checkBox =  cb
+            saveImagePath = if(checkBox!!.isChecked) binding.image!!.file_path else null
         }
     }
 
