@@ -1,4 +1,4 @@
-package com.project.monopad.ui.view.custom.bottomsheetdialog
+package com.project.monopad.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.ItemBsListMovieBinding
 import com.project.monopad.model.entity.Review
 
-class BottomSheetListAdapter : RecyclerView.Adapter<BottomSheetListAdapter.ViewHolder>() {
+class DiaryListBottomSheetAdapter : RecyclerView.Adapter<DiaryListBottomSheetAdapter.ViewHolder>() {
 
     private var reviews = ArrayList<Review>()
     private var listener: ((id: Int) -> Unit)? = null
@@ -20,7 +20,7 @@ class BottomSheetListAdapter : RecyclerView.Adapter<BottomSheetListAdapter.ViewH
         this.listener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemBsListMovieBinding = ItemBsListMovieBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
@@ -28,7 +28,7 @@ class BottomSheetListAdapter : RecyclerView.Adapter<BottomSheetListAdapter.ViewH
 
     override fun getItemCount(): Int = reviews.size
 
-    override fun onBindViewHolder(holder: BottomSheetListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindView(reviews[position])
         holder.onClick(reviews[position])
     }
