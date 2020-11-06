@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/item_movie_iv_poster"
-            android:layout_width="180dp"
-            android:layout_height="270dp"
+            android:layout_width="170dp"
+            android:layout_height="255dp"
             android:background="@color/transparent"
             android:layout_margin="@dimen/spacing_24"
             android:src="@drawable/test_poster"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@{model.overview}"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:layout_marginEnd="@dimen/spacing_16"
             android:layout_below="@+id/item_movie_tv_title"
             android:layout_alignStart="@+id/item_movie_tv_title"
