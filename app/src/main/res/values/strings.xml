@@ -64,5 +64,11 @@
 
     <!--os license-->
     <string name="title_activity_open_source_list">OpenSourceListActivity</string>
+    <string name="profile_sign_in">Sign In</string>
+    <string name="profile_sign_up">Sign Up</string>
+    <string name="profile_contact_us">Contact Us</string>
+    <string name="profile_report_bug">Report Bug</string>
+    <string name="profile_opensource_license">OpenSource License</string>
+    <string name="profile_app_version">App Version : 1.0.0</string>
 
 </resources>
