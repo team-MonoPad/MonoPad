@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/item_movie_iv_blur_poster"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:background="@color/colorGrey"
             app:bindBackPoster="@{model.poster_path}" />
