@@ -13,6 +13,11 @@
 
     </style>
 
+    <style name="LicenseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="background">@color/colorBlack</item>
+    </style>
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
