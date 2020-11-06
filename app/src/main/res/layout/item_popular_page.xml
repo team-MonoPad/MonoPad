@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/item_popular_container"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="380dp"
         android:background="@color/colorBlack">
 
         <ImageView
@@ -27,10 +27,10 @@
             android:layout_width="170dp"
             android:layout_height="255dp"
             android:background="@color/transparent"
-            android:layout_margin="@dimen/spacing_24"
+            android:layout_marginHorizontal="@dimen/spacing_24"
             android:src="@drawable/test_poster"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/item_movie_tv_3"
             app:homeBindPoster="@{model.poster_path}" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@{model.overview}"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:layout_marginEnd="@dimen/spacing_16"
             android:layout_below="@+id/item_movie_tv_title"
             android:layout_alignStart="@+id/item_movie_tv_title"
@@ -100,7 +100,7 @@
             style="@style/ShadowBodyTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_16"
+            android:layout_marginBottom="@dimen/spacing_24"
             android:layout_below="@+id/item_movie_tv_1"
             android:layout_alignStart="@+id/item_movie_tv_title"
             tools:text="Popularity: 1234"
