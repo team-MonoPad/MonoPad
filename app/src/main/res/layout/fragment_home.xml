@@ -12,7 +12,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.viewpager2.widget.ViewPager2
@@ -23,10 +23,12 @@
                     android:orientation="horizontal"/>
                 <me.relex.circleindicator.CircleIndicator3
                     android:id="@+id/home_indicator"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_gravity="bottom"/>
-            </FrameLayout>
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="start"/>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Top Rated Movies"
+                    android:text="@string/home_top_rated_movies"
                     android:layout_marginStart="@dimen/spacing_8"
                     style="@style/HomeTitleTextViewStyle"/>
 
@@ -50,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_8"
-                    android:text="Now Playing Movies"
+                    android:text="@string/home_now_playing_movies"
                     style="@style/HomeTitleTextViewStyle"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -62,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_8"
-                    android:text="Upcoming Movies"
+                    android:text="@string/home_upcoming_movies"
                     style="@style/HomeTitleTextViewStyle"/>
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -1,6 +1,5 @@
 package com.project.monopad.ui.adapter.home
 
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
