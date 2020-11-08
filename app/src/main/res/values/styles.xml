@@ -13,6 +13,11 @@
 
     </style>
 
+    <style name="LicenseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="background">@color/colorBlack</item>
+    </style>
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -183,5 +188,14 @@
     <style name="EditReviewBodyStyle">
         <item name="android:textSize">@dimen/title_20</item>
         <item name="android:layout_marginBottom">@dimen/spacing_5</item>
+    </style>
+
+    <style name="SettingTextViewStyle">
+        <item name="android:textSize">@dimen/body_16</item>
+        <item name="android:layout_marginStart">@dimen/spacing_14</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_5</item>
+        <item name="android:layout_marginTop">@dimen/title_20</item>
+        <item name="fontFamily">@font/notosans_regular</item>
+        <item name="android:gravity">start|center</item>
     </style>
 </resources>

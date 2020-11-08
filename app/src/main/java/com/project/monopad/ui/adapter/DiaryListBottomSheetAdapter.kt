@@ -4,19 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.ItemBsListMovieBinding
+import com.project.monopad.model.entity.Movie
 import com.project.monopad.model.entity.Review
 
 class DiaryListBottomSheetAdapter : RecyclerView.Adapter<DiaryListBottomSheetAdapter.ViewHolder>() {
 
     private var reviews = ArrayList<Review>()
-    private var listener: ((id: Int) -> Unit)? = null
+    private var listener: ((movie: Movie) -> Unit)? = null
 
     fun setList(reviews : List<Review>) {
         this.reviews = reviews as ArrayList<Review>
         notifyDataSetChanged()
     }
 
-    fun setOnReviewClickListener(listener: (id: Int) -> Unit) {
+    fun setOnReviewClickListener(listener: (movie: Movie) -> Unit) {
         this.listener = listener
     }
 
@@ -41,7 +42,7 @@ class DiaryListBottomSheetAdapter : RecyclerView.Adapter<DiaryListBottomSheetAda
 
         fun onClick(review : Review){
             binding.constraintLayout.setOnClickListener{
-                listener?.invoke(review.id)
+                listener?.invoke(review.movie)
             }
         }
     }

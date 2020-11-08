@@ -1,20 +1,23 @@
 package com.project.monopad.ui.view.detail
 
 import android.content.Context
-import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
+import com.project.monopad.extension.intentActionWithBundle
+import com.project.monopad.extension.showToast
+import com.project.monopad.model.entity.Movie
 import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.OtherMovieAdapter
 import com.project.monopad.ui.adapter.TrailerAdapter
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.view.review.ImageSelectActivity
+import com.project.monopad.ui.view.video.VideoActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
 import com.project.monopad.util.DetailParsingUtil
 import com.project.monopad.util.OtherMovieCase
@@ -30,6 +33,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private lateinit var menuReview: MenuItem
     private var reviewCheck: Boolean = false
 
+    private val MOVIE_ID : Int
+        get() = intent.getIntExtra("movie_id", 0)
+
+    lateinit var intentMovieData : Movie
+
     /* start activity */
     override fun initStartView() {
         toolbarLayoutSetting()
@@ -39,7 +47,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     override fun initBeforeBinding() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
-        viewModel.getDetailData(intent?.getIntExtra("movie_id", 89501) ?: 89501)
+        viewModel.getDetailData(MOVIE_ID)
         viewModel.getReviewData()
     }
 
@@ -63,6 +71,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 tvDetailGenre.text = DetailParsingUtil.genreParsing(it.genres)
                 tvDetailOverview.text = it.overview
             }
+            intentMovieData = Movie(it.id,it.title,it.overview,it.release_date,it.genres)
         })
     }
 
@@ -79,9 +88,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             casterAdapter.setList(DetailParsingUtil.casterParsing(it))
         })
         casterAdapter.setOnCasterClickListener {
-            val intent = Intent(this, PersonDetailActivity::class.java)
-            intent.putExtra("person_id", it)
-            startActivity(intent)
+            intentActionWithBundle(PersonDetailActivity::class){putInt("person_id",it)}
         }
     }
 
@@ -95,8 +102,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
         })
         similarMovieAdapter.setOnOtherClickListener {
-            val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
-            startActivity(intent)
+            intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
             finish()
         }
     }
@@ -111,8 +117,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
         })
         recommendMovieAdapter.setOnOtherClickListener {
-            val intent = Intent(this, DetailActivity::class.java).putExtra("movie_id", it)
-            startActivity(intent)
+            intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
             finish()
         }
     }
@@ -127,20 +132,15 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
         })
         trailerAdapter.setOnTrailerClickListener {
-            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
-            /* key 넘겨주기
-            val intent = Intent(this, CLASS).putExtra("key", it)
-            startActivity(intent)
-             */
+            intentActionWithBundle(VideoActivity::class){putString("video_key",it)}
         }
     }
 
     private fun observeReviewData(){
         viewModel.reviewData.observe(this, {
-            val movieId = intent?.getIntExtra("movie_id", 89501) ?: 89501
             menuReview.setIcon(R.drawable.ic_baseline_edit_24)
             for (i in it.indices) {
-                if (movieId == it[i].id) {
+                if (MOVIE_ID == it[i].id) {
                     menuReview.setIcon(R.drawable.ic_baseline_article_24)
                     reviewCheck = true
                     break
@@ -198,18 +198,22 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
             R.id.action_review -> {
                 if (!reviewCheck) {
-                    Intent(this, ImageSelectActivity::class.java)
-                        .putExtra("movie_id", intent?.getIntExtra("movie_id", 89501) ?: 89501)
-                        .also {
-                            startActivity(it)
-                        }
+                    intentActionWithBundle(ImageSelectActivity::class){
+                        putBoolean("isReselect",false)
+                        putParcelable("movie_data",intentMovieData)
+                    }
+                    finish()
                 } else {
-                    // go review edit view
+                    intentActionWithBundle(EditActivity::class){
+                        putParcelable("movie_data",intentMovieData)
+                        putBoolean("isReselect",false)
+                        putBoolean("isFirst",false)
+                    }
                 }
                 true
             }
             R.id.action_share -> {
-                // 공유하기
+                showToast(this,"서비스 준비중입니다.")
                 true
             }
             else -> super.onOptionsItemSelected(item)

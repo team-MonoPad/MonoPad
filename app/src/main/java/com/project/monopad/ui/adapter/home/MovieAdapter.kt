@@ -16,6 +16,7 @@ import com.project.monopad.extension.dDay
 import com.project.monopad.model.network.response.MovieInfoResultResponse
 
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
+
     private var movies: ArrayList<MovieInfoResultResponse> = ArrayList()
 
     private var listener: ((id: Int) -> Unit)? = null

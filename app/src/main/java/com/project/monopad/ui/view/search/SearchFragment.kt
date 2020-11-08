@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentSearchBinding
@@ -41,7 +42,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
     private fun observeSearchMovieData(){
         val searchAdapter = SearchAdapter()
-        viewModel.searchMovieData.observe(this, {
+        viewModel.searchMovieData.observe(viewLifecycleOwner, Observer{
            viewDataBinding.rvSearchMovie.adapter = searchAdapter
             searchAdapter.setList(it)
         })
@@ -58,7 +59,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     /* recyclerview setting */
     private fun recyclerViewSetting(){
         rv_search_movie.apply {
-            layoutManager = GridLayoutManager(context, 3)
+            layoutManager = GridLayoutManager(requireContext(), 3)
             setHasFixedSize(true)
         }
     }

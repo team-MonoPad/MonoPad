@@ -166,6 +166,7 @@ class DiaryViewModel(
         val dir = File(dirPath)
         val fileName = title+"_download_poster"
 
+        Log.d("다운로드!", dirPath)
         Glide.with(context)
             .load(imageURL)
             .into(object : CustomTarget<Drawable>() {
@@ -182,6 +183,16 @@ class DiaryViewModel(
                 }
             }
         })
+    }
+
+    fun deleteImageInFilesDir(imgPath : String){
+        val file : File = File(imgPath)
+        if (file.exists()){
+            file.delete()
+            Log.d("파일 존재 :","파일 삭제 완료!")
+        }else{
+            Log.d("파일 미존재 :","파일 삭제 안함!")
+        }
     }
 
 }

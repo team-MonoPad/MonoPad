@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
+import com.project.monopad.extension.intentActionWithBundle
+import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.adapter.home.MovieAdapter
 import com.project.monopad.ui.adapter.home.MovieCase
 import com.project.monopad.ui.base.BaseFragment
+import com.project.monopad.ui.view.detail.DetailActivity
 import com.project.monopad.ui.view.video.VideoActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -61,7 +64,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
             // 화면 전환이 끝났을 때 해당 포지션을 반환. 페이지의 변화가 생겼을때 호출되는 메서드이다.
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                d("TEST onPageSelected", position.toString())
                 when (position) {
                     0 -> viewDataBinding.homeIndicator.animatePageSelected(0) //첫 번째 페이지
                     1 -> viewDataBinding.homeIndicator.animatePageSelected(1) //첫 번째 페이지
@@ -78,26 +80,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         }
 
         popularAdapter.setOnItemClickListener {
-            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+            requireContext().intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
         }
 
         nowPlayingAdapter.setOnItemClickListener {
-            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-
-//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+            requireContext().intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
         }
 
         topRatedAdapter.setOnItemClickListener {
-            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-//            Navigation.findNavController(requireView()).navigate(R.id.action_home_to_detail)
-//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
-
+            requireContext().intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
         }
 
         upcomingAdapter.setOnItemClickListener {
-            Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(activity, DetailActivity::class.java).putExtra("id", it))
+            requireContext().intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
         }
     }
 
@@ -133,9 +128,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
             topRatedAdapter.setMovies(it)
             topRatedAdapter.notifyDataSetChanged()
         })
-
-        viewModel.videoData.observe(this, {
-            startActivity(Intent(activity, VideoActivity::class.java).putExtra("key", it[0].key))
+          
+        viewModel.popularMovieVideoData.observe(this, {
+            requireContext().intentActionWithBundle(VideoActivity::class){putString("video_key",it[0].key)}
         })
     }
 }
