@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.ItemBsListMovieBinding
-import com.project.monopad.model.entity.Movie
-import com.project.monopad.model.entity.Review
+import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.data.model.entity.Review
 
 class DiaryListBottomSheetAdapter : RecyclerView.Adapter<DiaryListBottomSheetAdapter.ViewHolder>() {
 

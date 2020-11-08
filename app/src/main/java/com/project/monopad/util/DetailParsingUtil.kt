@@ -1,8 +1,8 @@
 package com.project.monopad.util
 
-import com.project.monopad.model.network.dto.Genre
-import com.project.monopad.model.network.response.MovieCastResponse
-import com.project.monopad.model.network.response.MovieCrewResponse
+import com.project.monopad.data.model.dto.Genre
+import com.project.monopad.data.model.network.response.MovieCastResponse
+import com.project.monopad.data.model.network.response.MovieCrewResponse
 import java.util.regex.Pattern
 
 class DetailParsingUtil {

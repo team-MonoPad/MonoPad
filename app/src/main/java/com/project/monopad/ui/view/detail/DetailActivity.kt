@@ -10,13 +10,13 @@ import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.showToast
-import com.project.monopad.model.entity.Movie
+import com.project.monopad.data.model.entity.Movie
 import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.OtherMovieAdapter
 import com.project.monopad.ui.adapter.TrailerAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.edit.EditActivity
-import com.project.monopad.ui.view.review.ImageSelectActivity
+import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.view.video.VideoActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
 import com.project.monopad.util.DetailParsingUtil

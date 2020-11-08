@@ -3,11 +3,11 @@ package com.project.monopad.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.project.monopad.model.entity.Movie
-import com.project.monopad.model.entity.Review
-import com.project.monopad.model.network.response.*
-import com.project.monopad.network.repository.MovieRepoImpl
-import com.project.monopad.network.repository.ReviewRepoImpl
+import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.data.model.entity.Review
+import com.project.monopad.data.model.network.response.*
+import com.project.monopad.data.repository.MovieRepoImpl
+import com.project.monopad.data.repository.ReviewRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.BaseUtil
 import io.reactivex.android.schedulers.AndroidSchedulers

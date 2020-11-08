@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.GridView
 import androidx.viewpager.widget.PagerAdapter
 import com.project.monopad.R
-import com.project.monopad.model.entity.Day
-import com.project.monopad.model.entity.Review
+import com.project.monopad.data.model.entity.Day
+import com.project.monopad.data.model.entity.Review
 import java.util.*
 
 class CalendarPagerAdapter(private val context: Context) : PagerAdapter() {

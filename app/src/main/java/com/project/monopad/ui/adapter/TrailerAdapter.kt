@@ -3,9 +3,8 @@ package com.project.monopad.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.project.monopad.databinding.CasterViewBinding
 import com.project.monopad.databinding.TrailerViewBinding
-import com.project.monopad.model.network.response.MovieVideoResultResponse
+import com.project.monopad.data.model.network.response.MovieVideoResultResponse
 
 class TrailerAdapter : RecyclerView.Adapter<TrailerAdapter.ViewHolder>() {
 

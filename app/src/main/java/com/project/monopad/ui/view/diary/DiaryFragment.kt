@@ -4,9 +4,8 @@ import android.content.Intent
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryBinding
-import com.project.monopad.model.entity.Movie
-import com.project.monopad.model.entity.Review
-import com.project.monopad.model.network.dto.Genre
+import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.data.model.entity.Review
 import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.adapter.DiaryListBottomSheetAdapter
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheetFragment
@@ -14,7 +13,6 @@ import com.project.monopad.ui.view.custom.bottomsheetdialog.DiarySearchMovieBott
 import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 
 class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {

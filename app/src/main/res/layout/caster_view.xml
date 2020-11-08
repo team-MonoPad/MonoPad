@@ -5,7 +5,7 @@
     <data>
         <variable
             name="caster"
-            type="com.project.monopad.model.network.response.MovieCastResponse" />
+            type="com.project.monopad.data.model.network.response.MovieCastResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

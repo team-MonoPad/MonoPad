@@ -1,13 +1,10 @@
 package com.project.monopad.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.ItemFilmographyMovieBinding
-import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.model.network.response.PersonDetailCreditsCastResponse
-import com.project.monopad.util.DetailParsingUtil
+import com.project.monopad.data.model.network.response.PersonDetailCreditsCastResponse
 
 class PersonFilmographyAdapter : RecyclerView.Adapter<PersonFilmographyAdapter.ViewHolder>() {
 

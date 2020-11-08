@@ -4,7 +4,7 @@ import android.view.View
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.project.monopad.R
 import com.project.monopad.ui.view.login.AuthListener
-import com.project.monopad.network.repository.UserRepoImpl
+import com.project.monopad.data.repository.UserRepoImpl
 import com.project.monopad.ui.view.login.EmailCheckListener
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.LoginPatternCheckUtil

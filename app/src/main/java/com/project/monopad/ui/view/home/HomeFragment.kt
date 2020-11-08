@@ -10,7 +10,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
 import com.project.monopad.extension.intentActionWithBundle
-import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.adapter.home.MovieAdapter
 import com.project.monopad.ui.adapter.home.MovieCase
 import com.project.monopad.ui.base.BaseFragment

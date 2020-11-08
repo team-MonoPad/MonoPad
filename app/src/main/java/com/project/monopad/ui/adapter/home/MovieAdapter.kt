@@ -9,12 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.R
+import com.project.monopad.data.model.network.response.MovieInfoResultResponse
 import com.project.monopad.databinding.ItemNowPlayingBinding
 import com.project.monopad.databinding.ItemPopularPageBinding
 import com.project.monopad.databinding.ItemTopRatedBinding
 import com.project.monopad.databinding.ItemUpcomingBinding
 import com.project.monopad.extension.dDay
-import com.project.monopad.model.network.response.MovieInfoResultResponse
 
 //https://lakue.tistory.com/16?category=853542
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {

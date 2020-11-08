@@ -8,10 +8,10 @@
             type="com.project.monopad.ui.view.edit.EditActivity"/>
         <variable
             name="review"
-            type="com.project.monopad.model.entity.Review" />
+            type="com.project.monopad.data.model.entity.Review" />
         <variable
             name="movie"
-            type="com.project.monopad.model.entity.Movie" />
+            type="com.project.monopad.data.model.entity.Movie" />
     </data>
     <RelativeLayout
         android:id="@+id/edit_top_layout"

@@ -11,8 +11,8 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.project.monopad.R
 import com.project.monopad.databinding.ViewCalendarTopLayoutBinding
-import com.project.monopad.model.entity.Day
-import com.project.monopad.model.entity.Review
+import com.project.monopad.data.model.entity.Day
+import com.project.monopad.data.model.entity.Review
 import com.project.monopad.util.CalendarUtil.convertCalendarToString
 import com.project.monopad.util.CalendarUtil.isMonthSame
 import java.util.*

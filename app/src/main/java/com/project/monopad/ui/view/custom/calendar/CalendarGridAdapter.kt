@@ -11,8 +11,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.project.monopad.R
-import com.project.monopad.model.entity.Day
-import com.project.monopad.model.entity.Review
+import com.project.monopad.data.model.entity.Day
+import com.project.monopad.data.model.entity.Review
 import com.project.monopad.util.CalendarUtil
 import java.util.*
 

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.ImageSelectViewBinding
-import com.project.monopad.model.network.response.MovieImagePosterResponse
+import com.project.monopad.data.model.network.response.MovieImagePosterResponse
 
 class ImageSelectAdapter : RecyclerView.Adapter<ImageSelectAdapter.ViewHolder>() {
 

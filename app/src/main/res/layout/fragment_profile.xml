@@ -6,7 +6,7 @@
     <data>
         <variable
             name="profile"
-            type="com.project.monopad.ui.view.profile.ProfileFragment" />
+            type="com.project.monopad.ui.view.settings.SettingsFragment" />
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

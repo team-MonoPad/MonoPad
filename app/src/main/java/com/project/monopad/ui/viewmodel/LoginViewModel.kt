@@ -1,17 +1,15 @@
 package com.project.monopad.ui.viewmodel
 
-import android.content.Context
 import android.content.Intent
 import android.view.View
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.project.monopad.R
-import com.project.monopad.network.remote.api.UserApiClient
 import com.project.monopad.ui.view.login.AuthListener
 import com.project.monopad.util.LoginPatternCheckUtil
 import com.project.monopad.ui.view.login.RegisterActivity
-import com.project.monopad.network.repository.UserRepoImpl
+import com.project.monopad.data.repository.UserRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.LoginMode
 import io.reactivex.android.schedulers.AndroidSchedulers

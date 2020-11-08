@@ -9,9 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.project.monopad.model.entity.Review
-import com.project.monopad.model.network.response.MovieDetailResponse
-import com.project.monopad.network.repository.ReviewRepoImpl
+import com.project.monopad.data.model.entity.Review
+import com.project.monopad.data.model.network.response.MovieDetailResponse
+import com.project.monopad.data.repository.ReviewRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.DownloadUtil.saveImage

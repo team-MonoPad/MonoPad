@@ -1,7 +1,7 @@
 package com.project.monopad.di
 
-import com.project.monopad.network.remote.api.MovieRepoApi
-import com.project.monopad.network.remote.api.UserApiClient
+import com.project.monopad.data.remote.api.MovieRepoApi
+import com.project.monopad.data.remote.api.UserApiClient
 import com.project.monopad.exception.NoConnectionInterceptor
 import okhttp3.*
 import org.koin.core.qualifier.named

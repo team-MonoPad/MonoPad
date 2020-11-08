@@ -8,7 +8,7 @@
             type="com.project.monopad.ui.viewmodel.PersonViewModel" />
         <variable
             name="model"
-            type="com.project.monopad.model.network.response.PersonDetailCreditsCastResponse" />
+            type="com.project.monopad.data.model.network.response.PersonDetailCreditsCastResponse" />
     </data>
 
 

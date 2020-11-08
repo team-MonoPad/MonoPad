@@ -6,7 +6,7 @@
     <data>
         <variable
             name="image"
-            type="com.project.monopad.model.network.response.MovieImagePosterResponse" />
+            type="com.project.monopad.data.model.network.response.MovieImagePosterResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

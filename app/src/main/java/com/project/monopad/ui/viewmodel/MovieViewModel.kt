@@ -2,9 +2,9 @@ package com.project.monopad.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.project.monopad.model.network.response.MovieInfoResultResponse
-import com.project.monopad.model.network.response.MovieVideoResultResponse
-import com.project.monopad.network.repository.MovieRepoImpl
+import com.project.monopad.data.model.network.response.MovieInfoResultResponse
+import com.project.monopad.data.model.network.response.MovieVideoResultResponse
+import com.project.monopad.data.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.DateComparator

@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.project.monopad.ui.view.profile.ProfileFragment"
+        android:name="com.project.monopad.ui.view.settings.SettingsFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
@@ -50,4 +50,5 @@
         android:id="@+id/action_global_person"
         app:destination="@+id/navigation_deatil_person"
         />
+
 </navigation>

@@ -1,6 +1,6 @@
 package com.project.monopad.util
 
-import com.project.monopad.model.network.response.MovieInfoResultResponse
+import com.project.monopad.data.model.network.response.MovieInfoResultResponse
 import java.util.*
 
 /**

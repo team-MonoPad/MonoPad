@@ -1,13 +1,10 @@
 package com.project.monopad.ui.view.video
 
 import android.os.Bundle
-import android.util.Log.d
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityVideoBinding
-import com.project.monopad.model.network.response.MovieVideoResultResponse
-import com.project.monopad.ui.base.BaseActivity
 
 /**
  * 액티비티를 다이어로그처럼 만드는 방법

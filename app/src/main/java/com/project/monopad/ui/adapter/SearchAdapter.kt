@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.ItemSearchMovieBinding
-import com.project.monopad.model.network.response.MovieInfoResultResponse
+import com.project.monopad.data.model.network.response.MovieInfoResultResponse
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 

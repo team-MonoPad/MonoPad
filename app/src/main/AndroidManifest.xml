@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.view.login.RegisterActivity" />
         <activity android:name=".ui.view.login.LoginActivity" />
-        <activity android:name=".ui.view.review.ImageSelectActivity" />
+        <activity android:name=".ui.view.select.ImageSelectActivity" />
         <activity android:name=".ui.view.detail.PersonDetailActivity" />
         <activity
             android:name=".ui.view.video.VideoActivity"

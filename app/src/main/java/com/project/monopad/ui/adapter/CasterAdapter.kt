@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.databinding.CasterViewBinding
-import com.project.monopad.model.network.response.MovieCastResponse
+import com.project.monopad.data.model.network.response.MovieCastResponse
 
 class CasterAdapter : RecyclerView.Adapter<CasterAdapter.ViewHolder>() {
 

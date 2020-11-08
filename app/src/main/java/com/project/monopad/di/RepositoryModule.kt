@@ -1,8 +1,8 @@
 package com.project.monopad.di
 
-import com.project.monopad.network.repository.MovieRepoImpl
-import com.project.monopad.network.repository.ReviewRepoImpl
-import com.project.monopad.network.repository.UserRepoImpl
+import com.project.monopad.data.repository.MovieRepoImpl
+import com.project.monopad.data.repository.ReviewRepoImpl
+import com.project.monopad.data.repository.UserRepoImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
