@@ -1,15 +1,11 @@
 package com.project.monopad.ui.view.home
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log.d
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
 import com.project.monopad.extension.intentActionWithBundle
-import com.project.monopad.model.network.response.MovieInfoResultResponse
 import com.project.monopad.ui.adapter.home.MovieAdapter
 import com.project.monopad.ui.adapter.home.MovieCase
 import com.project.monopad.ui.base.BaseFragment
@@ -76,7 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         })
 
         popularAdapter.setOnTrailerClickListener {
-            viewModel.videoData(it)
+            viewModel.popularVideoData(it)
         }
 
         popularAdapter.setOnItemClickListener {
@@ -129,7 +125,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
             topRatedAdapter.notifyDataSetChanged()
         })
           
-        viewModel.popularMovieVideoData.observe(this, {
+        viewModel.videoData.observe(this, {
             requireContext().intentActionWithBundle(VideoActivity::class){putString("video_key",it[0].key)}
         })
     }

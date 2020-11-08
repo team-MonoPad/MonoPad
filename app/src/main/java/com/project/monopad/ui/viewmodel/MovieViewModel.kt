@@ -121,7 +121,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
         )
     }
 
-    fun videoData(movieId: Int){
+    fun popularVideoData(movieId: Int){
         addDisposable(
             repo.getMovieVideo(
                 movie_id = movieId,
