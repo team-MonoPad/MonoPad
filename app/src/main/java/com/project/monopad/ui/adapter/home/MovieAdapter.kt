@@ -1,6 +1,5 @@
 package com.project.monopad.ui.adapter.home
 
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.project.monopad.databinding.ItemTopRatedBinding
 import com.project.monopad.databinding.ItemUpcomingBinding
 import com.project.monopad.extension.dDay
 
-//https://lakue.tistory.com/16?category=853542
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
 
     private var movies: ArrayList<MovieInfoResultResponse> = ArrayList()

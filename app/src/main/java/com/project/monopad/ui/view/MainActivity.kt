@@ -12,10 +12,6 @@ import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
- * Android Setup BottomNavigationView With Jetpack Navigation UI (Kotlin)
- * https://code.luasoftware.com/tutorials/android/android-setup-bottomnavigationview-with-jetpack-navigation/
- */
 class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
 
     override val layoutResourceId: Int
@@ -23,7 +19,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MovieViewModel>() {
 
     override val viewModel: MovieViewModel by viewModel()
 
-    //override 된 메소드는 모두 onCreate 내에 존재함으로 activity가 시작되고 자동적으로 그려진다.
     override fun initStartView() {
         setSupportActionBar(viewDataBinding.mainToolbar)
         setUpBottomNavigationView()

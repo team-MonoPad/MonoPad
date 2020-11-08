@@ -1,10 +1,12 @@
 package com.project.monopad.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.project.monopad.data.model.network.response.MovieInfoResultResponse
-import com.project.monopad.data.model.network.response.MovieVideoResultResponse
-import com.project.monopad.data.repository.MovieRepoImpl
+import com.project.monopad.model.entity.Review
+import com.project.monopad.model.network.response.MovieInfoResultResponse
+import com.project.monopad.model.network.response.MovieVideoResultResponse
+import com.project.monopad.network.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.DateComparator
@@ -17,20 +19,24 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     private val TAG = "MovieViewModel"
 
     private val _popularMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val popularMovieData = _popularMovieData
+    val popularMovieData : LiveData<List<MovieInfoResultResponse>>
+        get() = _popularMovieData
 
     private val _nowPlayingMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val nowPlayingMovieData = _nowPlayingMovieData
+    val nowPlayingMovieData : LiveData<List<MovieInfoResultResponse>>
+        get() = _nowPlayingMovieData
 
     private val _upcomingMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val upcomingMovieData = _upcomingMovieData
+    val upcomingMovieData: LiveData<List<MovieInfoResultResponse>>
+        get() = _upcomingMovieData
 
     private val _topRatedMovieData = MutableLiveData<List<MovieInfoResultResponse>>()
-    val topRatedMovieData = _topRatedMovieData
+    val topRatedMovieData :  LiveData<List<MovieInfoResultResponse>>
+        get() = _topRatedMovieData
 
-    private val _popularMovieVideoData = MutableLiveData<List<MovieVideoResultResponse>>()
-    val popularMovieVideoData = _popularMovieVideoData
-
+    private val _videoData = MutableLiveData<List<MovieVideoResultResponse>>()
+    val videoData :  LiveData<List<MovieVideoResultResponse>>
+        get() = _videoData
 
     fun popularMovieData() {
         addDisposable(
@@ -44,7 +50,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     it.run {
-                        popularMovieData.value = it.results
+                        _popularMovieData.postValue(it.results)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -63,7 +69,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     it.run {
-                        nowPlayingMovieData.value = it.results
+                        _nowPlayingMovieData.postValue(it.results)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -86,7 +92,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                     it.run {
                         //개봉일 순으로 정렬
                         Collections.sort(it.results, DateComparator())
-                        upcomingMovieData.value = it.results
+                        _upcomingMovieData.postValue(it.results)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -107,7 +113,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .subscribe({ it ->
                     it.run {
                         it.results.sort() //vote_count 순 으로 정렬
-                        topRatedMovieData.value = it.results
+                        _topRatedMovieData.postValue(it.results)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -115,7 +121,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
         )
     }
 
-    fun popularMovieVideoData(movieId: Int){
+    fun popularVideoData(movieId: Int){
         addDisposable(
             repo.getMovieVideo(
                 movie_id = movieId,
@@ -126,7 +132,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it.run {
-                        _popularMovieVideoData.value = it.results
+                        _videoData.postValue(it.results)
                     }
                 }, {
                     Log.d(TAG, it.localizedMessage)

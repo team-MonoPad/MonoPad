@@ -26,7 +26,7 @@ import java.util.*
 
 
 class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
-;
+
     override val layoutResourceId: Int
         get() = R.layout.activity_edit
 

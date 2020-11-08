@@ -30,4 +30,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel> : Fragment()
         initAfterBinding()
         NetworkStateHelper(requireContext(), requireView(), this)
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewDataBinding = DataBindingUtil.inflate(inflater,layoutResourceId, container, false)
+        return viewDataBinding.root
+    }
 }

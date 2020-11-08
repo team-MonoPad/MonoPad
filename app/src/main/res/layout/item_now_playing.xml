@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             style="@style/DefaultImageViewStyle"
-            android:scaleType="centerCrop"
             app:homeBindPoster="@{model.poster_path}"/>
         <TextView
             android:id="@+id/item_now_tv_title"
