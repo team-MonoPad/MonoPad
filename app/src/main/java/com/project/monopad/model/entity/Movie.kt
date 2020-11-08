@@ -5,44 +5,15 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.project.monopad.model.network.dto.Genre
+import kotlinx.android.parcel.Parcelize
+import java.util.ArrayList
 
+@Parcelize
 @Entity(tableName = "Movie")
-data class Movie (
-    @PrimaryKey var id : Int,
-    var title : String?,
-    var overview : String?,
-    var release_date : String?,
-    var genres : List<Genre>
-) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.createTypedArrayList(Genre.CREATOR)!!
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
-        parcel.writeString(title)
-        parcel.writeString(overview)
-        parcel.writeString(release_date)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Movie> {
-        override fun createFromParcel(parcel: Parcel): Movie {
-            return Movie(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Movie?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-}
+data class Movie(
+    @PrimaryKey var id: Int,
+    var title: String?,
+    var overview: String?,
+    var release_date: String?,
+    var genres: List<Genre>?
+) : Parcelable

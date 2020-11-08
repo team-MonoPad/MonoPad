@@ -4,6 +4,8 @@ package com.project.monopad.ui.view.edit
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.app.DatePickerDialog
+import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,11 +14,15 @@ import android.widget.Toast
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityEditBinding
+import com.project.monopad.extension.intentActionWithBundle
+import com.project.monopad.extension.showToast
 import com.project.monopad.model.entity.Movie
 import com.project.monopad.model.entity.Review
 import com.project.monopad.model.network.dto.Genre
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.review.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
+import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
 import kotlinx.android.synthetic.main.activity_edit.*
@@ -32,35 +38,38 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override val viewModel: DiaryViewModel by viewModel()
 
     var isFirst = true
-    private var movie: Movie? = null
+    private lateinit var movie : Movie
     var imagePath: String? = null
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
-    private var isFront = true
+    private var isFront = false
+    private var isReselect = false
+
+
 
     override fun initStartView() {
         viewDataBinding.activity = this;
         initToolbar()
-//        intent.let{
-//            isFirst = intent.getBooleanExtra("isFirst", false)
-//        movie = intent.getParcelableExtra<Movie>("movie")
-//            if (isFirst){ //첫 작성이라면,
-//                setFirstReview()
-//            }else{ //첫 작성이 아니라면
-//                viewModel.getReviewByReviewId(id = movie.id)
-//            }
-//        }
 
-        movie = Movie(
-            id = 1225,
-            title = "괴물",
-            overview = "overview",
-            release_date = "2020/08/01",
-            genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
-        )
+        intent.apply {
+            isFirst = getBooleanExtra("isFirst",false)
+            isReselect = getBooleanExtra("isReselect",false)
+            imagePath = getStringExtra("image_path")
+            movie = getParcelableExtra("movie_data")!!
+        }
 
-        if (isFirst) setFirstReview() else viewModel.getReviewByReviewId(id = movie!!.id)
+
+        if (isFirst){ //첫 작성이라면
+            setFirstReview()
+        }else{ //첫 작성이 아니라면
+            if (isReselect){ //재선택이라면
+               //image 재선택
+            }else{ //재선택이 아니라면
+                viewModel.getReviewByReviewId(id = movie.id)
+            }
+        }
+
 
         //Flip CardView Setting
         applicationContext.resources.displayMetrics.density.let {
@@ -71,9 +80,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         backCard = AnimatorInflater.loadAnimator(applicationContext,R.animator.back_animator) as AnimatorSet
     }
 
-    override fun initBeforeBinding() {
-
-    }
+    override fun initBeforeBinding() {}
 
     //observing & add item to adapter\
     override fun initAfterBinding() {
@@ -87,33 +94,51 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         viewModel.singleReviewData.observe(this){
             viewDataBinding.review = it
             viewDataBinding.movie = it.movie
-            imagePath = it.review_poster
             viewDataBinding.editTvDate.text = DateUtil.convertDateToString(it.date)
+            imagePath = it.review_poster
         }
     }
 
     private fun setFirstReview(){
-//        movie = intent.getParcelableExtra<Movie>("movie")!!
-//        imagePath = intent.getStringExtra("image")
+        imagePath = IMAGE_URL + imagePath
         viewDataBinding.movie = movie
-        imagePath = IMAGE_URL + "aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg"
         viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
     }
 
     private fun saveReview() {
-        viewModel.downloadImage(imagePath!!, "Title")
+        viewModel.downloadImage(imagePath!!, movie.title!!)
 
         viewModel.imagePathData.observe(this) {
             imagePath = it
             if (it.isNotBlank()){
                 val review = Review(
-                    id = movie!!.id,
+                    id = movie.id,
                     review_poster = it, //로컬 경로
                     title = viewDataBinding.editEtTitle.text.toString(),
                     date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
                     comment = viewDataBinding.editEtComment.text.toString(),
                     rating = viewDataBinding.editRatingBar.rating.toDouble(),
-                    movie = movie!!
+                    movie = movie
+                )
+                viewModel.insertReviewWithMovie(review)
+            }
+        }
+    }
+
+    private fun updateReviewWithNewPoster(imgPath : String){
+        viewModel.downloadImage(imgPath, movie.title!!)
+
+        viewModel.imagePathData.observe(this) {
+            imagePath = it
+            if (it.isNotBlank()){
+                val review = Review(
+                    id = movie.id,
+                    review_poster = it, //로컬 경로
+                    title = viewDataBinding.editEtTitle.text.toString(),
+                    date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
+                    comment = viewDataBinding.editEtComment.text.toString(),
+                    rating = viewDataBinding.editRatingBar.rating.toDouble(),
+                    movie = movie
                 )
                 viewModel.insertReviewWithMovie(review)
             }
@@ -122,13 +147,13 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     private fun updateReview() {
         val review = Review(
-            id = movie!!.id,
+            id = movie.id,
             review_poster = imagePath!!,
             title = viewDataBinding.editEtTitle.text.toString(),
             date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
             comment = viewDataBinding.editEtComment.text.toString(),
             rating = viewDataBinding.editRatingBar.rating.toDouble(),
-            movie = movie!!
+            movie = movie
         )
         viewModel.updateReview(review)
     }
@@ -142,7 +167,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.home -> {
+            android.R.id.home -> {
                 finish()
                 return true
             }
@@ -156,7 +181,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                 return true
             }
             R.id.menu_share -> {
-                Toast.makeText(this@EditActivity, "준비 중 입니다.", Toast.LENGTH_SHORT).show()
+                showToast(this, "서비스 준비중입니다.")
                 return true
             }
             R.id.menu_delete -> {
@@ -165,8 +190,11 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             }
 
             R.id.menu_reselect_image -> {
-                //포스터 선택화면으로 이동
-//                finish()
+                intentActionWithBundle(ImageSelectActivity::class){
+                    putBoolean("isReselect",true)
+                    putParcelable("movie_data", movie)
+                }
+                finish()
                 return true
             }
             else -> {
@@ -249,7 +277,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private fun showDeleteDialog(){
         val dialog = CheckDialog(this)
         dialog.setAcceptBtnOnClickListener{
-            viewModel.deleteReviewByReviewId(movie!!.id)
+            viewModel.deleteReviewByReviewId(movie.id)
         }
         dialog.start(getString(R.string.dialog_delete_message))
     }

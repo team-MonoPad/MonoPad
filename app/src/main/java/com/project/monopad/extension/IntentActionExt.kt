@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlin.reflect.KClass
 
-inline fun Context.intentActionWithBundle(kClass: KClass<out Activity>, extras: Bundle.() -> Unit = {}) {
+fun Context.intentActionWithBundle(kClass: KClass<out Activity>, extras: Bundle.() -> Unit = {}) {
     startActivity(
         Intent(this, kClass.java).putExtras(Bundle().apply(extras))
     )

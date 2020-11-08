@@ -25,14 +25,9 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel> : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NetworkStateHelper(requireContext(), requireView(), this)
         initStartView()
         initDataBinding()
         initAfterBinding()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewDataBinding= DataBindingUtil.inflate(inflater,layoutResourceId, container, false)
-        return viewDataBinding.root
+        NetworkStateHelper(requireContext(), requireView(), this)
     }
 }

@@ -30,35 +30,35 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     override fun initDataBinding() {
-        viewModel.deleteAllReview()
+        //viewModel.deleteAllReview()
 
-        val poster_path = "https://image.tmdb.org/t/p/w342/5lgyNwFqyaMMNW484rLgw7aRRZs.jpg"
-        val title = "괴물"
-        val nowDate = Date()
-        viewModel.downloadImage(poster_path, title)
-
-        viewModel.imagePathData.observe(this) {
-            if (it.isNotBlank()){
-                val sampleMovie = Movie(
-                    id = 1225,
-                    title = "괴물",
-                    overview = "overview",
-                    release_date = "2020/08/01",
-                    genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
-                )
-                val sampleReview = Review(
-                    id = 1225
-                    , review_poster = it
-                    , title = "괴물은 재밌다"
-                    , date = nowDate
-                    , comment = "good!! nice!!"
-                    , rating = 1.1
-                    , movie = sampleMovie
-                )
-
-                viewModel.insertReviewWithMovie(sampleReview)
-            }
-        }
+//        val poster_path = "https://image.tmdb.org/t/p/w342/5lgyNwFqyaMMNW484rLgw7aRRZs.jpg"
+//        val title = "괴물"
+//        val nowDate = Date()
+//        viewModel.downloadImage(poster_path, title)
+//
+//        viewModel.imagePathData.observe(this) {
+//            if (it.isNotBlank()){
+//                val sampleMovie = Movie(
+//                    id = 1225,
+//                    title = "괴물",
+//                    overview = "overview",
+//                    release_date = "2020/08/01",
+//                    genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
+//                )
+//                val sampleReview = Review(
+//                    id = 1225
+//                    , review_poster = it
+//                    , title = "괴물은 재밌다"
+//                    , date = nowDate
+//                    , comment = "good!! nice!!"
+//                    , rating = 1.1
+//                    , movie = sampleMovie
+//                )
+//
+//                viewModel.insertReviewWithMovie(sampleReview)
+//            }
+//        }
 
         viewModel.getAllReview()
     }
@@ -91,7 +91,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
 
         bottomSheetListAdapter.setList(reviews)
         bottomSheetListAdapter.setOnReviewClickListener {
-            startEditActivity(id)
+            startEditActivity(it)
             bottomSheetDiaryListFragment.dismiss()
         }
 
@@ -103,9 +103,11 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
         bottomSheetSearchFragment.show(requireActivity().supportFragmentManager, "approval")
     }
 
-    private fun startEditActivity(id : Int) {
+    private fun startEditActivity(movie: Movie) {
         val intent = Intent(requireContext(), EditActivity::class.java).apply {
-            putExtra("review_id", id)
+            putExtra("movie_data", movie)
+            putExtra("isFirst",false)
+            putExtra("isReselect",false)
         }
         startActivity(intent)
     }

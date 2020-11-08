@@ -1,5 +1,8 @@
 package com.project.monopad.ui.view.review
 
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -7,8 +10,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityImageSelectBinding
+import com.project.monopad.extension.intentActionWithBundle
+import com.project.monopad.model.entity.Movie
 import com.project.monopad.ui.adapter.ImageSelectAdapter
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.viewmodel.ImageSelectViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,6 +25,11 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
 
     override val viewModel: ImageSelectViewModel by viewModel()
 
+    private val INTENT_MOVIE_DATA : Movie
+        get() = intent.getParcelableExtra("movie_data")!!
+
+    private val isReselect : Boolean
+        get() = intent.getBooleanExtra("isReselect", false)
 
     override fun initStartView() {
         toolbarSetting()
@@ -28,8 +39,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
     override fun initBeforeBinding() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
-        viewModel.getMovieData(intent?.getIntExtra("movie_id", 89501) ?: 89501)
-
+        viewModel.getMovieData(INTENT_MOVIE_DATA.id)
     }
 
     override fun initAfterBinding() {
@@ -69,11 +79,31 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
             R.id.action_review -> {
                 val imageSelectAdapter = viewDataBinding.rvImageSelect.adapter as ImageSelectAdapter
                 imageSelectAdapter.getImagePath().also {
-                    if(it==null){
-                        Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT).show()
+                    if (it == null) {
+                        Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT)
+                            .show()
                     } else {
                         Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                        // go to review edit view
+                        if (isReselect) {
+                            //기존 존재 -> Edit -> ImageSelect -> Edit
+                            intentActionWithBundle(EditActivity::class) {
+                                putBoolean("isFirst", false)
+                                putBoolean("isReselect", isReselect)
+                                putParcelable("movie_data", INTENT_MOVIE_DATA)
+                                putString("image_path", it)
+                            }
+                            finish()
+                        } else {
+                            //detail -> imageSelect -> Edit
+                            intentActionWithBundle(EditActivity::class){
+                                putBoolean("isFirst", true)
+                                putBoolean("isReselect", isReselect)
+                                putString("image_path", it)
+                                putParcelable("movie_data", INTENT_MOVIE_DATA)
+                            }
+                            finish()
+                        }
+
                     }
                 }
                 true

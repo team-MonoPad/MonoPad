@@ -23,6 +23,9 @@ class VideoActivity : AppCompatActivity() {
 
     lateinit var viewDataBinding: ActivityVideoBinding
 
+    private val id : String?
+        get() = intent.getStringExtra("video_key")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding = DataBindingUtil.setContentView(this, layoutResourceId)
@@ -32,13 +35,7 @@ class VideoActivity : AppCompatActivity() {
     }
 
     fun initStartView() {
-        viewDataBinding.videoYoutubePlayerView.play("0xJxgvJO2Xo")
-//        if (intent.hasExtra("key")) {
-//            val key = intent.getStringExtra("key")
-//            if (key != null) {
-//                viewDataBinding.videoYoutubePlayerView.play(key)
-//            } //key is youtube id
-//        }
+        viewDataBinding.videoYoutubePlayerView.play(id!!)
     }
     fun finishBtnOnClick(){
         finish()
