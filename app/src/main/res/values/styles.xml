@@ -155,7 +155,7 @@
     </style>
 
     <style name="ShadowTitleTextViewStyle">
-        <item name="android:textSize">@dimen/title_20</item>
+        <item name="android:textSize">@dimen/title_24</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowRadius">5.0</item>
         <item name="android:shadowDx">5.0</item>
@@ -166,7 +166,7 @@
     </style>
 
     <style name="ShadowBodyTextViewStyle" >
-        <item name="android:textSize">@dimen/caption_12</item>
+        <item name="android:textSize">@dimen/body_16</item>
         <item name="android:shadowRadius">5.0</item>
         <item name="android:shadowDx">5.0</item>
         <item name="android:shadowDy">5.0</item>

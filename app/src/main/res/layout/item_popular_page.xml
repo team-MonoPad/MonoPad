@@ -8,195 +8,130 @@
             type="com.project.monopad.model.network.response.MovieInfoResultResponse" />
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/item_popular_container"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="380dp"
         android:background="@color/colorBlack">
+
         <ImageView
             android:id="@+id/item_movie_iv_blur_poster"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:bindBackPoster="@{model.poster_path}"
-            android:contentDescription="@string/app_name" />
+            android:background="@color/colorGrey"
+            app:bindBackPoster="@{model.poster_path}" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/item_movie_iv_poster"
-                android:layout_width="180dp"
-                android:layout_height="270dp"
-                android:scaleType="centerCrop"
-                android:layout_marginStart="40dp"
-                android:layout_centerVertical="true"
-                android:background="@color/colorGrey"
-                app:homeBindPoster="@{model.poster_path}"
-                android:contentDescription="@string/app_name" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/item_movie_iv_poster"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/spacing_16">
+        <ImageView
+            android:id="@+id/item_movie_iv_poster"
+            android:layout_width="170dp"
+            android:layout_height="255dp"
+            android:background="@color/transparent"
+            android:layout_marginHorizontal="@dimen/spacing_24"
+            android:src="@drawable/test_poster"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/item_movie_tv_3"
+            app:homeBindPoster="@{model.poster_path}" />
 
-                <TextView
-                    android:id="@+id/item_movie_tv_title"
-                    style="@style/ShadowTitleTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3"
-                    android:ellipsize="end"
-                    android:text="@{model.title}"
-                    tools:text="영화 제목" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/spacing_8"
-                    android:gravity="center_vertical">
-                    <RatingBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:rating="@{(float)model.vote_average/2}"
-                        android:stepSize="0.5"
-                        android:numStars="5"
-                        style="@style/Widget.AppCompat.RatingBar.Small"/>
-                    <TextView
-                        style="@style/ShadowBodyTextViewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(model.vote_average)}"
-                        tools:text="5.0" />
-                </LinearLayout>
+        <TextView
+            android:id="@+id/item_movie_tv_title"
+            style="@style/ShadowTitleTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginHorizontal="@dimen/spacing_16"
+            android:layout_marginTop="@dimen/spacing_24"
+            android:text="@{model.title}"
+            tools:text="Demon Slayer: Kimetsu no Yaiba: Demon Slayer: Kimetsu no Yaiba " />
 
+        <TextView
+            android:id="@+id/item_movie_tv_3"
+            style="@style/ShadowBodyTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.overview}"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginEnd="@dimen/spacing_16"
+            android:layout_below="@+id/item_movie_tv_title"
+            android:layout_alignStart="@+id/item_movie_tv_title"
+            android:layout_marginBottom="20dp"
+            tools:text="The work of billionaire tech CEO Donovan Chalmers is so valuable that he hires mercenaries to protect it, and a terrorist group kidnaps his daughter just to get it." />
 
-                <TextView
-                    android:id="@+id/item_movie_tv_1"
-                    style="@style/ShadowBodyTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_8"
-                    android:text="@{model.release_date}"
-                    tools:text="2020-03-30" />
+        <RatingBar
+            android:id="@+id/item_movie_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="@{(float)model.vote_average/2}"
+            android:stepSize="0.5"
+            android:numStars="5"
+            android:layout_below="@+id/item_movie_tv_3"
+            android:layout_alignStart="@+id/item_movie_tv_3"
+            android:layout_marginBottom="@dimen/spacing_8"
+            android:paddingVertical="3dp"
+            android:foregroundGravity="center"
+            android:layout_marginEnd="@dimen/spacing_5"
+            style="@style/Widget.AppCompat.RatingBar.Small"/>
 
-                <TextView
-                    android:id="@+id/item_movie_tv_2"
-                    style="@style/ShadowBodyTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_8"
-                    tools:text="Like: 1234"
-                    android:text='@{"Pick: "+model.vote_count}' />
+        <TextView
+            android:id="@+id/item_movie_tv_rating"
+            style="@style/ShadowBodyTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(model.vote_average)}"
+            android:layout_below="@+id/item_movie_tv_3"
+            android:layout_toEndOf="@+id/item_movie_rating_bar"
+            tools:text="5.0" />
 
-                <TextView
-                    android:id="@+id/item_movie_tv_3"
-                    style="@style/ShadowBodyTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:text="@{model.overview}"
-                    android:ellipsize="end"
-                    android:maxLines="4"
-                    android:layout_weight="1"
-                    tools:text="item1" />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_8"
-                    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/item_movie_tv_1"
+            style="@style/ShadowBodyTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_8"
+            android:text="@{model.release_date}"
+            android:layout_below="@+id/item_movie_rating_bar"
+            android:layout_alignStart="@+id/item_movie_tv_title"
+            tools:text="2020-03-30" />
 
-                    <Button
-                        android:id="@+id/item_movie_bt_detail"
-                        android:layout_width="65dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="bottom"
-                        android:textSize="@dimen/caption_12"
-                        android:layout_marginEnd="@dimen/spacing_8"
-                        android:background="@drawable/button_popular_shape"
-                        android:backgroundTint="@color/colorAccent"
-                        android:text="@string/detail_text" />
+        <TextView
+            android:id="@+id/item_movie_tv_2"
+            style="@style/ShadowBodyTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_24"
+            android:layout_below="@+id/item_movie_tv_1"
+            android:layout_alignStart="@+id/item_movie_tv_title"
+            tools:text="Popularity: 1234"
+            android:text='@{"Popularity: "+(int)model.popularity}' />
 
-                    <Button
-                        android:id="@+id/item_movie_bt_trailer"
-                        android:layout_width="65dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="bottom"
-                        android:background="@drawable/button_popular_shape"
-                        android:textSize="@dimen/caption_12"
-                        android:backgroundTint="@color/colorLightGrey"
-                        android:text="@string/trailer_text" />
-                </LinearLayout>
+        <TextView
+            android:id="@+id/item_movie_bt_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/spacing_8"
+            android:textSize="@dimen/caption_12"
+            android:layout_marginEnd="@dimen/spacing_8"
+            android:background="@drawable/button_popular_shape"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_below="@+id/item_movie_tv_2"
+            android:layout_alignStart="@+id/item_movie_tv_title"
+            android:text="@string/detail_text" />
 
-            </LinearLayout>
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="270dp"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_toEndOf="@+id/item_movie_iv_poster"-->
-<!--                android:gravity="center"-->
-<!--                android:paddingVertical="@dimen/spacing_24"-->
-<!--                android:paddingHorizontal="16dp">-->
+        <TextView
+            android:id="@+id/item_movie_bt_trailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_8"
+            android:layout_gravity="bottom"
+            android:background="@drawable/button_popular_shape"
+            android:textSize="@dimen/caption_12"
+            android:backgroundTint="@color/colorLightGrey"
+            android:layout_below="@+id/item_movie_tv_2"
+            android:layout_toEndOf="@id/item_movie_bt_detail"
+            android:text="@string/trailer_text" />
 
-<!--                <TextView-->
-<!--                    android:layout_alignParentTop="true"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:id="@+id/item_movie_tv_title"-->
-<!--                    style="@style/SmallTitleTextViewStyle"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:maxLines="5"-->
-<!--                    android:shadowRadius="5.0"-->
-<!--                    android:shadowDx="5.0"-->
-<!--                    android:shadowDy="5.0"-->
-<!--                    android:gravity="center"-->
-<!--                    android:shadowColor="#000000"-->
-<!--                    android:text="@{model.title}"-->
-<!--                    tools:text="영화 제목" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/item_movie_tv_1"-->
-<!--                    style="@style/SubTitleTextViewStyle1"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:shadowRadius="5.0"-->
-<!--                    android:layout_below="@+id/item_movie_tv_title"-->
-<!--                    android:layout_above="@id/item_movie_bt_trailer"-->
-<!--                    android:shadowDx="5.0"-->
-<!--                    android:shadowDy="5.0"-->
-<!--                    android:shadowColor="#000000"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:layout_marginVertical="@dimen/spacing_16"-->
-
-<!--                    android:text="@{model.release_date.split(`-`)[0]}"-->
-<!--                    tools:text="2020" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/item_movie_tv_2"-->
-<!--                    style="@style/SubTitleTextViewStyle1"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:visibility="gone"-->
-<!--                    tools:text="Title" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/item_movie_bt_trailer"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="40dp"-->
-<!--                    android:layout_alignParentBottom="true"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:background="@drawable/button_trailer_shape"-->
-<!--                    android:focusable="true"-->
-<!--                    android:text="트레일러" />-->
-
-<!--            </RelativeLayout>-->
-
-        </RelativeLayout>
-
-
-
-    </FrameLayout>
+    </RelativeLayout>
 </layout>

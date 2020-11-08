@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log.d
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
@@ -32,10 +31,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     private val upcomingAdapter = MovieAdapter(MovieCase.UPCOMING)
 
     private var mPopularListSize = 0
-    private val mIndicatorCount = 3
+    private val mIndicatorCount = 5
 
     override fun initStartView() {
-        //Set LayoutManager
         val layout = { context: Context -> LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) }
         viewDataBinding.homeRvNowPlaying.apply {
             layoutManager = layout(context)
@@ -50,32 +48,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
             setHasFixedSize(true)
         }
 
+        viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
+        viewDataBinding.homeRvUpcoming.adapter = upcomingAdapter
+        viewDataBinding.homeRvTopRated.adapter = topRatedAdapter
+
         //set Indicator
         viewDataBinding.homeIndicator.apply {
             createIndicators(mIndicatorCount,0)
             setViewPager(viewDataBinding.homeViewpager)
         }
-
+        viewDataBinding.homeViewpager.adapter = popularAdapter
 
 //        popularAdapter.registerAdapterDataObserver(viewDataBinding.homeIndicator.adapterDataObserver) //어댑터의 데이터 변화를 구독한다.
         viewDataBinding.homeViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-
             // 화면 전환이 끝났을 때 해당 포지션을 반환. 페이지의 변화가 생겼을때 호출되는 메서드이다.
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 when (position) {
-                    0 -> viewDataBinding.homeIndicator.animatePageSelected(0) //첫 번째 페이지 -> 0
-                    mPopularListSize-1 -> viewDataBinding.homeIndicator.animatePageSelected(2)//마지막 페이지 -> 2
-                    else -> viewDataBinding.homeIndicator.animatePageSelected(1) // 이외의 페이지 -> 1
+                    0 -> viewDataBinding.homeIndicator.animatePageSelected(0) //첫 번째 페이지
+                    1 -> viewDataBinding.homeIndicator.animatePageSelected(1) //첫 번째 페이지
+                    mPopularListSize-2 -> viewDataBinding.homeIndicator.animatePageSelected(3)//뒤에서 두번째 페이지
+                    mPopularListSize-1 -> viewDataBinding.homeIndicator.animatePageSelected(4)//마지막 페이지
+                    else -> viewDataBinding.homeIndicator.animatePageSelected(2) // 이외의 페이지 -> 가운데 점
                 }
 
             }
         })
 
-
-        //Set ClickListener
         popularAdapter.setOnTrailerClickListener {
-            viewModel.popularMovieVideoData(it)
+            viewModel.videoData(it)
         }
 
         popularAdapter.setOnItemClickListener {
@@ -109,25 +110,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     private fun observeMovieLiveData(){
         viewModel.popularMovieData.observe(this, {
             popularAdapter.setMovies(it)
-            viewDataBinding.homeViewpager.adapter = popularAdapter
             mPopularListSize = it.size
+            popularAdapter.notifyDataSetChanged()
         })
 
         viewModel.nowPlayingMovieData.observe(this, {
             nowPlayingAdapter.setMovies(it)
-            viewDataBinding.homeRvNowPlaying.adapter = nowPlayingAdapter
+            nowPlayingAdapter.notifyDataSetChanged()
         })
 
         viewModel.upcomingMovieData.observe(this, {
             upcomingAdapter.setMovies(it)
-            viewDataBinding.homeRvUpcoming.adapter = upcomingAdapter
+            upcomingAdapter.notifyDataSetChanged()
         })
 
         viewModel.topRatedMovieData.observe(this, {
             topRatedAdapter.setMovies(it)
-            viewDataBinding.homeRvTopRated.adapter = topRatedAdapter
+            topRatedAdapter.notifyDataSetChanged()
         })
-
+          
         viewModel.popularMovieVideoData.observe(this, {
             requireContext().intentActionWithBundle(VideoActivity::class){putString("video_key",it[0].key)}
         })
