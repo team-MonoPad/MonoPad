@@ -11,12 +11,10 @@ open class BaseViewModel : ViewModel(){
 
     fun addDisposable(disposable: Disposable){
         compositeDisposable.add(disposable)
-        d("베이스 뷰모델","add Disposbale")
     }
 
     override fun onCleared() {
         compositeDisposable.dispose()
         super.onCleared()
-        d("베이스 뷰모델","on Clear")
     }
 }

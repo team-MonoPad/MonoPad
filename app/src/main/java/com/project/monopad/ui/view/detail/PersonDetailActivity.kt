@@ -25,6 +25,7 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
     private val personFilmographyAdapter = PersonFilmographyAdapter()
 
     override fun initStartView() {
+        progressDialog.show()
         recyclerViewSet()
         onClickEvent()
     }
@@ -43,6 +44,10 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
         viewModel.personDetailMovie.observe(this) { it ->
             rv_person_detail.adapter = personFilmographyAdapter
             personFilmographyAdapter.setFilmoList(it.sortedWith( compareBy { it.release_date }).reversed())
+        }
+
+        viewModel.count.observe(this) {
+            if(it==2){ progressDialog.dismiss() }
         }
     }
 

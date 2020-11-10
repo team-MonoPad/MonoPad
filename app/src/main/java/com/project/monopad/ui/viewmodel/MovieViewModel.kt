@@ -37,6 +37,14 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     val videoData :  LiveData<List<MovieVideoResultResponse>>
         get() = _videoData
 
+    private val _count = MutableLiveData<Int>()
+    val count : LiveData<Int>
+        get() = _count
+
+    init {
+        _count.value = 0
+    }
+
     fun popularMovieData() {
         addDisposable(
             repo.getPopularMovie(
@@ -50,6 +58,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .subscribe({ it ->
                     it.run {
                         _popularMovieData.postValue(it.results)
+                        _count.value = (_count.value)?.plus(1)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -69,6 +78,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                 .subscribe({ it ->
                     it.run {
                         _nowPlayingMovieData.postValue(it.results)
+                        _count.value = (_count.value)?.plus(1)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -92,6 +102,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                         //개봉일 순으로 정렬
                         Collections.sort(it.results, DateComparator())
                         _upcomingMovieData.postValue(it.results)
+                        _count.value = (_count.value)?.plus(1)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())
@@ -113,6 +124,7 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
                     it.run {
                         it.results.sort() //vote_count 순 으로 정렬
                         _topRatedMovieData.postValue(it.results)
+                        _count.value = (_count.value)?.plus(1)
                     }
                 }, {
                     Log.d(TAG, it.message.toString())

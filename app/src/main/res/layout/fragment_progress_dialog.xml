@@ -1,0 +1,15 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_gravity="center_horizontal"
+        android:indeterminateTint="#ec7e2a"
+        android:layout_width="65dp"
+        android:layout_height="65dp"/>
+
+</LinearLayout>
