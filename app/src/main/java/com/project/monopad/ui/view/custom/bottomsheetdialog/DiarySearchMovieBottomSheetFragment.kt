@@ -6,12 +6,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
@@ -37,6 +35,9 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
     private val viewModel: SearchViewModel by viewModel()
 
     private val searchAdapter = SearchAdapter()
+
+    private val SELECTED_DATE : IntArray
+        get() = arguments?.getIntArray("selected_date")!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -156,7 +157,10 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
         }
         searchAdapter.apply {
             setOnSearchClickListener {
-                val intent = Intent(requireContext(), DetailActivity::class.java).putExtra("movie_id", it)
+                val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                    putExtra("movie_id", it)
+                    putExtra("selected_date",SELECTED_DATE)
+                }
                 startActivity(intent)
                 dismiss()
             }
