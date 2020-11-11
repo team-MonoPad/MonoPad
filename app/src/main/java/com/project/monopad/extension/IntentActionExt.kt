@@ -17,6 +17,12 @@ fun Context.intentActionWithBundle(kClass: KClass<out Activity>, extras: Bundle.
     )
 }
 
+fun Context.intentActionWithBundleSingleTop(kClass: KClass<out Activity>, extras: Bundle.() -> Unit = {}) {
+    startActivity(
+        Intent(this, kClass.java).putExtras(Bundle().apply(extras)).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+    )
+}
+
 fun Fragment.intentAction(kClass: KClass<out Activity>) {
     startActivity(
         Intent(activity, kClass.java)

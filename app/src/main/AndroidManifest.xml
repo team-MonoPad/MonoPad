@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.view.error.ErrorActivity" />
+
         <activity
             android:name=".ui.view.edit.EditActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -26,28 +26,27 @@
             android:name=".ui.view.detail.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.view.login.RegisterActivity" />
-        <activity android:name=".ui.view.login.LoginActivity" />
         <activity android:name=".ui.view.select.ImageSelectActivity" />
         <activity android:name=".ui.view.detail.PersonDetailActivity" />
+        <activity android:name=".ui.view.login.RegisterActivity" />
+        <activity android:name=".ui.view.login.LoginActivity" />
         <activity
             android:name=".ui.view.video.VideoActivity"
             android:theme="@style/VideoDialogStyle"/>
         <activity android:name=".ui.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".exception.NetworkStateBroadcastReceiver" />
+        <activity android:name=".ui.view.error.ErrorActivity" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/LicenseTheme" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/LicenseTheme" />
+        <receiver android:name=".exception.NetworkStateBroadcastReceiver" />
     </application>
 
 </manifest>

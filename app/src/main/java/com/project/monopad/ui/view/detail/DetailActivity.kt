@@ -11,6 +11,7 @@ import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.showToast
 import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.extension.intentActionWithBundleSingleTop
 import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.OtherMovieAdapter
 import com.project.monopad.ui.adapter.TrailerAdapter
@@ -88,7 +89,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             casterAdapter.setList(DetailParsingUtil.casterParsing(it))
         })
         casterAdapter.setOnCasterClickListener {
-            intentActionWithBundle(PersonDetailActivity::class){putInt("person_id",it)}
+            intentActionWithBundleSingleTop(PersonDetailActivity::class){putInt("person_id",it)}
         }
     }
 
@@ -103,7 +104,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         })
         similarMovieAdapter.setOnOtherClickListener {
             intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
-            finish()
         }
     }
 
@@ -118,7 +118,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         })
         recommendMovieAdapter.setOnOtherClickListener {
             intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
-            finish()
         }
     }
 
@@ -132,7 +131,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
         })
         trailerAdapter.setOnTrailerClickListener {
-            intentActionWithBundle(VideoActivity::class){putString("video_key",it)}
+            intentActionWithBundleSingleTop(VideoActivity::class){putString("video_key",it)}
         }
     }
 
@@ -202,7 +201,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                         putBoolean("isReselect",false)
                         putParcelable("movie_data",intentMovieData)
                     }
-                    finish()
                 } else {
                     intentActionWithBundle(EditActivity::class){
                         putParcelable("movie_data",intentMovieData)
