@@ -90,7 +90,7 @@
     </style>
 
     <style name="HomeTitleTextViewStyle" parent="SmallTitleTextViewStyle">
-        <item name="android:layout_marginTop">@dimen/spacing_24</item>
+        <item name="android:layout_marginTop">@dimen/spacing_28</item>
         <item name="android:layout_marginBottom">@dimen/spacing_16</item>
     </style>
 

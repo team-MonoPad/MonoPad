@@ -20,6 +20,7 @@ import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
+import com.project.monopad.util.DetailParsingUtil
 import kotlinx.android.synthetic.main.activity_edit.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -38,16 +39,16 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
-    private var isFront = false
+    private var isFront = true
     private var isReselect = false
 
 
 
     override fun initStartView() {
-        viewDataBinding.activity = this;
+        viewDataBinding.activity = this
         initToolbar()
 
-        intent.apply {
+        intent?.apply {
             isFirst = getBooleanExtra("isFirst",false)
             isReselect = getBooleanExtra("isReselect",false)
             imagePath = getStringExtra("image_path")
@@ -60,6 +61,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         }else{ //첫 작성이 아니라면
             if (isReselect){ //재선택이라면
                //image 재선택
+
             }else{ //재선택이 아니라면
                 viewModel.getReviewByReviewId(id = movie.id)
             }
@@ -87,9 +89,15 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
         //이미 저장한 리뷰가 있다면, 받아온 데이터로 View 세팅
         viewModel.singleReviewData.observe(this){
-            viewDataBinding.review = it
-            viewDataBinding.movie = it.movie
-            viewDataBinding.editTvDate.text = DateUtil.convertDateToString(it.date)
+            viewDataBinding.run{
+                review = it
+                movie = it.movie
+                editTvDate.text = DateUtil.convertDateToString(it.date)
+                it.movie.genres?.run{
+                    editMovieTvGenre.text = DetailParsingUtil.genreParsing(this)
+                }
+            }
+
             imagePath = it.review_poster
         }
     }
@@ -98,6 +106,9 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         imagePath = IMAGE_URL + imagePath
         viewDataBinding.movie = movie
         viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
+        movie.genres?.run{
+            viewDataBinding.editMovieTvGenre.text = DetailParsingUtil.genreParsing(this)
+        }
     }
 
     private fun saveReview() {
@@ -208,6 +219,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
             editToolbar.menu.findItem(R.id.menu_share).isVisible = !flag
             editToolbar.menu.findItem(R.id.menu_edit).isVisible = !flag
+            editToolbar.menu.findItem(R.id.menu_more_vert).isVisible = !flag
             editToolbar.menu.findItem(R.id.menu_delete).isVisible = !flag
             editToolbar.menu.findItem(R.id.menu_reselect_image).isVisible = !flag
             editEtComment.isFocusable = flag
@@ -249,8 +261,10 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     
     private fun initToolbar(){
         setSupportActionBar(viewDataBinding.editToolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.arrow_left)
+        supportActionBar?.elevation = 4.0f
     }
 
     private fun showDatePickerDialog() {
