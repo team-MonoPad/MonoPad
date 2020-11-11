@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.lifecycle.Observer
@@ -15,7 +16,6 @@ import com.project.monopad.ui.adapter.SearchAdapter
 import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.view.detail.DetailActivity
 import com.project.monopad.ui.viewmodel.SearchViewModel
-import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
@@ -56,17 +56,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
     }
 
-    /* recyclerview setting */
+    /* recyclerView setting */
+    @SuppressLint("ClickableViewAccessibility")
     private fun recyclerViewSetting(){
-        rv_search_movie.apply {
+        viewDataBinding.rvSearchMovie.apply {
             layoutManager = GridLayoutManager(requireContext(), 3)
             setHasFixedSize(true)
         }
+        viewDataBinding.rvSearchMovie.setOnTouchListener{ _, motionEvent ->
+            when(motionEvent.action){
+                MotionEvent.ACTION_DOWN -> {
+                    searchViewHide()
+                    false
+                }
+                else -> false
+            }
+        }
     }
 
-    /* searchview setting */
+    /* searchView setting */
     private fun searchViewSetting(){
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.getSearchData(query)
@@ -80,6 +89,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
         })
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     private fun searchViewHide(){
