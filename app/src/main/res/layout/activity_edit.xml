@@ -35,7 +35,7 @@
             android:elevation="0dp"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edit_review_picture"
             android:layout_width="match_parent"
             android:layout_below="@id/edit_toolbar"
@@ -178,12 +178,16 @@
                     android:layout_height="40dp"
                     android:rotation="45"
                     android:src="@drawable/rotation"
-                    android:layout_gravity="bottom|center"
+                    android:layout_gravity="bottom"
+                    android:layout_above="@+id/cv_edit_diary_poster"
                     android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:onClick="@{() -> activity.rotateBtnClick()}"
                     android:bottom="@+id/cv_edit_diary_edit"
                     />
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </RelativeLayout>
