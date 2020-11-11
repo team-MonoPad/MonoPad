@@ -20,6 +20,7 @@ object BindingAdapter {
             .load(BaseUtil.IMAGE_URL + imageUrl)
             .fitCenter()
             .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
+            .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
@@ -30,6 +31,7 @@ object BindingAdapter {
         Glide.with(view.context)
             .load(BaseUtil.IMAGE_URL + imageUrl)
             .fitCenter()
+            .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
@@ -40,6 +42,7 @@ object BindingAdapter {
         Glide.with(view.context)
             .load(BaseUtil.THUMBNAIL_URL(imageUrl))
             .fitCenter()
+            .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
@@ -49,6 +52,7 @@ object BindingAdapter {
     fun homeBindPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
             .load(BaseUtil.IMAGE_URL + imageUrl)
+            .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
@@ -60,6 +64,7 @@ object BindingAdapter {
         Glide.with(view.context)
             .load(imagePath)
             .fitCenter()
+            .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
@@ -77,6 +82,8 @@ object BindingAdapter {
             .load(imageUrl)
             .centerCrop()
             .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 1)))
+            .placeholder(R.drawable.loading)
+            .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)
     }
 }
