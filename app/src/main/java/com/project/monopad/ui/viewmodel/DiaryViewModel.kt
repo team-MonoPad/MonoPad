@@ -25,10 +25,9 @@ class DiaryViewModel(
     private val context : Context
 ): BaseViewModel(){
 
-    private val TAG = "DiaryViewModel"
-
     private val _reviewData = MutableLiveData<List<Review>>()
-    val reviewData = _reviewData
+    val reviewData : LiveData<List<Review>>
+        get() = _reviewData
 
     private val _singleReviewData = MutableLiveData<Review>()
     val singleReviewData : LiveData<Review>
@@ -43,7 +42,8 @@ class DiaryViewModel(
         get() = _isCompleted
   
     private val _movieDetailInfo = MutableLiveData<MovieDetailResponse>()
-    val movieDetailInfo = _movieDetailInfo
+    val movieDetailInfo: LiveData<MovieDetailResponse>
+            get() = _movieDetailInfo
 
     fun insertReviewWithMovie(review : Review){
         addDisposable(
@@ -101,10 +101,9 @@ class DiaryViewModel(
         addDisposable(repo.getAllReview()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ it ->
+            .subscribe({
                 it.run {
-                    reviewData.value =it
-                    forEach { Log.d("getAllReview",it.toString()) }
+                    _reviewData.postValue(it)
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -195,4 +194,7 @@ class DiaryViewModel(
         }
     }
 
+    companion object{
+        private const val TAG = "DiaryViewModel"
+    }
 }
