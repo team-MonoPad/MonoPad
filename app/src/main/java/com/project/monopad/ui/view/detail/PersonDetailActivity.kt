@@ -5,6 +5,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityPersonDetailBinding
+import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.ui.adapter.PersonFilmographyAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.PersonViewModel
@@ -25,6 +26,7 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
     private val personFilmographyAdapter = PersonFilmographyAdapter()
 
     override fun initStartView() {
+        progressDialog.show()
         recyclerViewSet()
         onClickEvent()
     }
@@ -44,6 +46,10 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
             rv_person_detail.adapter = personFilmographyAdapter
             personFilmographyAdapter.setFilmoList(it.sortedWith( compareBy { it.release_date }).reversed())
         }
+
+        viewModel.count.observe(this) {
+            if(it==2){ progressDialog.dismiss() }
+        }
     }
 
     private fun recyclerViewSet(){
@@ -55,10 +61,9 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
 
     private fun onClickEvent(){
         personFilmographyAdapter.setOnFilmoMovieClickListener {
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("movie_id", it)
-            startActivity(intent)
-            finishAndRemoveTask()
+            intentActionWithBundle(DetailActivity::class){
+                putInt("movie_id",it)
+            }
         }
         iv_back.setOnClickListener {
             onBackPressed()

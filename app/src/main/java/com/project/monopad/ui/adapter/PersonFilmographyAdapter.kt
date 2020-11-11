@@ -8,7 +8,7 @@ import com.project.monopad.data.model.network.response.PersonDetailCreditsCastRe
 
 class PersonFilmographyAdapter : RecyclerView.Adapter<PersonFilmographyAdapter.ViewHolder>() {
 
-    private var filmographyList : MutableList<PersonDetailCreditsCastResponse> = ArrayList<PersonDetailCreditsCastResponse>()
+    private var filmographyList : MutableList<PersonDetailCreditsCastResponse> = ArrayList()
 
     private var listener: ((id: Int) -> Unit)? = null
 

@@ -11,6 +11,7 @@ import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.showToast
 import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.extension.intentActionWithBundleSingleTop
 import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.OtherMovieAdapter
 import com.project.monopad.ui.adapter.TrailerAdapter
@@ -87,7 +88,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             casterAdapter.setList(DetailParsingUtil.casterParsing(it))
         })
         casterAdapter.setOnCasterClickListener {
-            intentActionWithBundle(PersonDetailActivity::class){putInt("person_id",it)}
+            intentActionWithBundleSingleTop(PersonDetailActivity::class){putInt("person_id",it)}
         }
     }
 
@@ -102,7 +103,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         })
         similarMovieAdapter.setOnOtherClickListener {
             intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
-            finish()
         }
     }
 
@@ -117,7 +117,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         })
         recommendMovieAdapter.setOnOtherClickListener {
             intentActionWithBundle(DetailActivity::class){putInt("movie_id",it)}
-            finish()
         }
     }
 
@@ -131,7 +130,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
         })
         trailerAdapter.setOnTrailerClickListener {
-            intentActionWithBundle(VideoActivity::class){putString("video_key",it)}
+            intentActionWithBundleSingleTop(VideoActivity::class){putString("video_key",it)}
         }
     }
 
@@ -183,9 +182,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun toolbarLayoutSetting(){
         setSupportActionBar(viewDataBinding.detailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.arrow_left)
-        supportActionBar?.elevation = 4.0f
         viewDataBinding.toolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar)
 
     }
@@ -209,16 +205,15 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             }
             R.id.action_edit -> {
                 val intent = intent
-                intentActionWithBundle(ImageSelectActivity::class){
+                intentActionWithBundleSingleTop(ImageSelectActivity::class){
                     putBoolean("isReselect",false)
                     putParcelable("movie_data",intentMovieData)
-                    if(intent!=null) putIntArray("selected_date", intent.getIntArrayExtra("selected_date"))
+                    if(intent!=null) putString("selected_date", intent.getStringExtra("selected_date"))
                 }
-                //finish()
                 true
             }
             R.id.action_select -> {
-                intentActionWithBundle(EditActivity::class){
+                intentActionWithBundleSingleTop(EditActivity::class){
                     putParcelable("movie_data",intentMovieData)
                     putBoolean("isReselect",false)
                     putBoolean("isFirst",false)

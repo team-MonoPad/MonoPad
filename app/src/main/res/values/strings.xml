@@ -3,10 +3,14 @@
 
 
     <!--  탭,툴바 타이틀  -->
-    <string name="title_home">Home</string>
-    <string name="title_search">Search</string>
-    <string name="title_profile">Setting</string>
-    <string name="title_diary">Diary</string>
+    <string name="title_home">모노패드</string>
+    <string name="title_search">검색</string>
+    <string name="title_settings">환경설정</string>
+    <string name="title_diary">캘린더</string>
+    <string name="title_home_eng">Home</string>
+    <string name="title_search_eng">Search</string>
+    <string name="title_settings_eng">Settings</string>
+    <string name="title_diary_eng">Calendar</string>
     <string name="title_activity_detail">ScrollingActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_movie_detail">MovieDetail</string>

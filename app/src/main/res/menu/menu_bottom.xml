@@ -7,27 +7,27 @@
         android:icon="@drawable/ic_baseline_home_24"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:title="@string/title_home" />
+        android:title="@string/title_home_eng" />
 
     <item
         android:id="@+id/navigation_search"
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_search_24"
-        android:title="@string/title_search" />
+        android:title="@string/title_search_eng" />
 
     <item
         android:id="@+id/navigation_diary"
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_event_note_24"
-        android:title="@string/title_diary" />
+        android:title="@string/title_diary_eng" />
 
     <item
         android:id="@+id/navigation_profile"
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/title_profile" />
+        android:title="@string/title_settings_eng" />
 
 </menu>

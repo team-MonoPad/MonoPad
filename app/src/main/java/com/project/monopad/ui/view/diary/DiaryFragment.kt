@@ -1,6 +1,8 @@
 package com.project.monopad.ui.view.diary
 
 import android.content.Intent
+import android.os.Bundle
+import android.os.Parcel
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryBinding
@@ -12,7 +14,9 @@ import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheet
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiarySearchMovieBottomSheetFragment
 import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
+import com.project.monopad.util.CalendarUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 
 class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
@@ -22,42 +26,12 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_diary
 
-
     override fun initStartView() {
+        progressDialog.show()
         initClickEvent()
     }
 
     override fun initDataBinding() {
-        //viewModel.deleteAllReview()
-
-//        val poster_path = "https://image.tmdb.org/t/p/w342/5lgyNwFqyaMMNW484rLgw7aRRZs.jpg"
-//        val title = "괴물"
-//        val nowDate = Date()
-//        viewModel.downloadImage(poster_path, title)
-//
-//        viewModel.imagePathData.observe(this) {
-//            if (it.isNotBlank()){
-//                val sampleMovie = Movie(
-//                    id = 1225,
-//                    title = "괴물",
-//                    overview = "overview",
-//                    release_date = "2020/08/01",
-//                    genres = listOf(Genre(1,"action"), Genre(2,"fantasy"))
-//                )
-//                val sampleReview = Review(
-//                    id = 1225
-//                    , review_poster = it
-//                    , title = "괴물은 재밌다"
-//                    , date = nowDate
-//                    , comment = "good!! nice!!"
-//                    , rating = 1.1
-//                    , movie = sampleMovie
-//                )
-//
-//                viewModel.insertReviewWithMovie(sampleReview)
-//            }
-//        }
-
         viewModel.getAllReview()
     }
 
@@ -66,19 +40,19 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     private fun observeReviewData() {
-        viewModel.reviewData.observe(this) {
+        viewModel.reviewData.observe(viewLifecycleOwner) {
             viewDataBinding.calendarView.notifyDataChanged(it)
+            progressDialog.dismiss()
         }
     }
 
     private fun initClickEvent() {
-        viewDataBinding.calendarView.setonDayClickListener { item ->
-            val reviews = item.reviews
-            if(reviews.isNotEmpty()){
-                showBottomListDialog(reviews)
+        viewDataBinding.calendarView.setonDayClickListener {
+            if(it.reviews.isNotEmpty()){
+                showBottomListDialog(it.reviews)
             }
             else {
-                showBottomSearchDialog()
+                showBottomSearchDialog(it.calendar)
             }
         }
     }
@@ -92,13 +66,15 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
             startEditActivity(it)
             bottomSheetDiaryListFragment.dismiss()
         }
-
-        bottomSheetDiaryListFragment.show(requireActivity().supportFragmentManager, "approval")
+        bottomSheetDiaryListFragment.show(childFragmentManager, "approval")
     }
 
-    private fun showBottomSearchDialog() {
+    private fun showBottomSearchDialog(calendar: Calendar) {
         val bottomSheetSearchFragment = DiarySearchMovieBottomSheetFragment()
-        bottomSheetSearchFragment.show(requireActivity().supportFragmentManager, "approval")
+        bottomSheetSearchFragment.arguments = Bundle().also {
+            it.putString("selected_date",CalendarUtil.convertCalendarToString(calendar,"yyyy년 MM월 dd일"))
+        }
+        bottomSheetSearchFragment.show(childFragmentManager, "approval")
     }
 
     private fun startEditActivity(movie: Movie) {
@@ -110,4 +86,8 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllReview()
+    }
 }
