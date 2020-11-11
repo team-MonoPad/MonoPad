@@ -25,7 +25,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_diary
 
-
     override fun initStartView() {
         initClickEvent()
     }
@@ -64,7 +63,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
             startEditActivity(it)
             bottomSheetDiaryListFragment.dismiss()
         }
-        bottomSheetDiaryListFragment.show(requireActivity().supportFragmentManager, "approval")
+        bottomSheetDiaryListFragment.show(childFragmentManager, "approval")
     }
 
     private fun showBottomSearchDialog(calendar: Calendar) {
@@ -74,7 +73,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DATE))
             )
         }
-        bottomSheetSearchFragment.show(requireActivity().supportFragmentManager, "approval")
+        bottomSheetSearchFragment.show(childFragmentManager, "approval")
     }
 
     private fun startEditActivity(movie: Movie) {
@@ -86,4 +85,8 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllReview()
+    }
 }
