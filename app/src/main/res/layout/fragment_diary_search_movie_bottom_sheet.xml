@@ -46,6 +46,9 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorBlack"
                 android:layout_marginTop="105dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingStart="20dp"
+                android:paddingEnd="5dp"
                />
 
             <ImageView

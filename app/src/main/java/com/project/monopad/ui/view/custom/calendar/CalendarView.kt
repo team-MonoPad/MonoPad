@@ -110,14 +110,13 @@ class CalendarView(
             LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
         calendarPagerAdapter.setonDayClickListener { calendar, day ->
-            if (isMonthSame(day.calendar, calendar)) {
-                onDayClickListener?.invoke(day)
-            } else {
+            if (!isMonthSame(day.calendar, calendar)) {
                 when (day.calendar.compareTo(calendar)) {
                     PREVIOUS_MONTH -> setViewPagerPosition(PREVIOUS_MONTH)
                     NEXT_MONTH -> setViewPagerPosition(NEXT_MONTH)
                 }
             }
+            onDayClickListener?.invoke(day)
         }
 
         calendarViewPager.apply {
