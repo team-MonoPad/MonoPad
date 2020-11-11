@@ -36,16 +36,14 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
         <RelativeLayout
+            android:id="@+id/edit_review_picture"
             android:layout_width="match_parent"
             android:layout_below="@id/edit_toolbar"
             android:layout_height="match_parent">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardBackgroundColor="#793E3E3E"
+                    app:cardBackgroundColor="@color/colorCardBackground"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp"
                     android:id="@+id/cv_edit_diary_edit"
@@ -118,7 +116,7 @@
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    card_view:cardBackgroundColor="#793E3E3E"
+                    card_view:cardBackgroundColor="@color/colorCardBackground"
                     card_view:cardCornerRadius="10dp"
                     card_view:cardElevation="0dp"
                     android:id="@+id/cv_edit_diary_poster"
@@ -127,41 +125,51 @@
                     android:layout_marginBottom="@dimen/spacing_80"
                     android:visibility="gone"
                     card_view:contentPadding="4dp">
-
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="@dimen/spacing_24"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/edit_movie_tv_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{movie.title}"
-                            style="@style/EditReviewTitleStyle"
-                            />
-                        <TextView
-                            android:id="@+id/edit_movie_tv_release_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{movie.release_date}"
-                            style="@style/EditReviewBodyStyle"
-                            android:onClick="@{() -> activity.dateBtnClick()}"/>
-
-                        <TextView
-                            android:id="@+id/edit_movie_tv_overview"
+                        android:scrollbars="none">
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="@{movie.overview}"
-                            android:gravity="top"
-                            android:singleLine="false"
-                            android:textColor="@color/colorWhite"
-                            android:focusable="true"
-                            android:scrollbars="vertical"
-                            android:background="@color/transparent"
-                            android:layout_marginTop="@dimen/spacing_8"
-                            style="@style/EditReviewBodyStyle"/>
-                    </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/spacing_24"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/edit_movie_tv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{movie.title}"
+                                tools:text="영화 제목"
+                                style="@style/EditReviewTitleStyle" />
+                            <TextView
+                                android:id="@+id/edit_movie_tv_release_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{movie.release_date}"
+                                style="@style/EditReviewBodyStyle"
+                                tools:text="2020/01/01"
+                                android:onClick="@{() -> activity.dateBtnClick()}"/>
+                            <TextView
+                                android:id="@+id/edit_movie_tv_genre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="액션 / 스릴 / 공포 / 코믹"
+                                style="@style/EditReviewBodyStyle" />
+                            <TextView
+                                android:id="@+id/edit_movie_tv_overview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="@{movie.overview}"
+                                android:gravity="top"
+                                android:singleLine="false"
+                                android:textColor="@color/colorWhite"
+                                android:focusable="true"
+                                android:scrollbars="vertical"
+                                android:background="@color/transparent"
+                                android:layout_marginTop="@dimen/spacing_8"
+                                style="@style/EditReviewBodyStyle"/>
+                        </LinearLayout>
+                    </ScrollView>
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
@@ -175,9 +183,9 @@
                     android:onClick="@{() -> activity.rotateBtnClick()}"
                     android:bottom="@+id/cv_edit_diary_edit"
                     />
-            </FrameLayout>
+            </RelativeLayout>
+
 
         </RelativeLayout>
 
-    </RelativeLayout>
 </layout>

@@ -30,7 +30,16 @@ class SearchViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
-                    _searchMovieData.postValue(it.results)
+                    val results = it.results
+                    val movieList = ArrayList<MovieInfoResultResponse>()
+                    for(i in results.indices){
+                        val movie = results[i]
+                        if(movie.poster_path != null){
+                            movieList.add(movie)
+                        }
+                    }
+                    _searchMovieData.postValue(movieList)
+
                 }
             },{
                 Log.d(TAG, it.localizedMessage)

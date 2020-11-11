@@ -65,9 +65,9 @@
     <string name="dialog_cancel">아니오</string>
     <string name="dialog_accept">예</string>
     <string name="edit_review_title">%s 관람 후기</string>
-    <string name="home_upcoming_movies">Upcoming Movies</string>
-    <string name="home_now_playing_movies">Now Playing Movies</string>
-    <string name="home_top_rated_movies">Top Rated Movies</string>
+    <string name="home_upcoming_movies">개봉 예정 영화</string>
+    <string name="home_now_playing_movies">현재 상영 영화</string>
+    <string name="home_top_rated_movies">평점 높은 영화</string>
 
     <!--os license-->
     <string name="title_activity_open_source_list">OpenSourceListActivity</string>

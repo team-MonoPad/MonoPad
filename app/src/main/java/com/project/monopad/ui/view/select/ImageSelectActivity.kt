@@ -74,14 +74,13 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                 onBackPressed()
                 true
             }
-            R.id.action_review -> {
+            R.id.action_edit -> {
                 val imageSelectAdapter = viewDataBinding.rvImageSelect.adapter as ImageSelectAdapter
                 imageSelectAdapter.getImagePath().also {
                     if (it == null) {
                         Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                         if (isReselect) {
                             //기존 존재 -> Edit -> ImageSelect -> Edit
                             intentActionWithBundleSingleTop(EditActivity::class) {

@@ -60,7 +60,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
         @SuppressLint("ClickableViewAccessibility")
         fun onTouch(){
-            binding.ivSearchPoster.setOnTouchListener { view, motionEvent ->
+            binding.ivSearchPoster.setOnTouchListener { _, motionEvent ->
                 when(motionEvent.action){
                     MotionEvent.ACTION_DOWN -> {
                         touchListener?.invoke()
