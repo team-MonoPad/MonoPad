@@ -205,9 +205,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 true
             }
             R.id.action_edit -> {
+                val intent = intent
                 intentActionWithBundle(ImageSelectActivity::class){
                     putBoolean("isReselect",false)
                     putParcelable("movie_data",intentMovieData)
+                    if(intent!=null) putIntArray("selected_date", intent.getIntArrayExtra("selected_date"))
                 }
                 //finish()
                 true
