@@ -158,6 +158,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
             setOnSearchClickListener {
                 val intent = Intent(requireContext(), DetailActivity::class.java).putExtra("movie_id", it)
                 startActivity(intent)
+                dismiss()
             }
             setOnSearchTouchListener {
                 searchViewHide()
