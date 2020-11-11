@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlin.reflect.KClass
@@ -27,6 +29,6 @@ fun Fragment.intentActionToUrl(url:String){
     )
 }
 
-fun Fragment.navigateToActivity(Activity_Id : Int){
-    findNavController().navigate(Activity_Id)
+fun AppCompatActivity.replace(@IdRes frameId: Int, fragment: androidx.fragment.app.Fragment) {
+    supportFragmentManager.beginTransaction().replace(frameId, fragment, null).commit()
 }
