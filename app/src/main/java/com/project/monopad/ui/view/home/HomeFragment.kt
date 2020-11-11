@@ -104,23 +104,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
     }
 
     private fun observeMovieLiveData(){
-        viewModel.popularMovieData.observe(this, {
+        viewModel.popularMovieData.observe(viewLifecycleOwner, {
             popularAdapter.setMovies(it)
             mPopularListSize = it.size
             popularAdapter.notifyDataSetChanged()
         })
 
-        viewModel.nowPlayingMovieData.observe(this, {
+        viewModel.nowPlayingMovieData.observe(viewLifecycleOwner, {
             nowPlayingAdapter.setMovies(it)
             nowPlayingAdapter.notifyDataSetChanged()
         })
 
-        viewModel.upcomingMovieData.observe(this, {
+        viewModel.upcomingMovieData.observe(viewLifecycleOwner, {
             upcomingAdapter.setMovies(it)
             upcomingAdapter.notifyDataSetChanged()
         })
 
-        viewModel.topRatedMovieData.observe(this, {
+        viewModel.topRatedMovieData.observe(viewLifecycleOwner, {
             topRatedAdapter.setMovies(it)
             topRatedAdapter.notifyDataSetChanged()
         })
