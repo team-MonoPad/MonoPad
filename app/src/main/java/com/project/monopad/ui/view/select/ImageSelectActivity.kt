@@ -80,7 +80,6 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                         Toast.makeText(this, R.string.image_select_please, Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                         if (isReselect) {
                             //기존 존재 -> Edit -> ImageSelect -> Edit
                             intentActionWithBundle(EditActivity::class) {
