@@ -19,7 +19,8 @@ class DetailParsingUtil {
             for(g in genreList){
                 genre += "${g.name}, "
             }
-            return genre.substring(0, genre.length-2)
+            return if(genre.length >= 2) genre.substring(0, genre.length-2) else ""
+
         }
 
         fun directorParsing(crewList : List<MovieCrewResponse>) : String{
@@ -32,7 +33,7 @@ class DetailParsingUtil {
         fun casterParsing(casters: List<MovieCastResponse>): List<MovieCastResponse> {
             val list = ArrayList<MovieCastResponse>()
             for(c in casters){
-                if(c.profile_path!=null) list.add(c)
+                list.add(c)
             }
             return list
         }
