@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="auto"
@@ -21,7 +22,7 @@
             android:id="@+id/rv_search_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/spacing_10"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="@dimen/spacing_10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

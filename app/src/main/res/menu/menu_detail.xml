@@ -8,13 +8,18 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/action_review"
+        android:id="@+id/action_edit"
         android:icon="@drawable/ic_baseline_edit_24"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom" /><![CDATA[
-    />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_select"
+        android:icon="@drawable/ic_baseline_article_24"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
 
-]]>
 </menu>

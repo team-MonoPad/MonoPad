@@ -30,11 +30,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     override val viewModel: DetailViewModel by viewModel()
 
-    private lateinit var menuReview: MenuItem
     private var reviewCheck: Boolean = false
 
     private val MOVIE_ID : Int
         get() = intent.getIntExtra("movie_id", 0)
+
 
     lateinit var intentMovieData : Movie
 
@@ -48,7 +48,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
         viewModel.getDetailData(MOVIE_ID)
-        viewModel.getReviewData()
     }
 
     override fun initAfterBinding() {
@@ -138,13 +137,22 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     private fun observeReviewData(){
         viewModel.reviewData.observe(this, {
-            menuReview.setIcon(R.drawable.ic_baseline_edit_24)
+            reviewCheck = false
             for (i in it.indices) {
                 if (MOVIE_ID == it[i].id) {
-                    menuReview.setIcon(R.drawable.ic_baseline_article_24)
                     reviewCheck = true
                     break
                 }
+            }
+            val selectItem = viewDataBinding.detailToolbar.menu.findItem(R.id.action_select)
+            val editItem = viewDataBinding.detailToolbar.menu.findItem(R.id.action_edit)
+
+            if(reviewCheck){
+                selectItem.isVisible = true
+                editItem.isVisible = false
+            } else {
+                selectItem.isVisible = false
+                editItem.isVisible = true
             }
         })
     }
@@ -196,19 +204,21 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 onBackPressed()
                 true
             }
-            R.id.action_review -> {
-                if (!reviewCheck) {
-                    intentActionWithBundle(ImageSelectActivity::class){
-                        putBoolean("isReselect",false)
-                        putParcelable("movie_data",intentMovieData)
-                    }
-                    finish()
-                } else {
-                    intentActionWithBundle(EditActivity::class){
-                        putParcelable("movie_data",intentMovieData)
-                        putBoolean("isReselect",false)
-                        putBoolean("isFirst",false)
-                    }
+            R.id.action_edit -> {
+                val intent = intent
+                intentActionWithBundle(ImageSelectActivity::class){
+                    putBoolean("isReselect",false)
+                    putParcelable("movie_data",intentMovieData)
+                    if(intent!=null) putIntArray("selected_date", intent.getIntArrayExtra("selected_date"))
+                }
+                //finish()
+                true
+            }
+            R.id.action_select -> {
+                intentActionWithBundle(EditActivity::class){
+                    putParcelable("movie_data",intentMovieData)
+                    putBoolean("isReselect",false)
+                    putBoolean("isFirst",false)
                 }
                 true
             }
@@ -224,9 +234,13 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_detail, menu)
-        menuReview = menu.findItem(R.id.action_review)
-
         return true
+    }
+
+    /* life cycle */
+    override fun onResume() {
+        viewModel.getReviewData()
+        super.onResume()
     }
 
 }
