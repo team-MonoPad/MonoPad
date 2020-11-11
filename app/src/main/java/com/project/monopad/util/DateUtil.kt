@@ -6,6 +6,7 @@ import java.util.*
 object DateUtil{
     private val simpleDateFormat1 = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA) //review format
     private val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA) //movie dto format
+    private val fileNameDateFormat = SimpleDateFormat("yyMMddHHmmss", Locale.KOREA) //movie dto format
 
     fun getDayDifference(releaseDate: String): String {
         val date = simpleDateFormat2.parse(releaseDate)
@@ -26,6 +27,9 @@ object DateUtil{
 
     fun convertDateToString(date : Date) : String
         = simpleDateFormat1.format(date)
+
+    fun getFileNameDate(date : Date) : String
+        = fileNameDateFormat.format(date)
 
     fun convertStringToDate(stDate : String) : Date?
         = simpleDateFormat1.parse(stDate)

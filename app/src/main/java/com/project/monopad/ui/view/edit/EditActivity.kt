@@ -4,6 +4,7 @@ package com.project.monopad.ui.view.edit
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.app.DatePickerDialog
+import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +19,7 @@ import com.project.monopad.extension.showToast
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
+import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
 import com.project.monopad.util.DetailParsingUtil
@@ -41,7 +43,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
     private var isFront = true
-    private var isReselect = false
+    var isReselect = false
 
 
 
@@ -53,10 +55,13 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         intent?.apply {
             isFirst = getBooleanExtra("isFirst",false)
             isReselect = getBooleanExtra("isReselect",false)
-            imagePath = getStringExtra("image_path")
+            imagePath = IMAGE_URL + getStringExtra("image_path")
             movie = getParcelableExtra("movie_data")!!
             mSelectedDate = getStringExtra("date")
         }
+        d("isFirst", isFirst.toString())
+        d("isReselect", isReselect.toString())
+        d("image_path", imagePath.toString())
 
 
         if (isFirst){ //첫 작성이라면
@@ -64,7 +69,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         }else{ //첫 작성이 아니라면
             if (isReselect){ //재선택이라면
                //image 재선택
-
+                viewModel.getReviewByReviewId(id = movie.id)
             }else{ //재선택이 아니라면
                 viewModel.getReviewByReviewId(id = movie.id)
             }
@@ -86,7 +91,8 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override fun initAfterBinding() {
         //리뷰 저장 or 수정 응답 결과
         viewModel.isCompleted.observe(this){
-            isFirst = !it // insert/update 완료 : true -> isFirst = false
+            isFirst = !it // insert/update 완료 후 true 전달받음 : isFirst <- false
+            isReselect = !it //save 완료 후 true 전달받음 : isReselect <- false
             if(!it) finish() //delete 완료 : false -> 종료
         }
 
@@ -101,7 +107,12 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                 }
             }
 
-            imagePath = it.review_poster
+            if (!isReselect){
+                imagePath = it.review_poster
+            }else{
+                imagePath = IMAGE_URL+imagePath
+            }
+            d("imagePath: ", imagePath!!)
         }
     }
 
@@ -119,30 +130,14 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     }
 
     private fun saveReview() {
-        viewModel.downloadImage(imagePath!!, movie.title!!)
+        d("reselect remote image", imagePath!!)
+        d("file name", movie.title!!+DateUtil.getFileNameDate(Date()))
+
+        viewModel.downloadImage(imagePath!!, movie.title!!, DateUtil.getFileNameDate(Date()))
 
         viewModel.imagePathData.observe(this) {
             imagePath = it
-            if (it.isNotBlank()){
-                val review = Review(
-                    id = movie.id,
-                    review_poster = it, //로컬 경로
-                    title = viewDataBinding.editEtTitle.text.toString(),
-                    date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
-                    comment = viewDataBinding.editEtComment.text.toString(),
-                    rating = viewDataBinding.editRatingBar.rating.toDouble(),
-                    movie = movie
-                )
-                viewModel.insertReviewWithMovie(review)
-            }
-        }
-    }
-
-    private fun updateReviewWithNewPoster(imgPath : String){
-        viewModel.downloadImage(imgPath, movie.title!!)
-
-        viewModel.imagePathData.observe(this) {
-            imagePath = it
+            d("reselect local image", imagePath!!)
             if (it.isNotBlank()){
                 val review = Review(
                     id = movie.id,
@@ -174,7 +169,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
         menuInflater.inflate(R.menu.menu_edit, menu)
-        setEditableMode(isFirst) //intent 를 통해 데이터를 받아온 후, 값 설정
+        setEditableMode(isFirst || isReselect) //intent 를 통해 데이터를 받아온 후, 값 설정
         return true
     }
 
@@ -186,7 +181,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             }
             R.id.menu_save -> {
                 setEditableMode(false)
-                if (isFirst) saveReview() else updateReview()
+                if (isFirst||isReselect) saveReview() else updateReview()
                 return true
             }
             R.id.menu_edit -> {
@@ -247,7 +242,6 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
                 child.isEnabled = flag
             }
         }
-
         if(flag) showKeyboard() else hideKeyboard()
     }
 
@@ -275,19 +269,22 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     }
 
     private fun showDatePickerDialog() {
-        val cal = Calendar.getInstance()
-        val y = cal.get(Calendar.YEAR)
-        val m = cal.get(Calendar.MONTH)
-        val d = cal.get(Calendar.DAY_OF_MONTH)
+        val date = viewDataBinding.editTvDate.text.toString()
+        if (date.isNotBlank()){
+            val temp = date.replace(("[^\\d.]").toRegex(), "")
+            val y = temp.substring(0..3).toInt()
+            val m = temp.substring(4..5).toInt()-1
+            val d = temp.substring(6..7).toInt()
 
-        DatePickerDialog(
-            this, R.style.CustomDatePickerDialogTheme,
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                val birthDay = "${year}년 ${monthOfYear + 1}월 ${dayOfMonth}일"
-                viewDataBinding.editTvDate.text = birthDay
-            },
-            y, m, d
-        ).show()
+            DatePickerDialog(
+                this, R.style.CustomDatePickerDialogTheme,
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                    val birthDay = "${year}년 ${monthOfYear + 1}월 ${dayOfMonth}일"
+                    viewDataBinding.editTvDate.text = birthDay
+                },
+                y, m, d
+            ).show()
+        }
     }
 
     private fun showDeleteDialog(){

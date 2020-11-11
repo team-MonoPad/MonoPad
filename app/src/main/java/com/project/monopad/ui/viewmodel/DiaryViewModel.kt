@@ -52,7 +52,6 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
                         _isCompleted.postValue(true)
                     },
                     {
@@ -69,7 +68,6 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
                         _isCompleted.postValue(false)
                     },
                     {
@@ -104,7 +102,6 @@ class DiaryViewModel(
             .subscribe({ it ->
                 it.run {
                     reviewData.value =it
-                    forEach { Log.d("getAllReview",it.toString()) }
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
@@ -160,11 +157,11 @@ class DiaryViewModel(
         )
     }
 
-    fun downloadImage (imageURL : String, title:String) {
+    fun downloadImage (imageURL: String, title: String, saveTime: String) {
         val teamName = "MONOPAD"
         val dirPath = "${context.getExternalFilesDir(teamName)?.absolutePath}/${title}/"
         val dir = File(dirPath)
-        val fileName = title+"_download_poster"
+        val fileName = title+"_download_poster_"+saveTime
 
         Log.d("다운로드!", dirPath)
         Glide.with(context)
