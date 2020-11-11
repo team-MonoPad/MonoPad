@@ -66,7 +66,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
     /* searchview setting */
     private fun searchViewSetting(){
-        searchView.isIconified = false
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String): Boolean {

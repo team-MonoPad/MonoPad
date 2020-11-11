@@ -5,7 +5,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.extension.intentActionWithBundle
