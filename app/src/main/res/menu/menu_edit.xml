@@ -23,15 +23,25 @@
     </item>
 
     <item
-        android:id="@+id/menu_delete"
-        app:showAsAction="never"
-        android:title="리뷰 삭제">
+        android:id="@+id/menu_more_vert"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="menu">
+        <menu>
+            <item
+                android:id="@+id/menu_delete"
+                app:showAsAction="never"
+                android:title="리뷰 삭제">
+            </item>
+
+            <item
+                android:id="@+id/menu_reselect_image"
+                app:showAsAction="never"
+                android:title="포스터 변경">
+            </item>
+        </menu>
     </item>
 
-    <item
-        android:id="@+id/menu_reselect_image"
-        app:showAsAction="never"
-        android:title="포스터 변경">
-    </item>
+
 
 </menu>

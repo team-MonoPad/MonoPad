@@ -183,6 +183,9 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
     private fun toolbarLayoutSetting(){
         setSupportActionBar(viewDataBinding.detailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.arrow_left)
+        supportActionBar?.elevation = 4.0f
         viewDataBinding.toolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar)
 
     }
