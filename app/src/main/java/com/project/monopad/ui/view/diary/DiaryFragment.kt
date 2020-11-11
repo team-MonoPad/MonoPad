@@ -27,6 +27,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
         get() = R.layout.fragment_diary
 
     override fun initStartView() {
+        progressDialog.show()
         initClickEvent()
     }
 
@@ -41,6 +42,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     private fun observeReviewData() {
         viewModel.reviewData.observe(viewLifecycleOwner) {
             viewDataBinding.calendarView.notifyDataChanged(it)
+            progressDialog.dismiss()
         }
     }
 

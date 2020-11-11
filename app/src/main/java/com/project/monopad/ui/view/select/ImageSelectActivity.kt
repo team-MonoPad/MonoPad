@@ -9,6 +9,7 @@ import com.project.monopad.R
 import com.project.monopad.databinding.ActivityImageSelectBinding
 import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.extension.intentActionWithBundleSingleTop
 import com.project.monopad.ui.adapter.ImageSelectAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.edit.EditActivity
@@ -82,22 +83,20 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                     } else {
                         if (isReselect) {
                             //기존 존재 -> Edit -> ImageSelect -> Edit
-                            intentActionWithBundle(EditActivity::class) {
+                            intentActionWithBundleSingleTop(EditActivity::class) {
                                 putBoolean("isFirst", false)
                                 putBoolean("isReselect", isReselect)
                                 putParcelable("movie_data", INTENT_MOVIE_DATA)
                                 putString("image_path", it)
                             }
-                            finish()
                         } else {
                             //detail -> imageSelect -> Edit
-                            intentActionWithBundle(EditActivity::class){
+                            intentActionWithBundleSingleTop(EditActivity::class){
                                 putBoolean("isFirst", true)
                                 putBoolean("isReselect", isReselect)
                                 putString("image_path", it)
                                 putParcelable("movie_data", INTENT_MOVIE_DATA)
                             }
-                            finish()
                         }
 
                     }

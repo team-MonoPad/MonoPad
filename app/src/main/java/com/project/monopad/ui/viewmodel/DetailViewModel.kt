@@ -46,7 +46,6 @@ class DetailViewModel(private val movieRepo: MovieRepoImpl,
     val reviewData: LiveData<List<Movie>>
         get() = _reviewData
 
-
     fun getDetailData(movieId : Int){
         /* 영화 상세 정보 데이터 가져오기 */
         addDisposable(movieRepo.getMovieDetail(
