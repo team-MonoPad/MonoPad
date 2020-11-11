@@ -36,11 +36,13 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     var isFirst = true
     private lateinit var movie : Movie
     var imagePath: String? = null
+    private var mSelectedDate: String? = null
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
     private var isFront = true
     private var isReselect = false
+
 
 
 
@@ -53,6 +55,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             isReselect = getBooleanExtra("isReselect",false)
             imagePath = getStringExtra("image_path")
             movie = getParcelableExtra("movie_data")!!
+            mSelectedDate = getStringExtra("date")
         }
 
 
@@ -105,7 +108,11 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private fun setFirstReview(){
         imagePath = IMAGE_URL + imagePath
         viewDataBinding.movie = movie
-        viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
+        if (mSelectedDate.isNullOrBlank()){
+            viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
+        }else{
+            viewDataBinding.editTvDate.text = mSelectedDate
+        }
         movie.genres?.run{
             viewDataBinding.editMovieTvGenre.text = DetailParsingUtil.genreParsing(this)
         }
