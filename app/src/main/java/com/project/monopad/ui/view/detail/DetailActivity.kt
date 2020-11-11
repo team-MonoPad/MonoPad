@@ -5,12 +5,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
+import com.project.monopad.data.model.entity.Movie
 import com.project.monopad.databinding.ActivityDetailBinding
 import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.showToast
-import com.project.monopad.data.model.entity.Movie
 import com.project.monopad.ui.adapter.CasterAdapter
 import com.project.monopad.ui.adapter.OtherMovieAdapter
 import com.project.monopad.ui.adapter.TrailerAdapter
@@ -212,7 +213,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 intentActionWithBundle(ImageSelectActivity::class){
                     putBoolean("isReselect",false)
                     putParcelable("movie_data",intentMovieData)
-                    if(intent!=null) putIntArray("selected_date", intent.getIntArrayExtra("selected_date"))
+                    if(intent!=null) putString("selected_date", intent.getStringExtra("selected_date"))
                 }
                 //finish()
                 true

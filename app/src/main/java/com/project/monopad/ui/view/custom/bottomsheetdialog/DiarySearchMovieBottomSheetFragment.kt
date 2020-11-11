@@ -36,8 +36,8 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
 
     private val searchAdapter = SearchAdapter()
 
-    private val SELECTED_DATE : IntArray
-        get() = arguments?.getIntArray("selected_date")!!
+    private val SELECTED_DATE : String
+        get() = arguments?.getString("selected_date")!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
