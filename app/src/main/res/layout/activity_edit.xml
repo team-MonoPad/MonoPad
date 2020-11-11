@@ -163,16 +163,17 @@
                             style="@style/EditReviewBodyStyle"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <ImageView
                     android:id="@+id/edit_iv_rotate"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:rotation="180"
-                    android:src="@drawable/ic_baseline_rotate"
-                    android:bottom="@+id/cv_edit_diary_edit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:rotation="45"
+                    android:src="@drawable/rotation"
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="16dp"
                     android:onClick="@{() -> activity.rotateBtnClick()}"
+                    android:bottom="@+id/cv_edit_diary_edit"
                     />
             </FrameLayout>
 
