@@ -1,4 +1,4 @@
-package com.project.monopad.ui.view.edit
+package com.project.monopad.ui.view.custom.dialog
 
 import android.app.Dialog
 import android.content.Context

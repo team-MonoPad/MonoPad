@@ -17,6 +17,7 @@ import com.project.monopad.databinding.ActivityEditBinding
 import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.showToast
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.view.custom.dialog.CheckDialog
 import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import com.project.monopad.util.BaseUtil

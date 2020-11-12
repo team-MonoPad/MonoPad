@@ -1,5 +1,6 @@
 package com.project.monopad.data.repository
 
+import androidx.lifecycle.LiveData
 import com.project.monopad.data.model.entity.Review
 import com.project.monopad.data.model.network.response.MovieDetailResponse
 import com.project.monopad.data.model.network.response.MovieImageResponse
@@ -47,6 +48,9 @@ class ReviewRepoImpl (
 
     override fun updateReview(review: Review): Completable {
         return local.updateReview(review)
+    }
+    override fun getAllReviewInLiveData() : LiveData<List<Review>> {
+        return local.getAllReviewInLiveData()
     }
 
 }

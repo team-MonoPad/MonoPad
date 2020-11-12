@@ -1,5 +1,6 @@
 package com.project.monopad.data.repository
 
+import androidx.lifecycle.LiveData
 import com.project.monopad.data.model.entity.Review
 import com.project.monopad.data.model.network.response.MovieDetailResponse
 import com.project.monopad.data.model.network.response.MovieImageResponse
@@ -15,4 +16,6 @@ interface ReviewRepo {
     fun updateReview(review: Review) : Completable
     fun getMovieDetail(movie_id: Int, apikey: String, language: String) : Single<MovieDetailResponse>
     fun getMovieImages(movie_id: Int, apikey: String): Single<MovieImageResponse>
+    fun getAllReviewInLiveData() : LiveData<List<Review>>
+
 }

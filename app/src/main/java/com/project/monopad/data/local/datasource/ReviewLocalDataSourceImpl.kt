@@ -1,5 +1,6 @@
 package com.project.monopad.data.local.datasource
 
+import androidx.lifecycle.LiveData
 import com.project.monopad.data.model.entity.Review
 import com.project.monopad.data.local.LocalDataSource
 import io.reactivex.Completable
@@ -29,6 +30,10 @@ class ReviewLocalDataSourceImpl(private val localDataSource: LocalDataSource): R
 
     override fun updateReview(review: Review): Completable {
         return localDataSource.updateReview(review)
+    }
+
+    override fun getAllReviewInLiveData() : LiveData<List<Review>> {
+        return localDataSource.getAllReviewInLiveData()
     }
 
 }

@@ -36,9 +36,6 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
 
     private val searchAdapter = SearchAdapter()
 
-    private val SELECTED_DATE : String
-        get() = arguments?.getString("selected_date")!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -159,7 +156,7 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
             setOnSearchClickListener {
                 val intent = Intent(requireContext(), DetailActivity::class.java).apply {
                     putExtra("movie_id", it)
-                    putExtra("selected_date",SELECTED_DATE)
+                    putExtra("date",arguments?.getString("date"))
                 }
                 startActivity(intent)
                 dismiss()

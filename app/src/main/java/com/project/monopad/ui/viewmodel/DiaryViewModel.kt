@@ -25,7 +25,7 @@ class DiaryViewModel(
     private val context : Context
 ): BaseViewModel(){
 
-    private val _reviewData = MutableLiveData<List<Review>>()
+    private val _reviewData : LiveData<List<Review>> = repo.getAllReviewInLiveData()
     val reviewData : LiveData<List<Review>>
         get() = _reviewData
 
@@ -52,7 +52,6 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
                         _isCompleted.postValue(true)
                     },
                     {
@@ -69,7 +68,6 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
                         _isCompleted.postValue(false)
                     },
                     {
@@ -87,27 +85,13 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
+
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
                     }
                 )
 
-        )
-    }
-
-    fun getAllReview(){
-        addDisposable(repo.getAllReview()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                it.run {
-                    _reviewData.postValue(it)
-                }
-            },{
-                Log.d(TAG, it.localizedMessage)
-            })
         )
     }
 
@@ -151,7 +135,6 @@ class DiaryViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    getAllReview()
                     _isCompleted.postValue(true)
                 },{
                     Log.d(TAG, it.localizedMessage)

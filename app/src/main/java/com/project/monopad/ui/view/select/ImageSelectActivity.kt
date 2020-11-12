@@ -6,9 +6,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.project.monopad.R
-import com.project.monopad.databinding.ActivityImageSelectBinding
-import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.data.model.entity.Movie
+import com.project.monopad.databinding.ActivityImageSelectBinding
 import com.project.monopad.extension.intentActionWithBundleSingleTop
 import com.project.monopad.ui.adapter.ImageSelectAdapter
 import com.project.monopad.ui.base.BaseActivity
@@ -89,6 +88,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                                 putParcelable("movie_data", INTENT_MOVIE_DATA)
                                 putString("image_path", it)
                             }
+                            finish()
                         } else {
                             //detail -> imageSelect -> Edit
                             intentActionWithBundleSingleTop(EditActivity::class){
@@ -96,7 +96,9 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                                 putBoolean("isReselect", isReselect)
                                 putString("image_path", it)
                                 putParcelable("movie_data", INTENT_MOVIE_DATA)
+                                if(intent!=null) putString("date", intent.getStringExtra("date"))
                             }
+                            finish()
                         }
 
                     }
