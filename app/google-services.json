@@ -1,50 +1,34 @@
 {
   "project_info": {
-    "project_number": "157429841026",
-    "firebase_url": "https://monopad-18f7f.firebaseio.com",
-    "project_id": "monopad-18f7f",
-    "storage_bucket": "monopad-18f7f.appspot.com"
+    "project_number": "939758428399",
+    "firebase_url": "https://monopad-c3c5f.firebaseio.com",
+    "project_id": "monopad-c3c5f",
+    "storage_bucket": "monopad-c3c5f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:157429841026:android:9b6678e65946d443ac089b",
+        "mobilesdk_app_id": "1:939758428399:android:63e49c8568a15b01213b1a",
         "android_client_info": {
           "package_name": "com.project.monopad"
         }
       },
       "oauth_client": [
         {
-          "client_id": "157429841026-qr082ueuafd03e57gk8oel6kcctibukn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.project.monopad",
-            "certificate_hash": "91b8eb548bf7c461e583168e789ad49bfcb3ca3b"
-          }
-        },
-        {
-          "client_id": "157429841026-fsmko9rl0ev5c5j3klojktasg6vh5g94.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.project.monopad",
-            "certificate_hash": "096d9bfdaed96800e0302ce94de90483fe88db8a"
-          }
-        },
-        {
-          "client_id": "157429841026-pm9nlt020dbejbcqrrj22mq3o9aurqnn.apps.googleusercontent.com",
+          "client_id": "939758428399-2jlnt6pekmcdig4gke01gt98b1v7jh7h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA2X6-uIcrfx69VRF2LFz27jPcvmQZjdJI"
+          "current_key": "AIzaSyA8aIvSudMYdMd6dbxJpj3BC-6kdsN3F3E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "157429841026-pm9nlt020dbejbcqrrj22mq3o9aurqnn.apps.googleusercontent.com",
+              "client_id": "939758428399-2jlnt6pekmcdig4gke01gt98b1v7jh7h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
