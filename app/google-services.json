@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "157429841026-qr082ueuafd03e57gk8oel6kcctibukn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.monopad",
+            "certificate_hash": "91b8eb548bf7c461e583168e789ad49bfcb3ca3b"
+          }
+        },
+        {
           "client_id": "157429841026-fsmko9rl0ev5c5j3klojktasg6vh5g94.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
