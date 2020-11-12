@@ -7,8 +7,8 @@ import com.google.android.gms.tasks.Task
 import com.project.monopad.data.repository.UserRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
 import com.project.monopad.ui.view.login.AuthListener
-import com.project.monopad.util.LoginMode
-import com.project.monopad.util.isNotValidEmailAndPassword
+import com.project.monopad.util.LoginPatternCheckUtil.isNotValidEmailAndPassword
+import com.project.monopad.util.state.LoginMode
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

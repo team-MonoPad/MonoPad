@@ -1,4 +1,4 @@
-package com.project.monopad.ui.adapter.home
+package com.project.monopad.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +14,8 @@ import com.project.monopad.databinding.ItemPopularPageBinding
 import com.project.monopad.databinding.ItemTopRatedBinding
 import com.project.monopad.databinding.ItemUpcomingBinding
 import com.project.monopad.extension.dDay
+import com.project.monopad.ui.base.MovieItemView
+import com.project.monopad.util.state.MovieCase
 
 class MovieAdapter(private val movieCase: MovieCase) : RecyclerView.Adapter<MovieItemView>() {
 

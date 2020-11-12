@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.project.monopad.R
 import com.project.monopad.data.model.entity.Day
 import com.project.monopad.data.model.entity.Review
-import com.project.monopad.util.CalendarUtil
+import com.project.monopad.util.MainUtil.isCalendarAndDateSame
 import java.util.*
 
 class CalendarGridAdapter(private val context: Context, private val calendar: Calendar) :
@@ -102,7 +102,7 @@ class CalendarGridAdapter(private val context: Context, private val calendar: Ca
             val reviews = mutableListOf<Review>()
             while (it.hasNext()) {
                 val item = it.next()
-                if (CalendarUtil.isCalendarAndDateSame(cal, item.date)) {
+                if (isCalendarAndDateSame(cal, item.date)) {
                     reviews.add(item)
                 }
             }

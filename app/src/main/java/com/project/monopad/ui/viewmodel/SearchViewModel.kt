@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.project.monopad.data.model.network.response.MovieInfoResultResponse
 import com.project.monopad.data.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
-import com.project.monopad.util.BaseUtil
+import com.project.monopad.util.AppUtil.API_KEY
+import com.project.monopad.util.AppUtil.KR_LANGUAGE
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -21,8 +22,8 @@ class SearchViewModel(private val repo: MovieRepoImpl) : BaseViewModel() {
     fun getSearchData(query: String){
         /* 비슷한 영화 정보 가져오기 */
         addDisposable(repo.getMovieSearch(
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
+            apikey = API_KEY,
+            language = KR_LANGUAGE,
             query = query,
             page = 1
         )

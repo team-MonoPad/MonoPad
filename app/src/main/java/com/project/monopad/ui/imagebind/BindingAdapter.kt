@@ -6,7 +6,8 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.project.monopad.R
-import com.project.monopad.util.BaseUtil
+import com.project.monopad.util.AppUtil.IMAGE_URL
+import com.project.monopad.util.AppUtil.THUMBNAIL_URL
 import com.project.monopad.util.DateUtil
 import jp.wasabeef.glide.transformations.BlurTransformation
 import java.util.*
@@ -17,7 +18,7 @@ object BindingAdapter {
     @BindingAdapter("bindBackPoster")
     fun bindBackPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
+            .load(IMAGE_URL + imageUrl)
             .fitCenter()
             .apply(RequestOptions.bitmapTransform(BlurTransformation(13, 3)))
             .placeholder(R.drawable.loading)
@@ -29,7 +30,7 @@ object BindingAdapter {
     @BindingAdapter("bindPoster")
     fun bindPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
+            .load(IMAGE_URL + imageUrl)
             .fitCenter()
             .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
@@ -40,7 +41,7 @@ object BindingAdapter {
     @BindingAdapter("bindThumbNail")
     fun bindThumbNail(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
-            .load(BaseUtil.THUMBNAIL_URL(imageUrl))
+            .load(THUMBNAIL_URL(imageUrl))
             .fitCenter()
             .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
@@ -51,7 +52,7 @@ object BindingAdapter {
     @BindingAdapter("homeBindPoster")
     fun homeBindPoster(view: ImageView, imageUrl: String?) {
         Glide.with(view.context)
-            .load(BaseUtil.IMAGE_URL + imageUrl)
+            .load(IMAGE_URL + imageUrl)
             .placeholder(R.drawable.loading)
             .error(R.drawable.ic_baseline_error_outline_24)
             .into(view)

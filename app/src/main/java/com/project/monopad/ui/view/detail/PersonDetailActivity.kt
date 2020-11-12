@@ -1,6 +1,5 @@
 package com.project.monopad.ui.view.detail
 
-import android.content.Intent
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.monopad.R
@@ -9,7 +8,7 @@ import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.ui.adapter.PersonFilmographyAdapter
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.PersonViewModel
-import com.project.monopad.util.DetailParsingUtil
+import com.project.monopad.util.MainUtil.koreaNameParsing
 import kotlinx.android.synthetic.main.activity_person_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,7 +38,7 @@ class PersonDetailActivity : BaseActivity<ActivityPersonDetailBinding, PersonVie
     override fun initAfterBinding() {
         viewModel.personDetailInfo.observe(this) {
             viewDataBinding.model = it
-            tv_person_detail_known_name.text = DetailParsingUtil.koreaNameParsing(it.also_known_as)
+            tv_person_detail_known_name.text = koreaNameParsing(it.also_known_as)
         }
 
         viewModel.personDetailMovie.observe(this) { it ->

@@ -9,7 +9,8 @@ import com.project.monopad.data.model.network.response.*
 import com.project.monopad.data.repository.MovieRepoImpl
 import com.project.monopad.data.repository.ReviewRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
-import com.project.monopad.util.BaseUtil
+import com.project.monopad.util.AppUtil.API_KEY
+import com.project.monopad.util.AppUtil.KR_LANGUAGE
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -50,8 +51,8 @@ class DetailViewModel(private val movieRepo: MovieRepoImpl,
         /* 영화 상세 정보 데이터 가져오기 */
         addDisposable(movieRepo.getMovieDetail(
             movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
+            apikey = API_KEY,
+            language = KR_LANGUAGE,
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +68,7 @@ class DetailViewModel(private val movieRepo: MovieRepoImpl,
         /* 영화 출연진, 스태프 정보 가져오기 */
         addDisposable(movieRepo.getMovieCredits(
             movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
+            apikey = API_KEY,
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -84,8 +85,8 @@ class DetailViewModel(private val movieRepo: MovieRepoImpl,
         /* 비슷한 영화 정보 가져오기 */
         addDisposable(movieRepo.getSimilarMovie(
             movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
+            apikey = API_KEY,
+            language = KR_LANGUAGE,
             page = 1
         )
             .subscribeOn(Schedulers.io())
@@ -102,8 +103,8 @@ class DetailViewModel(private val movieRepo: MovieRepoImpl,
         /* 추천 영화 정보 가져오기 */
         addDisposable(movieRepo.getRecommendationsMovie(
             movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
+            apikey = API_KEY,
+            language = KR_LANGUAGE,
             page = 1
         )
             .subscribeOn(Schedulers.io())
@@ -120,8 +121,8 @@ class DetailViewModel(private val movieRepo: MovieRepoImpl,
         /* 영화 트레일러 가져오기 */
         addDisposable(movieRepo.getMovieVideo(
             movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
+            apikey = API_KEY,
+            language = KR_LANGUAGE,
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

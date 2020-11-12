@@ -13,8 +13,8 @@ import com.project.monopad.R
 import com.project.monopad.databinding.ViewCalendarTopLayoutBinding
 import com.project.monopad.data.model.entity.Day
 import com.project.monopad.data.model.entity.Review
-import com.project.monopad.util.CalendarUtil.convertCalendarToString
-import com.project.monopad.util.CalendarUtil.isMonthSame
+import com.project.monopad.util.MainUtil.convertCalendarToString
+import com.project.monopad.util.MainUtil.isMonthSame
 import java.util.*
 
 class CalendarView(

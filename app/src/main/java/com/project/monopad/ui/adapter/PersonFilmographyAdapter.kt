@@ -36,7 +36,7 @@ class PersonFilmographyAdapter : RecyclerView.Adapter<PersonFilmographyAdapter.V
         fun bindView(movie: PersonDetailCreditsCastResponse){
             if (movie.character.isNotEmpty()) binding.tvFilmoMovieCharacter.text = "${movie.character} 역"
             binding.model = movie
-            binding.ivFilmoMoviePoster.setOnClickListener {
+            binding.cslFilmoRoot.setOnClickListener {
                 listener?.invoke(movie.id)
             }
         }

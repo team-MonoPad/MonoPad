@@ -1,20 +1,13 @@
 package com.project.monopad.ui.view.home
 
-import android.app.Activity
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
-import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.intentActionWithBundleSingleTop
-import com.project.monopad.ui.adapter.home.MovieAdapter
-import com.project.monopad.ui.adapter.home.MovieCase
+import com.project.monopad.ui.adapter.MovieAdapter
+import com.project.monopad.util.state.MovieCase
 import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.view.detail.DetailActivity
 import com.project.monopad.ui.view.video.VideoActivity

@@ -2,8 +2,6 @@ package com.project.monopad.ui.view.diary
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.util.Log
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryBinding
@@ -15,7 +13,7 @@ import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheet
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiarySearchMovieBottomSheetFragment
 import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
-import com.project.monopad.util.CalendarUtil
+import com.project.monopad.util.MainUtil.convertCalendarToString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -73,7 +71,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     private fun showBottomSearchDialog(calendar: Calendar) {
         val bottomSheetSearchFragment = DiarySearchMovieBottomSheetFragment()
         bottomSheetSearchFragment.arguments = Bundle().also {
-            it.putString("date",CalendarUtil.convertCalendarToString(calendar,"yyyy년 MM월 dd일"))
+            it.putString("date",convertCalendarToString(calendar,"yyyy년 MM월 dd일"))
         }
         bottomSheetSearchFragment.show(childFragmentManager, "approval")
     }

@@ -1,5 +1,6 @@
 package com.project.monopad.util
 
+import com.project.monopad.data.model.network.response.MovieInfoResultResponse
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,4 +34,10 @@ object DateUtil{
 
     fun convertStringToDate(stDate : String) : Date?
         = simpleDateFormat1.parse(stDate)
+
+    class DateComparator : Comparator<MovieInfoResultResponse?> {
+        override fun compare(o1: MovieInfoResultResponse?, o2: MovieInfoResultResponse?): Int {
+            return o1!!.release_date.compareTo(o2!!.release_date)
+        }
+    }
 }

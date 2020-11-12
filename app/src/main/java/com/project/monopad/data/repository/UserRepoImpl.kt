@@ -3,7 +3,7 @@ package com.project.monopad.data.repository
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.project.monopad.data.remote.datasource.UserRemoteDataSource
-import com.project.monopad.util.LoginMode
+import com.project.monopad.util.state.LoginMode
 import io.reactivex.Completable
 
 

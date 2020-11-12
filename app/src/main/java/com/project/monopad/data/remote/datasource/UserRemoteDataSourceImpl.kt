@@ -6,7 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.project.monopad.data.remote.api.UserApiClient
-import com.project.monopad.util.LoginMode
+import com.project.monopad.util.state.LoginMode
 import io.reactivex.Completable
 import io.reactivex.Single
 

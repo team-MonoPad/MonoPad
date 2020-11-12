@@ -13,8 +13,9 @@ import com.project.monopad.data.model.entity.Review
 import com.project.monopad.data.model.network.response.MovieDetailResponse
 import com.project.monopad.data.repository.ReviewRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
-import com.project.monopad.util.BaseUtil
-import com.project.monopad.util.DownloadUtil.saveImage
+import com.project.monopad.util.AppUtil.API_KEY
+import com.project.monopad.util.AppUtil.KR_LANGUAGE
+import com.project.monopad.util.AppUtil.saveImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
@@ -114,8 +115,8 @@ class DiaryViewModel(
     fun getMovieDetailInfo(movieId: Int){
         addDisposable(repo.getMovieDetail(
             movie_id = movieId,
-            apikey = BaseUtil.API_KEY,
-            language = BaseUtil.KR_LANGUAGE,
+            apikey = API_KEY,
+            language = KR_LANGUAGE,
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

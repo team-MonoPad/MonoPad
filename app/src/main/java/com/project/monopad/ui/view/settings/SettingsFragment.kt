@@ -62,7 +62,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, LoginViewModel>()
     }
 
     private fun sendBugEmail(){
-        val send_address : Array<String> = arrayOf("wodbs135@gamil.com")
+        val send_address : Array<String> = arrayOf("team.monopad@gmail.com")
         val appVersion = BuildConfig.VERSION_NAME
         startActivity(
             Intent(

@@ -10,7 +10,7 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:datePickerStyle">@style/myDatePickerStyle</item>
         <item name="android:dialogTheme">@style/myDialogTheme</item>
-        <item name="fontFamily">@font/noto_sans</item>
+        <item name="fontFamily">@font/notosans_regular</item>
         <item name="android:lineSpacingExtra">@dimen/spacing_5</item>
     </style>
 
@@ -32,44 +32,54 @@
 
     <style name="MainToolbarStyle">
         <item name="background">@color/colorBlack</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="BodyTextViewStyle1">
         <item name="android:textSize">@dimen/body_14</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="BodyTextViewStyle2">
         <item name="android:textSize">@dimen/body_16</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="BigTitleTextViewStyle">
         <item name="android:textSize">@dimen/title_34</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="MiddleTitleTextViewStyle">
         <item name="android:textSize">@dimen/title_24</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="SmallTitleTextViewStyle">
         <item name="android:textSize">@dimen/title_20</item>
         <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="SubTitleTextViewStyle1">
         <item name="android:textSize">@dimen/subtitle_16</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="SubTitleTextViewStyle2">
         <item name="android:textSize">@dimen/subtitle_14</item>
         <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="CaptionTextViewStyle">
         <item name="android:textSize">@dimen/caption_12</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="DefaultButtonStyle">
         <item name="android:textSize">@dimen/button_text</item>
+        <item name="fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="DefaultImageViewStyle">
@@ -86,11 +96,13 @@
     <style name="HomeImageViewStyle1" parent="DefaultImageViewStyle">
         <item name="android:height">250dp</item>
         <item name="android:width">180dp</item>
+        <item name="fontFamily">@font/notosans_bold</item>
     </style>
 
     <style name="HomeTitleTextViewStyle" parent="SmallTitleTextViewStyle">
         <item name="android:layout_marginTop">@dimen/spacing_28</item>
         <item name="android:layout_marginBottom">@dimen/spacing_16</item>
+        <item name="fontFamily">@font/notosans_bold</item>
     </style>
 
 

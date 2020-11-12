@@ -8,10 +8,10 @@ import com.project.monopad.databinding.ActivityRegisterBinding
 import com.project.monopad.extension.showToast
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.RegisterViewModel
-import com.project.monopad.util.isNotValidEmail
-import com.project.monopad.util.isNotValidName
-import com.project.monopad.util.isNotValidPassword
-import com.project.monopad.util.isPasswordCheckSuccess
+import com.project.monopad.util.LoginPatternCheckUtil.isNotValidEmail
+import com.project.monopad.util.LoginPatternCheckUtil.isNotValidName
+import com.project.monopad.util.LoginPatternCheckUtil.isNotValidPassword
+import com.project.monopad.util.LoginPatternCheckUtil.isPasswordCheckSuccess
 import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

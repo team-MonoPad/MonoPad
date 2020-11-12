@@ -20,8 +20,12 @@ import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.view.video.VideoActivity
 import com.project.monopad.ui.viewmodel.DetailViewModel
-import com.project.monopad.util.DetailParsingUtil
-import com.project.monopad.util.OtherMovieCase
+import com.project.monopad.util.MainUtil.casterParsing
+import com.project.monopad.util.MainUtil.directorParsing
+import com.project.monopad.util.MainUtil.genreParsing
+import com.project.monopad.util.MainUtil.releaseDateParsing
+import com.project.monopad.util.MainUtil.runtimeParsing
+import com.project.monopad.util.state.OtherMovieCase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
@@ -66,9 +70,9 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         viewModel.movieDetailData.observe(this, {
             viewDataBinding.toolbarLayout.title = it.title
             viewDataBinding.contentLayout.apply {
-                tvDetailReleaseDate.text = DetailParsingUtil.releaseDateParsing(it.release_date)
-                tvDetailRuntime.text = DetailParsingUtil.runtimeParsing(it.runtime)
-                tvDetailGenre.text = DetailParsingUtil.genreParsing(it.genres)
+                tvDetailReleaseDate.text = releaseDateParsing(it.release_date)
+                tvDetailRuntime.text = runtimeParsing(it.runtime)
+                tvDetailGenre.text = genreParsing(it.genres)
                 tvDetailOverview.text = it.overview
             }
             intentMovieData = Movie(it.id,it.title,it.overview,it.release_date,it.genres)
@@ -77,7 +81,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     private fun observeMovieCrewData(){
         viewModel.movieCrewData.observe(this, {
-            viewDataBinding.contentLayout.tvDetailDirector.text = DetailParsingUtil.directorParsing(it)
+            viewDataBinding.contentLayout.tvDetailDirector.text = directorParsing(it)
         })
     }
 
@@ -85,7 +89,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
         val casterAdapter = CasterAdapter()
         viewModel.movieCastData.observe(this, {
             viewDataBinding.contentLayout.rvDetailCaster.adapter = casterAdapter
-            casterAdapter.setList(DetailParsingUtil.casterParsing(it))
+            casterAdapter.setList(casterParsing(it))
         })
         casterAdapter.setOnCasterClickListener {
             intentActionWithBundleSingleTop(PersonDetailActivity::class){putInt("person_id",it)}

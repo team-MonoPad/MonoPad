@@ -7,8 +7,10 @@ import com.project.monopad.data.model.network.response.MovieInfoResultResponse
 import com.project.monopad.data.model.network.response.MovieVideoResultResponse
 import com.project.monopad.data.repository.MovieRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
-import com.project.monopad.util.BaseUtil
-import com.project.monopad.util.DateComparator
+import com.project.monopad.util.AppUtil.API_KEY
+import com.project.monopad.util.AppUtil.KR_LANGUAGE
+import com.project.monopad.util.AppUtil.KR_REGION
+import com.project.monopad.util.DateUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -48,10 +50,10 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun popularMovieData() {
         addDisposable(
             repo.getPopularMovie(
-                apikey = BaseUtil.API_KEY,
-                language = BaseUtil.KR_LANGUAGE,
+                apikey = API_KEY,
+                language = KR_LANGUAGE,
                 page = 1,
-                region = BaseUtil.KR_REGION
+                region = KR_REGION
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,8 +71,8 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun nowPlayMovieData() {
         addDisposable(
             repo.getNowPlayMovie(
-                apikey = BaseUtil.API_KEY,
-                language = BaseUtil.KR_LANGUAGE,
+                apikey = API_KEY,
+                language = KR_LANGUAGE,
                 page = 1
             )
                 .subscribeOn(Schedulers.io())
@@ -90,17 +92,17 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun upcomingMovieData() {
         addDisposable(
             repo.getUpComingMovie(
-                apikey = BaseUtil.API_KEY,
-                language = BaseUtil.KR_LANGUAGE,
+                apikey = API_KEY,
+                language = KR_LANGUAGE,
                 page = 1,
-                region = BaseUtil.KR_REGION
+                region = KR_REGION
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     it.run {
                         //개봉일 순으로 정렬
-                        Collections.sort(it.results, DateComparator())
+                        Collections.sort(it.results, DateUtil.DateComparator())
                         _upcomingMovieData.postValue(it.results)
                         _count.value = (_count.value)?.plus(1)
                     }
@@ -113,10 +115,10 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
     fun topRatedMovieData() {
         addDisposable(
             repo.getTopRatedMovie(
-                apikey = BaseUtil.API_KEY,
-                language = BaseUtil.KR_LANGUAGE,
+                apikey = API_KEY,
+                language = KR_LANGUAGE,
                 page = 1,
-                region = BaseUtil.KR_REGION
+                region = KR_REGION
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -136,8 +138,8 @@ class MovieViewModel(private val repo: MovieRepoImpl) : BaseViewModel(){
         addDisposable(
             repo.getMovieVideo(
                 movie_id = movieId,
-                apikey = BaseUtil.API_KEY,
-                language = BaseUtil.KR_LANGUAGE,
+                apikey = API_KEY,
+                language = KR_LANGUAGE,
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

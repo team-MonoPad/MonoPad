@@ -20,9 +20,9 @@ import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.custom.dialog.CheckDialog
 import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
-import com.project.monopad.util.BaseUtil.IMAGE_URL
+import com.project.monopad.util.AppUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
-import com.project.monopad.util.DetailParsingUtil
+import com.project.monopad.util.MainUtil.genreParsing
 import kotlinx.android.synthetic.main.activity_edit.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -94,7 +94,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
                 editTvDate.text = DateUtil.convertDateToString(it.date)
                 it.movie.genres?.run{
-                    editMovieTvGenre.text = DetailParsingUtil.genreParsing(this)
+                    editMovieTvGenre.text = genreParsing(this)
                 }
             }
             if (isReselect){
@@ -114,7 +114,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             viewDataBinding.editTvDate.text = mSelectedDate
         }
         movie.genres?.run{
-            viewDataBinding.editMovieTvGenre.text = DetailParsingUtil.genreParsing(this)
+            viewDataBinding.editMovieTvGenre.text = genreParsing(this)
         }
     }
 

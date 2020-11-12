@@ -1,4 +1,4 @@
-package com.project.monopad.ui.adapter.home
+package com.project.monopad.ui.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
