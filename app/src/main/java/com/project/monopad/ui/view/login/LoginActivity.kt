@@ -1,49 +1,42 @@
 package com.project.monopad.ui.view.login
+
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.project.monopad.ui.viewmodel.LoginViewModel
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityLoginBinding
 import com.project.monopad.ui.base.BaseActivity
-import com.project.monopad.ui.view.MainActivity
+import com.project.monopad.ui.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
     AuthListener {
 
-    private val TAG = "LoginActivity"
-
     override val layoutResourceId: Int
         get() = R.layout.activity_login
     override val viewModel: LoginViewModel by viewModel()
 
-    private lateinit var googleSignInOptions : GoogleSignInOptions
-    private lateinit var googleSignInClient : GoogleSignInClient
-    private val GOOGLE_REQUEST_CODE_SIGN_IN = 9001
+    private lateinit var googleSignInOptions: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun initStartView() {
         initGoogleSignInClient()
-        viewDataBinding.progressbar.visibility = View.GONE
+        initView()
+        initClickEvent()
     }
 
     override fun initBeforeBinding() {
-        viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this
     }
 
     override fun initAfterBinding() {
-        viewModel.mLoginListener = this
-
-        viewDataBinding.googleLoginBtn.setOnClickListener{
-            googleSignIn()
-        }
+        viewModel.setLoginListener(this)
     }
 
-    fun initGoogleSignInClient() {
+    private fun initGoogleSignInClient() {
         googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -51,46 +44,75 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        if(viewModel.autoLogin){
-            viewModel.getCurrentFirebaseUser()?.let {
-                startMainActivity()
+        if (requestCode == GOOGLE_REQUEST_CODE_SIGN_IN) {
+            viewModel.handleGoogleSignInResult(data)
+        }
+    }
+
+    private fun initView() {
+        hideProgressBar()
+        viewDataBinding.autoLoginButton.isChecked = true
+    }
+
+    private fun initClickEvent() {
+        viewDataBinding.apply {
+            autoLoginButton.setOnClickListener {
+                it.isSelected = !it.isSelected
+                viewModel.isAutoLoginSet = it.isSelected
+            }
+            loginButton.setOnClickListener {
+                this@LoginActivity.viewModel.signInWithEmail(
+                    viewDataBinding.loginEmailEdittext.text.toString(),
+                    viewDataBinding.loginPasswordEdittext.text.toString()
+                )
+            }
+            registerButton.setOnClickListener {
+                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            }
+            googleLoginBtn.setOnClickListener {
+                googleSignIn()
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == GOOGLE_REQUEST_CODE_SIGN_IN) {
-                viewModel.handleGoogleSignInResult(data)
-        }
+    private fun showProgressBar() {
+        viewDataBinding.progressbar.visibility = View.VISIBLE
     }
 
-    fun startMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+    private fun hideProgressBar() {
+        viewDataBinding.progressbar.visibility = View.GONE
     }
 
-    fun googleSignIn(){
+    private fun googleSignIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE_SIGN_IN)
     }
 
+    private fun startMainActivity() {
+        finish()
+    }
+
+    //AuthListener
     override fun onStarted() {
-        viewDataBinding.progressbar.visibility = View.VISIBLE
+        showProgressBar()
     }
 
     override fun onSuccess() {
-        viewDataBinding.progressbar.visibility = View.GONE
+        hideProgressBar()
         startMainActivity()
     }
 
     override fun onFailure(message: String) {
-        viewDataBinding.progressbar.visibility = View.GONE
+        hideProgressBar()
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val TAG = "LoginActivity"
+        private const val GOOGLE_REQUEST_CODE_SIGN_IN = 9001
     }
 
 }
