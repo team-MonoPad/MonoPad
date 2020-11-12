@@ -41,7 +41,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     private fun observeReviewData() {
-        viewModel.getReview().observe(viewLifecycleOwner){
+        viewModel.reviewData.observe(viewLifecycleOwner){
             viewDataBinding.calendarView.notifyDataChanged(it)
             progressDialog.dismiss()
         }
