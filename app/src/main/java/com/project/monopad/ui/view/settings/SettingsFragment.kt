@@ -92,7 +92,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, LoginViewModel>()
             viewModel.signOut()
             stateLoggedOut()
         }
-        dialog.start("로그아웃?")
+        dialog.start(getString(R.string.message_logout))
     }
 
     private fun stateLoggedIn() {

@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="viewModel"
-            type="com.project.monopad.ui.viewmodel.LoginViewModel" />
 
     </data>
 
@@ -46,7 +43,6 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingHorizontal="20dp"
-                android:text="@={viewModel.email}"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorLightGrey"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +61,6 @@
                 android:paddingHorizontal="20dp"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorLightGrey"
-                android:text="@={viewModel.password}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login_email_edittext" />
@@ -82,32 +77,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login_password_edittext"
-                android:onClick="@{(v) -> viewModel.onLoginButtonClick(v)}"
                 />
 
-
-            <Button
+            <CheckBox
                 android:id="@+id/auto_login_button"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/checkbox"
-                android:scaleType="fitCenter"
+                android:buttonTint="#FFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_button"
-                android:onClick="@{(v) -> viewModel.onAutoLoginButtonClick(v)}" />
+                app:layout_constraintTop_toBottomOf="@+id/login_button"/>
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/auto_login"
                 android:textColor="@color/colorWhite"
                 android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/auto_login_button"
                 app:layout_constraintStart_toEndOf="@+id/auto_login_button"
-                app:layout_constraintTop_toBottomOf="@+id/login_button" />
+                app:layout_constraintTop_toTopOf="@+id/auto_login_button" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -122,11 +113,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <TextView
-                android:id="@+id/btn_register"
+                android:id="@+id/register_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:onClick="@{(v) -> viewModel.onResisterButtonClick(v)}"
                 android:text="@string/register"
                 android:textColor="@color/colorAccent"
                 android:textSize="15sp"
@@ -142,7 +132,7 @@
                 app:buttonSize="wide"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+                app:layout_constraintTop_toBottomOf="@+id/register_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

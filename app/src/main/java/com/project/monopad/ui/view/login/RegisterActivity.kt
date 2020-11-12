@@ -48,9 +48,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
     //EmailCheckListener
     override fun onEmailCheckSuccess(isEmailCheckSucccesful: Boolean) {
-        var message = if(isEmailCheckSucccesful) R.string.message_is_not_duplicated else R.string.message_is_duplicated
+        val message = if(isEmailCheckSucccesful) R.string.message_is_not_duplicated else R.string.message_is_duplicated
 
-        val alertDialog = AlertDialog.Builder(this@RegisterActivity,android.R.style.Theme_DeviceDefault_Dialog_Alert)
+        AlertDialog.Builder(this@RegisterActivity,android.R.style.Theme_DeviceDefault_Dialog_Alert)
             .setTitle(R.string.message_check_email_duplicate)
             .setMessage(message)
             .setPositiveButton("확인", null)

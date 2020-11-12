@@ -10,7 +10,7 @@ import io.reactivex.Completable
 class UserRepoImpl(private val userRemoteDataSource: UserRemoteDataSource) : UserRepo{
 
     var isLoggedIn : Boolean = false
-    var autoLogin : Boolean = false
+    var isAutoLoginSet : Boolean = false
     var loginMode : LoginMode = LoginMode.EMAIL
 
     override fun getCurrentFirebaseUser() = userRemoteDataSource.getCurrentFirebaseUser()

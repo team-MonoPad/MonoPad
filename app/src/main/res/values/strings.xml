@@ -32,6 +32,7 @@
     <string name="message_plz_email_check">이메일 중복 확인 버튼을 눌러주세요.</string>
     <string name="message_password_error">비밀번호는 6자 이상으로 입력해주세요.</string>
     <string name="message_password_inconsistent">비밀번호가 다릅니다.</string>
+    <string name="message_logout">로그아웃 하시겠습니까?</string>
 
     <!--Detail-->
     <string name="detail_dot"> ⦁ </string>
