@@ -1,15 +1,15 @@
 package com.project.monopad.ui.view.login
+
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.project.monopad.ui.viewmodel.LoginViewModel
 import com.project.monopad.R
 import com.project.monopad.databinding.ActivityLoginBinding
 import com.project.monopad.ui.base.BaseActivity
+import com.project.monopad.ui.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
@@ -19,8 +19,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
         get() = R.layout.activity_login
     override val viewModel: LoginViewModel by viewModel()
 
-    private lateinit var googleSignInOptions : GoogleSignInOptions
-    private lateinit var googleSignInClient : GoogleSignInClient
+    private lateinit var googleSignInOptions: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun initStartView() {
         initGoogleSignInClient()
@@ -47,7 +47,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == GOOGLE_REQUEST_CODE_SIGN_IN) {
+        if (requestCode == GOOGLE_REQUEST_CODE_SIGN_IN) {
             viewModel.handleGoogleSignInResult(data)
         }
     }
@@ -64,7 +64,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
                 viewModel.isAutoLoginSet = it.isSelected
             }
             loginButton.setOnClickListener {
-                Log.e("SEULGI", viewDataBinding.loginEmailEdittext.text.toString() +viewDataBinding.loginPasswordEdittext.text.toString())
                 this@LoginActivity.viewModel.signInWithEmail(
                     viewDataBinding.loginEmailEdittext.text.toString(),
                     viewDataBinding.loginPasswordEdittext.text.toString()
@@ -73,7 +72,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
             registerButton.setOnClickListener {
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
             }
-            googleLoginBtn.setOnClickListener{
+            googleLoginBtn.setOnClickListener {
                 googleSignIn()
             }
         }
@@ -87,7 +86,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
         viewDataBinding.progressbar.visibility = View.GONE
     }
 
-    private fun googleSignIn(){
+    private fun googleSignIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE_SIGN_IN)
     }
@@ -111,7 +110,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
     }
 
-    companion object{
+    companion object {
         private const val TAG = "LoginActivity"
         private const val GOOGLE_REQUEST_CODE_SIGN_IN = 9001
     }

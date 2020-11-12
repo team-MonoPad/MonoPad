@@ -8,14 +8,15 @@ import com.project.monopad.databinding.ActivityRegisterBinding
 import com.project.monopad.extension.showToast
 import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.viewmodel.RegisterViewModel
-import com.project.monopad.util.*
+import com.project.monopad.util.isNotValidEmail
+import com.project.monopad.util.isNotValidName
+import com.project.monopad.util.isNotValidPassword
+import com.project.monopad.util.isPasswordCheckSuccess
 import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(),
     AuthListener, EmailCheckListener {
-
-    private val TAG = "RegisterActivity"
 
     override val layoutResourceId: Int
         get() = R.layout.activity_register
@@ -32,7 +33,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
 
     override fun initAfterBinding() {
         viewModel.setRegisterListener(this)
-        viewModel.mEmailCheckListener = this
+        viewModel.setEmailCheckListener(this)
     }
 
     private fun initView() {
@@ -46,6 +47,40 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             }
             btnEmailCheck.setOnClickListener {
                 checkEmail()
+            }
+        }
+    }
+
+    private fun register() {
+        val name = viewDataBinding.etName.text.toString()
+        val email = viewDataBinding.etEmail.text.toString()
+        val password = viewDataBinding.etPw.text.toString()
+        val passwordCheck = viewDataBinding.etPwCheck.text.toString()
+
+        if(isNotValidName(name)){
+            showToast(this, R.string.message_name_error)
+        }
+        else if(isNotValidEmail(email) || !viewModel.isEmailCheckSuccessful) {
+            showToast(this, R.string.message_plz_email_check)
+        }
+        else if(isNotValidPassword(password)) {
+            showToast(this, R.string.message_password_error)
+        }
+        else if(!isPasswordCheckSuccess(password, passwordCheck)) {
+            showToast(this, R.string.message_password_inconsistent)
+        }
+        else {
+            viewModel.createUserWithEmailAndPassword(email, password, passwordCheck, name)
+        }
+    }
+
+    private fun checkEmail() {
+        et_email.text.toString().let {
+            if (isNotValidEmail(it)){
+                showToast(this, R.string.message_is_not_valid_email)
+            }
+            else {
+                viewModel.isAvailableEmail(it)
             }
         }
     }
@@ -89,41 +124,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         Log.e(TAG, message)
     }
 
-    private fun register() {
-        val name = viewDataBinding.etName.text.toString()
-        val email = viewDataBinding.etEmail.text.toString()
-        val password = viewDataBinding.etPw.text.toString()
-        val passwordCheck = viewDataBinding.etPwCheck.text.toString()
-
-        Log.e("SEULGI", "$name $email $password $passwordCheck")
-
-        if(isNotValidName(name)){
-            onFailure(resources.getString(R.string.message_name_error))
-        }
-        else if(isNotValidEmail(email) || !viewModel.isEmailCheckSucccesful) {
-            onFailure(resources.getString(R.string.message_plz_email_check))
-        }
-        else if(isNotValidPassword(password)) {
-            onFailure(resources.getString(R.string.message_password_error))
-        }
-        else if(!isPasswordCheckSuccess(password, passwordCheck)) {
-            onFailure(resources.getString(R.string.message_password_inconsistent))
-        }
-        else {
-            viewModel.createUserWithEmailAndPassword(email, password, passwordCheck, name)
-            //showToast(this, R.string.message_success_register)
-            //finish()
-        }
-    }
-
-    private fun checkEmail() {
-        et_email.text.toString().let {
-            if (isNotValidEmail(it)){
-                showToast(this, R.string.message_is_not_valid_email)
-            }
-            else {
-                viewModel.isAvailableEmail(it)
-            }
-        }
+    companion object{
+        private const val TAG = "RegisterActivity"
     }
 }

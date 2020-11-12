@@ -10,15 +10,17 @@ import io.reactivex.schedulers.Schedulers
 
 class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
 
-    private val TAG = "RegisterViewModel"
-
     private var mRegisterListener: AuthListener? = null
-    var mEmailCheckListener: EmailCheckListener? = null
+    private var mEmailCheckListener: EmailCheckListener? = null
 
-    var isEmailCheckSucccesful = false
+    var isEmailCheckSuccessful = false
 
     fun setRegisterListener(listener : AuthListener){
         this.mRegisterListener = listener
+    }
+
+    fun setEmailCheckListener(listener : EmailCheckListener){
+        this.mEmailCheckListener = listener
     }
 
     fun createUserWithEmailAndPassword(email: String, password: String, passwordCheck: String, name : String) {
@@ -41,12 +43,15 @@ class RegisterViewModel(private val repo : UserRepoImpl) : BaseViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                isEmailCheckSucccesful = it
+                isEmailCheckSuccessful = it
                 mEmailCheckListener?.onEmailCheckSuccess(it)
             }, {
                 mEmailCheckListener?.onEmailCheckFailure(it.message!!)
             }))
     }
 
+    companion object{
+        private const val TAG = "RegisterViewModel"
+    }
 
 }
