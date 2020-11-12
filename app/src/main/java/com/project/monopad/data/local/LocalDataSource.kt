@@ -1,5 +1,6 @@
 package com.project.monopad.data.local
 
+import androidx.lifecycle.LiveData
 import com.project.monopad.data.model.entity.Review
 import com.project.monopad.data.local.database.DiaryDao
 import io.reactivex.Completable
@@ -29,5 +30,9 @@ class LocalDataSource (private val diaryDao: DiaryDao) {
 
     fun updateReview(review: Review) : Completable {
         return diaryDao.updateReview(review = review)
+    }
+
+    fun getAllReviewInLiveData() : LiveData<List<Review>> {
+        return diaryDao.getAllReviewInLiveData()
     }
 }

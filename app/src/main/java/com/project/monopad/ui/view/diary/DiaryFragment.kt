@@ -3,6 +3,7 @@ package com.project.monopad.ui.view.diary
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcel
+import android.util.Log
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryBinding
@@ -32,7 +33,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     override fun initDataBinding() {
-        viewModel.getAllReview()
+
     }
 
     override fun initAfterBinding() {
@@ -40,7 +41,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     }
 
     private fun observeReviewData() {
-        viewModel.reviewData.observe(viewLifecycleOwner) {
+        viewModel.getReview().observe(viewLifecycleOwner){
             viewDataBinding.calendarView.notifyDataChanged(it)
             progressDialog.dismiss()
         }
@@ -84,10 +85,5 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
             putExtra("isReselect",false)
         }
         startActivity(intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAllReview()
     }
 }

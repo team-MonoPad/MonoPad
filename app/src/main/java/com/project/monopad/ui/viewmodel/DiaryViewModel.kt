@@ -45,6 +45,10 @@ class DiaryViewModel(
     val movieDetailInfo: LiveData<MovieDetailResponse>
             get() = _movieDetailInfo
 
+    fun getReview(): LiveData<List<Review>> {
+        return repo.getAllReviewInLiveData()
+    }
+
     fun insertReviewWithMovie(review : Review){
         addDisposable(
             repo.insertReview(review)
@@ -52,8 +56,9 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
+                        //getAllReview()
                         _isCompleted.postValue(true)
+                        Log.e("SEULGI","insertReviewWithMovie")
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
@@ -69,8 +74,9 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
+                        //getAllReview()
                         _isCompleted.postValue(false)
+                        Log.e("SEULGI","deleteReviewByReviewId")
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
@@ -87,7 +93,7 @@ class DiaryViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        getAllReview()
+                        //getAllReview()
                     },
                     {
                         Log.d(TAG, it.localizedMessage)
@@ -97,19 +103,20 @@ class DiaryViewModel(
         )
     }
 
-    fun getAllReview(){
+    /*fun getAllReview(){
         addDisposable(repo.getAllReview()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 it.run {
                     _reviewData.postValue(it)
+                    Log.e("SEULGI","getAllReview : ${it.size}")
                 }
             },{
                 Log.d(TAG, it.localizedMessage)
             })
         )
-    }
+    }*/
 
     fun getReviewByReviewId(id : Int){
         addDisposable(
@@ -151,7 +158,7 @@ class DiaryViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    getAllReview()
+                    //getAllReview()
                     _isCompleted.postValue(true)
                 },{
                     Log.d(TAG, it.localizedMessage)

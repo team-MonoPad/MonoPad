@@ -1,5 +1,6 @@
 package com.project.monopad.data.local.datasource
 
+import androidx.lifecycle.LiveData
 import com.project.monopad.data.model.entity.Review
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -18,4 +19,5 @@ interface ReviewLocalDataSource{
 
     fun updateReview(review:Review) : Completable
 
+    fun getAllReviewInLiveData() : LiveData<List<Review>>
 }

@@ -1,5 +1,6 @@
 package com.project.monopad.data.local.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.project.monopad.data.model.entity.Review
 import io.reactivex.Completable
@@ -23,6 +24,9 @@ interface DiaryDao {
 
     @Query("SELECT * FROM Review")
     fun getAllReview() : Single<List<Review>>
+
+    @Query("SELECT * FROM Review")
+    fun getAllReviewInLiveData() : LiveData<List<Review>>
 
     @Update
     fun updateReview(review: Review) : Completable
