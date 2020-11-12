@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:bindEditReviewBackPoster ="@{activity.isFirst ? activity.imagePath : review.review_poster}"/>
+            app:bindEditReviewBackPoster ="@{activity.isFirst ? activity.remoteImageUrl  : activity.isReselect ? activity.remoteImageUrl : review.review_poster}"/>
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/edit_toolbar"
             android:layout_width="match_parent"
@@ -65,13 +65,15 @@
                             android:text="@{activity.isFirst ? @string/edit_review_title(movie.title) : review.title}"
                             style="@style/EditReviewTitleStyle"
                             android:background="@null"
-                            android:inputType="text"
+                            android:inputType="textMultiLine"
                             android:hint="@string/review_title_hint"
                             android:textColorHint="@color/grey300"
                             android:textCursorDrawable="@drawable/cursor_style"
                             android:textColor="@color/colorWhite"
                             android:focusable="true"
-                            android:maxLines="1"/>
+                            android:singleLine="false"
+                            tools:text="어벤저스: 윈터솔저: 앤드게임 관람 후기 "
+                            android:maxLines="2"/>
                         <TextView
                             android:id="@+id/edit_tv_date"
                             android:layout_width="wrap_content"
