@@ -72,7 +72,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
     private fun showBottomSearchDialog(calendar: Calendar) {
         val bottomSheetSearchFragment = DiarySearchMovieBottomSheetFragment()
         bottomSheetSearchFragment.arguments = Bundle().also {
-            it.putString("selected_date",CalendarUtil.convertCalendarToString(calendar,"yyyy년 MM월 dd일"))
+            it.putString("date",CalendarUtil.convertCalendarToString(calendar,"yyyy년 MM월 dd일"))
         }
         bottomSheetSearchFragment.show(childFragmentManager, "approval")
     }
