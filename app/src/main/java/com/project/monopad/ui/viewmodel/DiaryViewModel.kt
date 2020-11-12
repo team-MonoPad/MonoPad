@@ -144,7 +144,7 @@ class DiaryViewModel(
 
     fun downloadImage (imageURL: String, title: String, saveTime: String) {
         val teamName = "MONOPAD"
-        val dirPath = "${context.getExternalFilesDir(teamName)?.absolutePath}/${title}/"
+        val dirPath = "${context.getExternalFilesDir(teamName)?.absolutePath}/${title+saveTime}/"
         val dir = File(dirPath)
         val fileName = title+"_download_poster_"+saveTime
 

@@ -3,16 +3,15 @@
     android:oneshot="false" >
 
     <item android:drawable="@drawable/load_progress_1"
-        android:duration="20"/>
+        android:duration="200"/>
 
     <item android:drawable="@drawable/load_progress_2"
-        android:duration="20"/>
+        android:duration="200"/>
 
     <item android:drawable="@drawable/load_progress_3"
-        android:duration="20"/>
+        android:duration="200"/>
 
     <item android:drawable="@drawable/load_progress_4"
-        android:duration="20"/>
-
+        android:duration="200"/>
 
 </animation-list>

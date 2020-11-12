@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:bindEditReviewBackPoster ="@{activity.isFirst ? activity.imagePath  : activity.isReselect ? activity.imagePath : review.review_poster}"/>
+            app:bindEditReviewBackPoster ="@{activity.isFirst ? activity.remoteImageUrl  : activity.isReselect ? activity.remoteImageUrl : review.review_poster}"/>
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/edit_toolbar"
             android:layout_width="match_parent"

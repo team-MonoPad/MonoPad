@@ -20,7 +20,6 @@ import com.project.monopad.ui.base.BaseActivity
 import com.project.monopad.ui.view.custom.dialog.CheckDialog
 import com.project.monopad.ui.view.select.ImageSelectActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
-import com.project.monopad.util.BaseUtil
 import com.project.monopad.util.BaseUtil.IMAGE_URL
 import com.project.monopad.util.DateUtil
 import com.project.monopad.util.DetailParsingUtil
@@ -38,16 +37,15 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
 
     var isFirst = true
     private lateinit var movie : Movie
-    var imagePath: String? = null
+    private var remoteImagePath: String? = null
+    var remoteImageUrl: String? = null
+    private var localImagePath: String? = null
     private var mSelectedDate: String? = null
     private lateinit var imm: InputMethodManager
     private lateinit var frontCard : AnimatorSet
     private lateinit var backCard : AnimatorSet
     private var isFront = true
     var isReselect = false
-
-
-
 
     override fun initStartView() {
         viewDataBinding.activity = this
@@ -56,24 +54,15 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
         intent?.apply {
             isFirst = getBooleanExtra("isFirst",false)
             isReselect = getBooleanExtra("isReselect",false)
-            imagePath = IMAGE_URL + getStringExtra("image_path")
+            remoteImagePath = getStringExtra("image_path")
             movie = getParcelableExtra("movie_data")!!
             mSelectedDate = getStringExtra("date")
         }
-        d("isFirst", isFirst.toString())
-        d("isReselect", isReselect.toString())
-        d("image_path", imagePath.toString())
-
 
         if (isFirst){ //첫 작성이라면
             setFirstReview()
         }else{ //첫 작성이 아니라면
-            if (isReselect){ //재선택이라면
-               //image 재선택
-                viewModel.getReviewByReviewId(id = movie.id)
-            }else{ //재선택이 아니라면
-                viewModel.getReviewByReviewId(id = movie.id)
-            }
+            viewModel.getReviewByReviewId(id = movie.id)
         }
 
 
@@ -102,23 +91,22 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
             viewDataBinding.run{
                 review = it
                 movie = it.movie
+
                 editTvDate.text = DateUtil.convertDateToString(it.date)
                 it.movie.genres?.run{
                     editMovieTvGenre.text = DetailParsingUtil.genreParsing(this)
                 }
             }
-
-            if (!isReselect){
-                imagePath = it.review_poster
+            if (isReselect){
+                remoteImageUrl = IMAGE_URL + remoteImagePath
             }else{
-                imagePath = IMAGE_URL+imagePath
+                localImagePath = it.review_poster
             }
-            d("imagePath: ", imagePath!!)
         }
     }
 
     private fun setFirstReview(){
-        imagePath = IMAGE_URL + imagePath
+        remoteImageUrl = IMAGE_URL + remoteImagePath
         viewDataBinding.movie = movie
         if (mSelectedDate.isNullOrBlank()){
             viewDataBinding.editTvDate.text = DateUtil.convertDateToString(Date()) //오늘 날짜로 초기화
@@ -131,18 +119,16 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     }
 
     private fun saveReview() {
-        d("reselect remote image", imagePath!!)
-        d("file name", movie.title!!+DateUtil.getFileNameDate(Date()))
-
-        viewModel.downloadImage(imagePath!!, movie.title!!, DateUtil.getFileNameDate(Date()))
+        d("save remote image url", remoteImageUrl!!)
+        viewModel.downloadImage(remoteImageUrl!!, movie.title!!, DateUtil.getFileNameDate(Date()))
 
         viewModel.imagePathData.observe(this) {
-            imagePath = it
-            d("reselect local image", imagePath!!)
+            d("saved local image", it)
+            localImagePath = it
             if (it.isNotBlank()){
                 val review = Review(
                     id = movie.id,
-                    review_poster = it, //로컬 경로
+                    review_poster = localImagePath!!, //Local Path
                     title = viewDataBinding.editEtTitle.text.toString(),
                     date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
                     comment = viewDataBinding.editEtComment.text.toString(),
@@ -157,7 +143,7 @@ class EditActivity : BaseActivity<ActivityEditBinding, DiaryViewModel>() {
     private fun updateReview() {
         val review = Review(
             id = movie.id,
-            review_poster = imagePath!!,
+            review_poster = localImagePath!!, //Local Path
             title = viewDataBinding.editEtTitle.text.toString(),
             date = DateUtil.convertStringToDate(viewDataBinding.editTvDate.text.toString())!!,
             comment = viewDataBinding.editEtComment.text.toString(),
