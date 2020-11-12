@@ -9,11 +9,10 @@ import com.project.monopad.databinding.FragmentSettingsBinding
 import com.project.monopad.extension.intentAction
 import com.project.monopad.extension.intentActionToUrl
 import com.project.monopad.ui.base.BaseFragment
-import com.project.monopad.ui.view.edit.CheckDialog
+import com.project.monopad.ui.view.custom.dialog.CheckDialog
 import com.project.monopad.ui.view.login.LoginActivity
 import com.project.monopad.ui.view.login.RegisterActivity
 import com.project.monopad.ui.viewmodel.LoginViewModel
-import com.project.monopad.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, LoginViewModel>(){
