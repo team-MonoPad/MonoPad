@@ -17,11 +17,22 @@
         >
 
         <TextView
+            android:id="@+id/tv_signOut_call"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/settings_sign_out"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/border_bottom"
+            style="@style/SettingTextViewStyle"
+            />
+
+        <TextView
             android:id="@+id/tv_signIn_call"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/profile_sign_in"
+            android:text="@string/settings_sign_in"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/border_bottom"
             style="@style/SettingTextViewStyle"
@@ -31,7 +42,7 @@
             android:id="@+id/tv_signUp_call"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="@string/profile_sign_up"
+            android:text="@string/settings_sign_up"
             app:layout_constraintTop_toBottomOf="@+id/tv_signIn_call"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/border_bottom"
@@ -43,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             app:layout_constraintTop_toBottomOf="@id/tv_signUp_call"
-            android:text="@string/profile_contact_us"
+            android:text="@string/settings_contact_us"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/border_bottom"
             style="@style/SettingTextViewStyle"
@@ -55,7 +66,7 @@
             android:layout_height="40dp"
             app:layout_constraintTop_toBottomOf="@id/tv_contactUs"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/profile_report_bug"
+            android:text="@string/settings_report_bug"
             android:background="@drawable/border_bottom"
             style="@style/SettingTextViewStyle"
             />
@@ -64,7 +75,7 @@
             android:id="@+id/tv_openSource"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="@string/profile_opensource_license"
+            android:text="@string/settings_opensource_license"
             app:layout_constraintTop_toBottomOf="@+id/tv_bugReport"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/border_bottom"
@@ -74,7 +85,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/profile_app_version"
+            android:text="@string/settings_app_version"
             android:fontFamily="@font/notosans_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

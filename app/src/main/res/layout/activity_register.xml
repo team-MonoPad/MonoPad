@@ -26,6 +26,7 @@
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingHorizontal="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
                     android:id="@+id/ranking_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="50dp"
                     android:text="@string/register"
                     android:textColor="@color/colorWhite"
@@ -46,7 +47,7 @@
 
                 <EditText
                     android:id="@+id/et_name"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/gray_rectangle_radius_10"
@@ -103,7 +104,7 @@
 
                 <EditText
                     android:id="@+id/et_pw"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/gray_rectangle_radius_10"
@@ -120,7 +121,7 @@
 
                 <EditText
                     android:id="@+id/et_pw_check"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/gray_rectangle_radius_10"
@@ -137,7 +138,7 @@
 
                 <Button
                     android:id="@+id/btn_register"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/button_register"

@@ -69,12 +69,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
         }
     }
 
-    fun startMainActivity() {
+    private fun startMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
-    fun googleSignIn(){
+    private fun googleSignIn(){
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE_SIGN_IN)
     }

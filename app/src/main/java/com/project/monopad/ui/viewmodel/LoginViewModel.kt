@@ -25,8 +25,12 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
     var password: String? = null
 
     var autoLogin : Boolean
-        get() { return repo.autoLogin }
+        get() = repo.autoLogin
         set(value) { repo.autoLogin = value }
+
+    var isLoggedIn : Boolean
+        get() = repo.isLoggedIn
+        set(value) { repo.isLoggedIn = value }
 
     fun getCurrentFirebaseUser() = repo.getCurrentFirebaseUser()
 
@@ -42,6 +46,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
                 .subscribe({
                     mLoginListener?.onSuccess()
                     repo.loginMode = LoginMode.EMAIL
+                    isLoggedIn = true
                 }, {
                     mLoginListener?.onFailure(it.message!!)
                 })
@@ -57,6 +62,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
             .subscribe({
                 mLoginListener?.onSuccess()
                 repo.loginMode = LoginMode.GOOGLE
+                isLoggedIn = true
             }, {
                 mLoginListener?.onFailure(it.message!!)
             })
@@ -74,6 +80,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 mLoginListener?.onSuccess()
+                isLoggedIn = false
             }, {
                 mLoginListener?.onFailure(it.message!!)
             })
