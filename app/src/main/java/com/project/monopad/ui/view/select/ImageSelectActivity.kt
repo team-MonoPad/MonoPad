@@ -89,6 +89,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                                 putParcelable("movie_data", INTENT_MOVIE_DATA)
                                 putString("image_path", it)
                             }
+                            finish()
                         } else {
                             //detail -> imageSelect -> Edit
                             intentActionWithBundleSingleTop(EditActivity::class){
@@ -97,6 +98,7 @@ class ImageSelectActivity : BaseActivity<ActivityImageSelectBinding, ImageSelect
                                 putString("image_path", it)
                                 putParcelable("movie_data", INTENT_MOVIE_DATA)
                             }
+                            finish()
                         }
 
                     }
