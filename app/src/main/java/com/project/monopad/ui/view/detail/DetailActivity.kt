@@ -208,7 +208,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
                 intentActionWithBundleSingleTop(ImageSelectActivity::class){
                     putBoolean("isReselect",false)
                     putParcelable("movie_data",intentMovieData)
-                    if(intent!=null) putString("selected_date", intent.getStringExtra("selected_date"))
+                    if(intent!=null) putString("date", intent.getStringExtra("date"))
                 }
                 true
             }
