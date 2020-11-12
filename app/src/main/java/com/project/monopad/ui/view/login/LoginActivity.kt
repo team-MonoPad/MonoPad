@@ -1,5 +1,6 @@
 package com.project.monopad.ui.view.login
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -63,6 +64,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(),
                 viewModel.isAutoLoginSet = it.isSelected
             }
             loginButton.setOnClickListener {
+                Log.e("SEULGI", viewDataBinding.loginEmailEdittext.text.toString() +viewDataBinding.loginPasswordEdittext.text.toString())
                 this@LoginActivity.viewModel.signInWithEmail(
                     viewDataBinding.loginEmailEdittext.text.toString(),
                     viewDataBinding.loginPasswordEdittext.text.toString()

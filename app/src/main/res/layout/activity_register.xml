@@ -5,9 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="viewModel"
-            type="com.project.monopad.ui.viewmodel.RegisterViewModel" />
 
     </data>
 
@@ -33,14 +30,14 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/ranking_textview"
+                    android:id="@+id/register_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="50dp"
                     android:text="@string/register"
                     android:textColor="@color/colorWhite"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -54,12 +51,12 @@
                     android:hint="이름"
                     android:maxLines="1"
                     android:paddingHorizontal="20dp"
-                    android:text="@={viewModel.name}"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorLightGrey"
+                    android:inputType="text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ranking_textview" />
+                    app:layout_constraintTop_toBottomOf="@+id/register_textview" />
 
                 <LinearLayout
                     android:id="@+id/email_layout"
@@ -80,11 +77,11 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:paddingHorizontal="20dp"
-                        android:text="@={viewModel.email}"
                         android:textColor="@color/colorWhite"
                         android:textColorHint="@color/colorLightGrey" />
 
                     <Button
+                        android:id="@+id/btn_email_check"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="2dp"
@@ -97,8 +94,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/et_pw"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/et_email"
-                        app:layout_constraintTop_toBottomOf="@+id/et_name"
-                        android:onClick="@{(v) -> viewModel.onEmailCheckButtonClick(v)}" />
+                        app:layout_constraintTop_toBottomOf="@+id/et_name"/>
 
                 </LinearLayout>
 
@@ -112,7 +108,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:paddingHorizontal="20dp"
-                    android:text="@={viewModel.password}"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorLightGrey"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +124,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:paddingHorizontal="20dp"
-                    android:text="@={viewModel.passwordCheck}"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorLightGrey"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +136,6 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/button_register"
-                    android:onClick="@{(v) -> viewModel.onResisterButtonClick(v)}"
                     android:text="@string/register"
                     android:textColor="@color/colorWhite"
                     android:textSize="15dp"

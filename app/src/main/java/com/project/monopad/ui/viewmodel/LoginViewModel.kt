@@ -1,15 +1,14 @@
 package com.project.monopad.ui.viewmodel
 
 import android.content.Intent
-import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-import com.project.monopad.ui.view.login.AuthListener
-import com.project.monopad.util.LoginPatternCheckUtil
 import com.project.monopad.data.repository.UserRepoImpl
 import com.project.monopad.ui.base.BaseViewModel
+import com.project.monopad.ui.view.login.AuthListener
 import com.project.monopad.util.LoginMode
+import com.project.monopad.util.isNotValidEmailAndPassword
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -33,8 +32,7 @@ class LoginViewModel(private val repo : UserRepoImpl) : BaseViewModel(){
     fun getCurrentFirebaseUser() = repo.getCurrentFirebaseUser()
 
     fun signInWithEmail(email : String?, password : String?){
-        Log.e("SEULGI", ""+email+" "+password)
-        if(!LoginPatternCheckUtil.isValidEmailAndPassword(email, password)){
+        if(isNotValidEmailAndPassword(email, password)){
             mLoginListener?.onFailure("가입되지 않은 사용자이거나 비밀번호 오류입니다.")
         }
         else {
