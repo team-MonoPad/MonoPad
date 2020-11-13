@@ -12,6 +12,7 @@
         <item name="android:dialogTheme">@style/myDialogTheme</item>
         <item name="fontFamily">@font/notosans_regular</item>
         <item name="android:lineSpacingExtra">@dimen/spacing_5</item>
+        <item name="android:overScrollMode">never</item>
     </style>
 
     <style name="LicenseTheme" parent="Theme.AppCompat.Light.NoActionBar">
