@@ -2,6 +2,9 @@ package com.project.monopad.ui.view.diary
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.lifecycle.observe
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentDiaryBinding
@@ -11,6 +14,7 @@ import com.project.monopad.ui.base.BaseFragment
 import com.project.monopad.ui.adapter.DiaryListBottomSheetAdapter
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiaryListBottomSheetFragment
 import com.project.monopad.ui.view.custom.bottomsheetdialog.DiarySearchMovieBottomSheetFragment
+import com.project.monopad.ui.view.custom.dialog.CheckDialog
 import com.project.monopad.ui.view.edit.EditActivity
 import com.project.monopad.ui.viewmodel.DiaryViewModel
 import com.project.monopad.util.MainUtil.convertCalendarToString
@@ -26,8 +30,9 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
         get() = R.layout.fragment_diary
 
     override fun initStartView() {
-        progressDialog.show()
+        setHasOptionsMenu(true)
         initClickEvent()
+        progressDialog.show()
     }
 
     override fun initDataBinding() {
@@ -83,5 +88,26 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding, DiaryViewModel>() {
             putExtra("isReselect",false)
         }
         startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_diary, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_delete_all -> deleteAllReview()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteAllReview() {
+        CheckDialog(requireContext()).run {
+            setAcceptBtnOnClickListener{
+                viewModel.deleteAllReview()
+            }
+            start(getString(R.string.message_delete_all_review))
+        }
     }
 }
