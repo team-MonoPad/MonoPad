@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.project.monopad.R
 import com.project.monopad.databinding.FragmentHomeBinding
+import com.project.monopad.extension.intentActionWithBundle
 import com.project.monopad.extension.intentActionWithBundleSingleTop
 import com.project.monopad.ui.adapter.MovieAdapter
 import com.project.monopad.util.state.MovieCase
@@ -134,7 +135,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, MovieViewModel>() {
         })
           
         viewModel.videoData.observe(this, {
-            requireContext().intentActionWithBundleSingleTop(VideoActivity::class) {
+            requireContext().intentActionWithBundle(VideoActivity::class) {
                 putString(
                     "video_key",
                     it[0].key
