@@ -32,22 +32,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, LoginViewModel>()
 
     override fun initAfterBinding() {}
 
-    override fun onStart() {
-        super.onStart()
-        checkLogInState()
-    }
-
     private fun initClickEvent() {
         viewDataBinding.apply {
-            tvSignInCall.setOnClickListener {
-                intentAction(LoginActivity::class)
-            }
-            tvSignUpCall.setOnClickListener {
-                intentAction(RegisterActivity::class)
-            }
-            tvSignOutCall.setOnClickListener {
-                showSignOutDialog()
-            }
             tvContactUs.setOnClickListener {
                 intentActionToUrl(MONOPAD_URL)
             }
@@ -75,38 +61,5 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, LoginViewModel>()
                 )
                 .setType("message/rfc822")
         )
-    }
-
-    private fun checkLogInState() {
-        if(viewModel.isLoggedIn){
-            stateLoggedIn()
-        }else {
-            stateLoggedOut()
-        }
-    }
-
-    private fun showSignOutDialog() {
-        val dialog = CheckDialog(requireContext())
-        dialog.setAcceptBtnOnClickListener{
-            viewModel.signOut()
-            stateLoggedOut()
-        }
-        dialog.start(getString(R.string.message_logout))
-    }
-
-    private fun stateLoggedIn() {
-        viewDataBinding.apply {
-            tvSignInCall.visibility = View.INVISIBLE
-            tvSignUpCall.visibility = View.INVISIBLE
-            tvSignOutCall.visibility = View.VISIBLE
-        }
-    }
-
-    private fun stateLoggedOut() {
-        viewDataBinding.apply {
-            tvSignInCall.visibility = View.VISIBLE
-            tvSignUpCall.visibility = View.VISIBLE
-            tvSignOutCall.visibility = View.INVISIBLE
-        }
     }
 }

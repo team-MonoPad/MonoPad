@@ -17,44 +17,12 @@
         >
 
         <TextView
-            android:id="@+id/tv_signOut_call"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/settings_sign_out"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/border_bottom"
-            style="@style/SettingTextViewStyle"
-            />
-
-        <TextView
-            android:id="@+id/tv_signIn_call"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/settings_sign_in"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/border_bottom"
-            style="@style/SettingTextViewStyle"
-            />
-
-        <TextView
-            android:id="@+id/tv_signUp_call"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/settings_sign_up"
-            app:layout_constraintTop_toBottomOf="@+id/tv_signIn_call"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/border_bottom"
-            style="@style/SettingTextViewStyle"
-            />
-
-        <TextView
             android:id="@+id/tv_contactUs"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_signUp_call"
             android:text="@string/settings_contact_us"
+            android:layout_marginTop="60dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/border_bottom"
             style="@style/SettingTextViewStyle"
