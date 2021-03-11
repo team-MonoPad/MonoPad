@@ -105,13 +105,13 @@ class DiarySearchMovieBottomSheetFragment : BottomSheetDialogFragment(){
     @RequiresApi(Build.VERSION_CODES.R)
     private fun getWindowHeightVerR(): Int {
         val displayMetrics = DisplayMetrics()
-        activity?.applicationContext?.display!!.getRealMetrics(displayMetrics)
+        requireContext().display!!.getRealMetrics(displayMetrics)
         return displayMetrics.heightPixels
     }
 
     private fun getWindowHeightOld(): Int {
         val displayMetrics = DisplayMetrics()
-        activity?.windowManager?.defaultDisplay!!.getRealMetrics(displayMetrics)
+        requireActivity().windowManager.defaultDisplay.getRealMetrics(displayMetrics)
         return displayMetrics.heightPixels
     }
 
